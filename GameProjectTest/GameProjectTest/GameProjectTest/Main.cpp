@@ -15,6 +15,8 @@ using namespace DirectX;
 int CWIDTH = WINDOW_WIDTH;
 int CHEIGHT = WINDOW_HEIGHT;
 
+char testString[10] = "";
+
 //‚P‚Â‚Ì’¸“_î•ñ‚ğŠi”[‚·‚é\‘¢‘Ì
 struct VERTEX {
 	XMFLOAT3 Pos;
