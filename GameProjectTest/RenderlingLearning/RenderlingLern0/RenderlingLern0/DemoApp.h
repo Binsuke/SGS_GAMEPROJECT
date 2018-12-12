@@ -114,9 +114,95 @@ protected:
 	static LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wp, LPARAM lp);
 
 public:
+	// public variables
 
+	struct Config
+	{
+		UINT			swapChainCount;
+		DXGI_FORMAT		swapChainFormat;
+		DXGI_FORMAT		depthStencilFormat;
+		UINT			multiSampleCount;
+		UINT			multiSampleQuality;
+		UINT			width;
+		UINT			height;
+		LPSTR			title;
+		FLOAT			clearColorR;
+		FLOAT			clearColorG;
+		FLOAT			clearColorB;
+		FLOAT			clearColorA;
 
+		Congif()
+			:swapChainCount(2)
+			, swapChainFormat(DXGI_FORMAT_R8G8B8A8_UNORM)
+			, depthStencilFormat(DXGI_FORMAT_D24_UNORM_S8_UINT)
+			, multiSampleCount(1)
+			, multiSampleQuality(0)
+			, width(960)
+			, height(540)
+			, title("DemoApp")
+			, clearColorR(0.392f)
+			, clearColorG(0.584f)
+			, clearColorB(0.929f)
+			, clearColorA(1.0f)
+		{ /* DO NOTHING*/}
+	};
 
+	//public methods
+
+	// constructor
+
+	DemoApp(const Config& config);
+
+	//destructor
+
+	virtual ~DemoApp();
+
+	// Aplication Execution
+
+	int Run();
+
+	// node Config
+
+	void SetNode(SceneNode* pNode);
+
+	// get node
+
+	SceneNode* GetNode() const;
+
+	// get device interface
+
+	ID3D11Device* GetDevice() const;
+
+	// get DeviceContextInterface
+
+	ID3D11DeviceContext* GetDeviceContext() const;
+
+	// get RenderTargetView
+
+	ID3D11RenderTargetView* GetRenderTargetView() const;
+
+	// get DepthStencilView
+
+	ID3D11DepthStencilView* GetDepthStencilView() const;
+
+	//get SwapChain
+
+	IDXGISwapChain* GetSwapChain() const;
+
+	//get window width
+	UINT GetWidth() const;
+
+	//get window height
+
+	UINT GetHeight() const;
+
+	// GetAspectRtion
+
+	FLOAT GetAspectRatio() const;
+
+	// Get Active App0lication
+
+	static DemoApp* GetActive();
 };
 
 
