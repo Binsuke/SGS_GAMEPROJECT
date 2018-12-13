@@ -131,7 +131,7 @@ public:
 		FLOAT			clearColorB;
 		FLOAT			clearColorA;
 
-		Congif()
+		Config()
 			:swapChainCount(2)
 			, swapChainFormat(DXGI_FORMAT_R8G8B8A8_UNORM)
 			, depthStencilFormat(DXGI_FORMAT_D24_UNORM_S8_UINT)

@@ -118,11 +118,13 @@
     <ClCompile Include="DemoApp.cpp" />
     <ClCompile Include="DemoNode.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="ShaderUtil.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DemoApp.h" />
     <ClInclude Include="DemoNode.h" />
     <ClInclude Include="SceneNode.h" />
+    <ClInclude Include="ShaderUtil.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
