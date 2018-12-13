@@ -35,9 +35,9 @@ protected:
 	HWND						m_hWnd;						//WindowHandle
 	D3D_DRIVER_TYPE				m_DriverType;				//DriverType
 	D3D_FEATURE_LEVEL			m_FeatureLevel;				//function Level
-	UINT						m_MulitiSampleCount;		//MultiSample Count
-	UINT						m_MulitiSampleQuality;		//MultiSample Quality
-	UINT						m_MulltiSampeleMaxQuality;	//MultiSample Max Quality
+	UINT						m_MultiSampleCount;		//MultiSample Count
+	UINT						m_MultiSampleQuality;		//MultiSample Quality
+	UINT						m_MultiSampeleMaxQuality;	//MultiSample Max Quality
 	UINT						m_SwapChainCount;			//SwapChain Count
 	DXGI_FORMAT					m_SwapChainFormat;			//SwapChain Format
 	DXGI_FORMAT					m_DepthStencilFormat;		//DepthStencil Format
@@ -54,6 +54,7 @@ protected:
 	FLOAT						m_ClearColor[4];			//クリアカラー
 	UINT						m_Width;					//WindowWidth
 	UINT						m_Height;					//WindowHeight
+	FLOAT						m_AspectRatio;				//aspect
 	std::string					m_Title;					//TitleName
 
 	//protected Method
