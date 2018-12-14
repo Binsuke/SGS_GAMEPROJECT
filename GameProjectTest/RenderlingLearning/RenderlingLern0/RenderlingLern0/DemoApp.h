@@ -111,6 +111,10 @@ protected:
 
 	void ReleaseDefaultDepthStencil();
 
+	//Release Default RenderTarget
+
+	void ReleaseDefaultRenderTarget();
+
 	// Window Proc
 	static LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wp, LPARAM lp);
 
@@ -140,7 +144,7 @@ public:
 			, multiSampleQuality(0)
 			, width(960)
 			, height(540)
-			, title("DemoApp")
+			, title(L"DemoApp")
 			, clearColorR(0.392f)
 			, clearColorG(0.584f)
 			, clearColorB(0.929f)
