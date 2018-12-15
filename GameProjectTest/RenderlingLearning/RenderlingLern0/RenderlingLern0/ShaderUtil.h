@@ -1,5 +1,7 @@
 #pragma once
 
+#ifndef __SHADER_UTIL_H__
+#endif __SHADER_UTIL_H__
 
 #include <d3dcompiler.h>
 

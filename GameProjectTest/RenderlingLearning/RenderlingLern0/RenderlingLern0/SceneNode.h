@@ -47,7 +47,7 @@ struct SceneNode
 	void RemoveChildren()
 	{
 		//Children Call EndProcess
-		for (size_t i = 0; i < pChildren.size(), i++)
+		for (size_t i = 0; i < pChildren.size(); i++)
 		{
 			pChildren[i]->RemoveChildren();
 			pChildren[i]->OnTerm();

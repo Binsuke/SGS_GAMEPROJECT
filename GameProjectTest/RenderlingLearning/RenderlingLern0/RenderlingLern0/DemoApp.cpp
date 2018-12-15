@@ -64,7 +64,7 @@ DemoApp::DemoApp(const Config& config)
 
 }
 
-DemoApp::~DemoApp
+DemoApp::~DemoApp()
 { TermApp(); }
 
 
@@ -83,7 +83,7 @@ bool DemoApp::InitWnd()
 	wc.cbSize			= sizeof(WNDCLASSEXA);
 	wc.style			= CS_HREDRAW | CS_VREDRAW;
 	wc.lpfnWndProc		= WndProc;
-	wc.cbClasExtra = 0;
+	wc.cbClsExtra = 0;
 	wc.cbWndExtra = 0;
 	wc.hInstance = hInst;
 	wc.hIcon = LoadIcon(hInst, IDI_APPLICATION);
@@ -110,7 +110,7 @@ bool DemoApp::InitWnd()
 
 	//Setting Rect
 
-	RECT rc = { 0,0,m_Width,m_Height };
+	RECT rc = { 0,0,(LONG)m_Width,(LONG)m_Height };
 
 	AdjustWindowRect(&rc, WS_OVERLAPPEDWINDOW, FALSE);
 
@@ -189,7 +189,7 @@ bool DemoApp::InitD3D11()
 	UINT createDeviceFlags = 0;
 
 #if defined(DEBUG) || defined(_DEBUG)
-	createDeviceFlags != D3D11_CREATE_DEVICE_DEBUG;
+	createDeviceFlags |= D3D11_CREATE_DEVICE_DEBUG;
 #endif
 
 	D3D_DRIVER_TYPE driverTypes[] = {
@@ -198,7 +198,7 @@ bool DemoApp::InitD3D11()
 		D3D_DRIVER_TYPE_REFERENCE,
 	};
 
-	UINT numDriverTypes = sizeof(driverTypes) / sizeof(numDriverTypes[0]);
+	UINT numDriverTypes = sizeof(driverTypes) / sizeof(driverTypes[0]);
 
 	D3D_FEATURE_LEVEL featureLevels[] = {
 		D3D_FEATURE_LEVEL_11_0,
@@ -223,7 +223,7 @@ bool DemoApp::InitD3D11()
 	sd.Windowed = TRUE;
 
 
-	for (UINT idx = 0; idx < numDriverType; i++)
+	for (UINT idx = 0; idx < numDriverTypes; idx++)
 	{
 		m_DriverType = driverTypes[idx];
 
@@ -244,7 +244,7 @@ bool DemoApp::InitD3D11()
 			&m_pDeviceContext
 		);
 		//succeced for end llp
-		if(SUCCECED(hr))
+		if(SUCCEEDED(hr))
 		{
 			break;
 		}
@@ -258,7 +258,7 @@ bool DemoApp::InitD3D11()
 	hr = m_pDevice->CheckMultisampleQualityLevels(m_SwapChainFormat, m_MultiSampleCount, &m_MultiSampleMaxQuality);
 	if (FAILED(hr))
 	{
-		ELOR("Error : D3D11DeviceCheckMultiSampleQualityLevels() Failed.");
+		ELOG("Error : D3D11DeviceCheckMultiSampleQualityLevels() Failed.");
 		return false;
 	}
 
@@ -360,9 +360,9 @@ void DemoApp::TermApp()
 //Create RenderTarget
 bool DemoApp::CreateDefaultRenderTarget()
 {
-	HRESULT hr ~S_OK;
+	HRESULT hr = S_OK;
 
-	hr = m_pSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2d), (LPVOID*)&m_pRTT);
+	hr = m_pSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&m_pRTT);
 	if (FAILED(hr))
 	{
 		ELOG("Error : IDXFISwapChain::Getbuffer() Failed");
@@ -376,7 +376,7 @@ bool DemoApp::CreateDefaultRenderTarget()
 		return false;
 	}
 
-	hr = m_pDevice->CreateShaderResourceView(m_RTT, NULL, m_pRTSRV);
+	hr = m_pDevice->CreateShaderResourceView(m_pRTT, NULL, &m_pRTSRV);
 	if (FAILED(hr))
 	{
 		ELOG("Error * ID3D11Device::CreateShaderResourceView() Failed.");
@@ -389,7 +389,7 @@ bool DemoApp::CreateDefaultRenderTarget()
 
 void DemoApp::ReleaseDefaultRenderTarget()
 {
-	/ レンダーターゲットのシェーダリソースビューを解放.
+	// レンダーターゲットのシェーダリソースビューを解放.
 		if (m_pRTSRV)
 		{
 			m_pRTSRV->Release();
@@ -430,7 +430,7 @@ bool DemoApp::CreateDefaultDepthStencil()
 	case DXGI_FORMAT_D24_UNORM_S8_UINT:
 		{
 			textureFormat = DXGI_FORMAT_R24G8_TYPELESS;
-			resourceFormat ~= DXGI_FORMAT_R24_UNORM_X8_TYPELESS;
+			resourceFormat = DXGI_FORMAT_R24_UNORM_X8_TYPELESS;
 		}
 		break;
 	case DXGI_FORMAT_D32_FLOAT:
@@ -446,44 +446,255 @@ bool DemoApp::CreateDefaultDepthStencil()
 	}
 	break;
 
-
 	}
+
+	D3D11_TEXTURE2D_DESC td;
+	ZeroMemory(&td, sizeof(D3D11_TEXTURE2D_DESC));
+	td.Width	= m_Width;
+	td.Height	= m_Height;
+	td.MipLevels = 1;
+	td.ArraySize = 1;
+	td.Format = textureFormat;
+	td.SampleDesc.Count = m_MultiSampleCount;
+	td.SampleDesc.Quality = m_MultiSampleQuality;
+	td.Usage = D3D11_USAGE_DEFAULT;
+	td.BindFlags = D3D11_BIND_DEPTH_STENCIL | D3D11_BIND_SHADER_RESOURCE;
+	td.CPUAccessFlags = 0;
+	td.MiscFlags = 0;
+
+	// 深度ステンシルテクスチャの生成.
+	hr = m_pDevice->CreateTexture2D(&td, NULL, &m_pDST);
+	if (FAILED(hr))
+	{
+		ELOG("Error : ID3D11Device::CreateTexture2D() Failed.");
+		return false;
+	}
+
+	D3D11_DEPTH_STENCIL_VIEW_DESC dsvd;
+	ZeroMemory(&dsvd, sizeof(D3D11_DEPTH_STENCIL_VIEW_DESC));
+	dsvd.Format = m_DepthStencilFormat;
+	if (m_MultiSampleCount == 0)
+	{
+		dsvd.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
+		dsvd.Texture2D.MipSlice = 0;
+	}
+	else {
+		dsvd.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2DMS;
+	}
+
+	hr = m_pDevice->CreateDepthStencilView(m_pDST, &dsvd, &m_pDSV);
+	if (FAILED(hr))
+	{
+		ELOG("Error : ID3D11Device::CreateDepthStencilView() Failed.");
+		return false;
+	}
+
+	D3D11_SHADER_RESOURCE_VIEW_DESC srvd;
+	ZeroMemory(&srvd, sizeof(D3D11_SHADER_RESOURCE_VIEW_DESC));
+	srvd.Format = resourceFormat;
+
+	if (m_MultiSampleCount == 0)
+	{
+		srvd.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
+		srvd.Texture2D.MostDetailedMip = 0;
+		srvd.Texture2D.MipLevels = 1;
+	}
+	else
+	{
+		srvd.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2DMS;
+	}
+
+	hr = m_pDevice->CreateShaderResourceView(m_pDST, &srvd, &m_pDSSRV);
+	if (FAILED(hr))
+	{
+		ELOG("Error : ID3D11Device::CreateShaderResourceView() Failed.");
+		return false;
+	}
+
+
 	return true;
 }
 //ReleaseDefualtDepth
 void DemoApp::ReleaseDefaultDepthStencil()
 {
+	// 深度ステンシルバッファのシェーダリソースビューを解放します.
+	if (m_pDSSRV)
+	{
+		m_pDSSRV->Release();
+		m_pDSSRV = NULL;
+	}
+
+	// 深度ステンシルビューを解放します.
+	if (m_pDSV)
+	{
+		m_pDSV->Release();
+		m_pDSV = NULL;
+	}
+
+	// 深度ステンシルテクスチャを解放します.
+	if (m_pDST)
+	{
+		m_pDST->Release();
+		m_pDST = NULL;
+	}
 
 }
 //Initialize
 bool DemoApp::OnInit()
 {
+	if (m_pNode)
+	{
+		if (!m_pNode->OnInit(m_pDevice, m_pDeviceContext, m_Width, m_Height))
+		{
+			ELOG("Error: SceneNode::OnInit() Failed.");
+			return false;
+		}
+
+		for (UINT i = 0; i < m_pNode->pChildren.size(); i++)
+		{
+			if (!m_pNode->pChildren[i]->OnInit(m_pDevice, m_pDeviceContext, m_Width, m_Height)) 
+			{
+				ELOG("Error : SceneNode::OnInit() Failed.chiled index = %d", i);
+				return false;
+			}
+		}
+
+	}
 	return true;
 }
 
 
 void DemoApp::OnTerm()
 {
-
+	if (m_pNode)
+	{
+		for (UINT i = 0; i < m_pNode->pChildren.size(); i++)
+		{
+			m_pNode->pChildren[i]->OnTerm();
+		}
+		m_pNode->OnTerm();
+	}
 }
 
 
 void DemoApp::OnRender()
 {
+	assert(m_pRTV != NULL);
+	assert(m_pDSV != NULL);
+
+	m_pDeviceContext->ClearRenderTargetView(m_pRTV, m_ClearColor);
+	m_pDeviceContext->ClearDepthStencilView(m_pDSV, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
+
+	if (m_pNode)
+	{
+		//call parent renderin process
+		m_pNode->OnRender(m_pDevice, m_pDeviceContext);
+
+		//call children render process
+		for (UINT i = 0; i < m_pNode->pChildren.size(); i++)
+		{
+			m_pNode->pChildren[i]->OnRender(m_pDevice, m_pDeviceContext);
+		}
+	}
+
+	//render result
+	m_pSwapChain->Present(0, 0);
 
 }
 
 
 void DemoApp::OnResize(const UINT w, const UINT h)
 {
+	if (m_pSwapChain && m_pDeviceContext)
+	{
+		//setting windows size
+		m_Width = w;
+		m_Height = h;
 
+		//calc aspect
+		m_AspectRatio = (FLOAT)w / (FLOAT)h;
+
+		//setting render target to NULL
+		ID3D11RenderTargetView* pNull = NULL;
+		m_pDeviceContext->OMSetRenderTargets(1, &pNull, NULL);
+
+		//release render target
+		ReleaseDefaultRenderTarget();
+
+		//release depth target
+		ReleaseDefaultRenderTarget();
+
+		HRESULT hr = S_OK;
+
+		//Resize SwapChain
+
+		hr = m_pSwapChain->ResizeBuffers(m_SwapChainCount, 0, 0, m_SwapChainFormat, 0);
+
+		if (FAILED(hr))
+		{
+			ELOG("Error : IDXGISwapChain::ResizeBuffer() Failed.");
+		}
+
+		if (!CreateDefaultRenderTarget())
+		{
+			ELOG("Error : CreateDeaultRenderTarget() Failed.");
+		}
+
+		if (!CreateDefaultDepthStencil())
+		{
+			ELOG("Error : CreateDefaultDepthStencil() Failed.");
+		}
+
+		//Setting RenderTarget to DeviceContext
+		m_pDeviceContext->OMSetRenderTargets(1, &m_pRTV, m_pDSV);
+
+
+
+		//setting viewport
+		D3D11_VIEWPORT vp;
+		vp.Width = (FLOAT)w;
+		vp.Height = (FLOAT)h;
+		vp.MinDepth = 0.0f;
+		vp.MaxDepth = 1.0f;
+		vp.TopLeftX = 0;
+		vp.TopLeftY = 0;
+
+		//setting viewport to devicecontext
+		m_pDeviceContext->RSSetViewports(1, &vp);
+
+	}
+
+	if (m_pNode)
+	{
+		//Call Resize Process
+		m_pNode->OnResize(m_pDevice, m_pDeviceContext, w, h);
+
+		for (UINT i = 0; i < m_pNode->pChildren.size(); ++i)
+		{
+			m_pNode->pChildren[i]->OnResize(m_pDevice, m_pDeviceContext, w, h);
+		}
+	}
 
 }
 
 
 int DemoApp::MainLoop()
 {
+	MSG msg = { 0 };
 
+	while (WM_QUIT != msg.message) 
+	{
+		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
+		{
+			TranslateMessage(&msg);
+			DispatchMessage(&msg);
+		}
+		else
+		{
+			OnRender();
+		}
+	}
+	return (int)msg.wParam;
 }
 
 
@@ -491,6 +702,11 @@ int DemoApp::Run()
 {
 	int retcode = -1;
 
+	if (InitApp())
+	{
+		retcode = MainLoop();
+	}
+	TermApp();
 
 	return retcode;
 }
@@ -499,6 +715,29 @@ int DemoApp::Run()
 
 LRESULT CALLBACK DemoApp::WndProc(HWND hWnd, UINT uMsg, WPARAM wp, LPARAM lp)
 {
+	PAINTSTRUCT	ps;
+	HDC			hdc;
+	switch (uMsg)
+	{
+	case WM_PAINT:
+	{
+		hdc = BeginPaint(hWnd, &ps);
+		EndPaint(hWnd, &ps);
+	}break;
+	case WM_DESTROY:
+	{
+		PostQuitMessage(0);
+	}break;
+	case WM_SIZE:
+	{
+		UINT w = (UINT)LOWORD(lp);
+		UINT h = (UINT)HIWORD(lp);
+		s_pThis->OnResize(w, h);
+	}break;
+	default:
+	{//Notthing
+	}break;
+	}
 	return DefWindowProc(hWnd, uMsg, wp, lp);
 }
 
@@ -540,7 +779,7 @@ ID3D11DepthStencilView* DemoApp::GetDepthStencilView() const
 	return m_pDSV;
 }
 
-ID3D11ShaderResourceView* DemoApp::GetDepthStencilView() const 
+ID3D11ShaderResourceView* DemoApp::GetDepthStencilShaderResourceView() const
 {
 	return m_pDSSRV;
 }

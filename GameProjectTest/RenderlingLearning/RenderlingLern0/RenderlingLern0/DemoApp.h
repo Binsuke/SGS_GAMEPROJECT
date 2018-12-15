@@ -37,7 +37,7 @@ protected:
 	D3D_FEATURE_LEVEL			m_FeatureLevel;				//function Level
 	UINT						m_MultiSampleCount;		//MultiSample Count
 	UINT						m_MultiSampleQuality;		//MultiSample Quality
-	UINT						m_MultiSampeleMaxQuality;	//MultiSample Max Quality
+	UINT						m_MultiSampleMaxQuality;	//MultiSample Max Quality
 	UINT						m_SwapChainCount;			//SwapChain Count
 	DXGI_FORMAT					m_SwapChainFormat;			//SwapChain Format
 	DXGI_FORMAT					m_DepthStencilFormat;		//DepthStencil Format
@@ -70,6 +70,10 @@ protected:
 	//D3D11 Initialize
 
 	bool InitD3D11();
+
+	// applu Initialize
+
+	bool InitApp();
 
 	//D3D11 Endfunc
 
@@ -144,7 +148,7 @@ public:
 			, multiSampleQuality(0)
 			, width(960)
 			, height(540)
-			, title(L"DemoApp")
+			, title((LPSTR)"DemoApp")
 			, clearColorR(0.392f)
 			, clearColorG(0.584f)
 			, clearColorB(0.929f)
@@ -189,6 +193,8 @@ public:
 	// get DepthStencilView
 
 	ID3D11DepthStencilView* GetDepthStencilView() const;
+
+	ID3D11ShaderResourceView* GetDepthStencilShaderResourceView() const;
 
 	//get SwapChain
 

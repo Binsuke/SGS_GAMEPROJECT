@@ -20,7 +20,7 @@ HRESULT CompileShaderFromFile(
 	DWORD dwShaderFlags = D3DCOMPILE_ENABLE_STRICTNESS;
 
 #if defined(DEBUG) || defined(_DEBUG)
-		dwShaderFlags |= D3DCOMPIKE_DEBUG;
+		dwShaderFlags |= D3DCOMPILE_DEBUG;
 #endif //defined(DEBUG) || defined(_DEBUG
 
 #if defined(NDEBUG)  || defined(_NDEBUG)

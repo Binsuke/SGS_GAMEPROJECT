@@ -38,10 +38,10 @@ DemoNode::DemoNode()
 
 // Destructor
 
-//DemoNode::~DemoNode
-//{
-//	OnTerm();
-//}
+DemoNode::~DemoNode()
+{
+	OnTerm();
+}
 
 
 //Initialize
@@ -60,11 +60,11 @@ bool DemoNode::OnInit
 	ID3DBlob* pVSBlob = NULL;
 
 	// file pass
-	hr = CompileShaderFromFile(L"../res/Simple,fx", "VSFunc", "vs_4_0", &pVSBlob);
+	hr = CompileShaderFromFile((WCHAR*)".Simple,fx", "VSFunc", "vs_4_0", &pVSBlob);
 
 	if (FAILED(hr))
 	{
-		assert(false && "CompileShaderFromFile() Failed");
+		assert(false && "CompileShaderFromFile()VS Failed");
 		return false;
 	}
 
@@ -111,11 +111,11 @@ bool DemoNode::OnInit
 		ID3DBlob* pGSBlob = NULL;
 		// filepass
 
-		hr = D3DCompileFromFile(L"../res/Simple.fx", "GSFunc", "gs_4_0", &pGSBlob);
+		hr = CompileShaderFromFile((WCHAR*)"../res/Simple.fx","GSFunc","gs_4_0", &pGSBlob);
 
 		if (FAILED(hr))
 		{
-			assert(false && "CompleteShaderFromFile() Failed");
+			assert(false && "CompleteShaderFromFile() GS Failed");
 			return false;
 		}
 
@@ -142,11 +142,11 @@ bool DemoNode::OnInit
 	{
 		ID3DBlob* pPSBlob = NULL;
 
-		hr = CompileShaderFromFile(L"../res/Simple.fs", "PSFunc", "ps_4_0", &pPSBlob);
+		hr = CompileShaderFromFile((WCHAR*)"../res/Simple.fx", "PSFunc", "ps_4_0", &pPSBlob);
 
 		if (FAILED(hr)) 
 		{
-			assert(false && "CompileShaderFromFile() Failed");
+			assert(false && "CompileShaderFromFile() PS Failed");
 			return false;
 		}
 
@@ -216,7 +216,7 @@ bool DemoNode::OnInit
 		ZeroMemory(&bd, sizeof(D3D11_BUFFER_DESC));
 
 	}
-
+	return true;
 }
 
 void DemoNode::OnTerm()
@@ -264,4 +264,48 @@ void DemoNode::OnTerm()
 	}
 
 
+}
+
+void DemoNode::OnRender(ID3D11Device* pDevice, ID3D11DeviceContext* pDeviceContext)
+{
+	//setting shader
+	pDeviceContext->VSSetShader(m_pVS, NULL, 0);
+	pDeviceContext->GSSetShader(m_pGS, NULL, 0);
+	pDeviceContext->PSSetShader(m_pPS, NULL, 0);
+
+	//setting constant buffer
+
+	ConstantBufferForPerFrame cb;
+	cb.world = m_World;
+	cb.view = m_View;
+	cb.proj = m_Proj;
+
+	//update subresource 
+	pDeviceContext->UpdateSubresource(m_pCB, 0, NULL, &cb, 0, 0);
+
+	//setting constanto bufffer to geometory
+	pDeviceContext->GSSetConstantBuffers(0, 1, &m_pCB);
+
+	//Render
+
+	pDeviceContext->Draw(3, 0);
+
+}
+
+void DemoNode::OnResize
+(
+	ID3D11Device*           pDevice,
+	ID3D11DeviceContext*    pDeviceContext,
+	const UINT              width,
+	const UINT              height
+)
+{
+	// setting projction matrix.
+	{
+		// calc aspect
+		FLOAT aspectRatio = (FLOAT)width / (FLOAT)height;
+
+		//calc projection matrix
+		m_Proj = DirectX::XMMatrixPerspectiveFovLH(DirectX::XM_PIDIV2, aspectRatio, 0.01f, 1000.0f);
+	}
 }
