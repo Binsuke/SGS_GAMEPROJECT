@@ -75,11 +75,15 @@ namespace MyModel {
 			return m_MyVertex.numVertex;
 		}
 
+		const FbxMesh * GetPolyMesh() {
+			return m_myFbx.GetMesh();
+		}
+
 		ID3D11Buffer* const* GetVertexBuffer() {
 			return &m_pVerBuffer;  //privateにした意味とは？ publicにすべきか？
 		}
-		ID3D11Buffer* GetIndexBuffer() {
-			return m_pIndBuffer; //privateにした意味とは？
+		ID3D11Buffer** GetIndexBuffer() {
+			return &m_pIndBuffer; //privateにした意味とは？
 		}
 		//const VERTEX* GetVertex() {//データは不変
 		//	if (Initializeflg) { return m_pVertices; }

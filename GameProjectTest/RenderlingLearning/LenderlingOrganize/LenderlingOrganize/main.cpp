@@ -41,7 +41,7 @@ ID3D11PixelShader *pPixelShader;		//modelのシェーダーごとに必要
 ID3D11Buffer *pConstantBuffer;			//シェーダーのコンスタントバッファーと合わせる
 
 
-#define __FBX_DEBUG__
+//#define __FBX_DEBUG__
 
 #ifndef __FBX_DEBUG__
 #include "model.h"
@@ -53,10 +53,7 @@ struct VERTEX {
 };
 #endif
 
-
-//#define __FBX_DEBUG_MY_FBX__
-
-#ifdef __FBX_DEBUG_MY_FBX__
+#ifdef __FBX_DEBUG__
 
 FbxManager *fbxManager = NULL;			//fbxの読み込みに必要
 FbxScene *fbxScene = NULL;				//fbxの読み込みに必要
@@ -64,39 +61,50 @@ FbxMesh *mesh = NULL;
 
 #endif
 
-#ifndef __FBX_DEBUG_MY_FBX__
 
-#include "fbx.h"
-
-MyFbx::MyFbx dbgFbx;
-
-#ifndef __MY_MODEL_VERTEX_INFO__
-#define __MY_MODEL_VERTEX_INFO__
-
-struct MY_VERTEX {
-	DirectX::XMFLOAT3 Pos;
-};
-
-struct MY_MODEL_VERTEX_INFO {
-	MY_VERTEX *Vertices;
-	int numVertex;
-	int numFace;
-	//int numPolyVertex;
-	MY_MODEL_VERTEX_INFO()
-		:Vertices(NULL)
-		, numVertex(0)
-		, numFace(0)
-		//, numPolyVertex(0){};
-	{};
-	~MY_MODEL_VERTEX_INFO() {
-		delete[] Vertices;
-	}
-};
-
-#endif
-
-MY_MODEL_VERTEX_INFO dbgMMVertex;
-#endif
+//#define __FBX_DEBUG_MY_FBX__
+//
+//#ifdef __FBX_DEBUG_MY_FBX__
+//
+//FbxManager *fbxManager = NULL;			//fbxの読み込みに必要
+//FbxScene *fbxScene = NULL;				//fbxの読み込みに必要
+//FbxMesh *mesh = NULL;
+//
+//#endif
+//
+//#ifndef __FBX_DEBUG_MY_FBX__
+//
+//#include "fbx.h"
+//
+//MyFbx::MyFbx dbgFbx;
+//
+//#ifndef __MY_MODEL_VERTEX_INFO__
+//#define __MY_MODEL_VERTEX_INFO__
+//
+//struct MY_VERTEX {
+//	DirectX::XMFLOAT3 Pos;
+//};
+//
+//struct MY_MODEL_VERTEX_INFO {
+//	MY_VERTEX *Vertices;
+//	int numVertex;
+//	int numFace;
+//	//int numPolyVertex;
+//	MY_MODEL_VERTEX_INFO()
+//		:Vertices(NULL)
+//		, numVertex(0)
+//		, numFace(0)
+//		//, numPolyVertex(0){};
+//	{};
+//	~MY_MODEL_VERTEX_INFO() {
+//		delete[] Vertices;
+//	}
+//};
+//
+//#endif
+//
+//MY_MODEL_VERTEX_INFO dbgMMVertex;
+//#endif
 
 #ifdef __FBX_DEBUG__
 ID3D11Buffer *VerBuffer = NULL;
@@ -157,13 +165,18 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hInstancePrev, LPSTR pCmdLine,
 			pDeviceContext->Unmap(pConstantBuffer, 0);
 
 			// 描画実行
-#ifdef __FBX_DEBUG_MY_FBX__
+//#ifdef __FBX_DEBUG_MY_FBX__
+//			pDeviceContext->DrawIndexed(mesh->GetPolygonVertexCount(), 0, 0);
+//#endif
+//
+//#ifndef __FBX_DEBUG_MY_FBX__
+//			pDeviceContext->DrawIndexed(dbgMMVertex.numFace, 0, 0);
+//#endif
+
+#ifdef __FBX_DEBUG__
 			pDeviceContext->DrawIndexed(mesh->GetPolygonVertexCount(), 0, 0);
 #endif
 
-#ifdef __FBX_DEBUG_MY_FBX__
-			pDeviceContext->DrawIndexed(dbgMMVertex.numFace, 0, 0);
-#endif
 #ifndef __FBX_DEBUG__
 			pDeviceContext->DrawIndexed(DemonModel.GetNumFace(), 0, 0);
 #endif
@@ -246,7 +259,7 @@ LRESULT CALLBACK WinProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 		DemonModel.Load("demonwalking.fbx");
 		
 #endif
-#ifdef __FBX_DEBUG_MY_FBX__
+#ifdef __FBX_DEBUG__
 
 		// FBXの読み込み
 		fbxManager = FbxManager::Create();
@@ -272,10 +285,10 @@ LRESULT CALLBACK WinProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 		}
 #endif
 
-#ifndef __FBX_DEBUG_MY_FBX__
-		dbgFbx.LoadFBX(&dbgMMVertex, "demonwalking.fbx");
-
-#endif
+//#ifndef __FBX_DEBUG_MY_FBX__
+//		dbgFbx.LoadFBX(&dbgMMVertex, "demonwalking.fbx");
+//
+//#endif
 
 #ifndef __FBX_DEBUG__
 		DemonModel.InitVertexBuffer(pDevice);
@@ -283,7 +296,7 @@ LRESULT CALLBACK WinProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 
 
 
-#ifdef __FBX_DEBUG_MY_FBX__
+#ifdef __FBX_DEBUG__
 
 		//// 頂点データ用バッファの設定 debug on
 		D3D11_BUFFER_DESC bd_vertex;
@@ -298,32 +311,26 @@ LRESULT CALLBACK WinProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 		pDevice->CreateBuffer(&bd_vertex, &data_vertex, &VerBuffer);
 #endif
 
-#ifndef __FBX_DEBUG_MY_FBX__
-
-		//// 頂点データ用バッファの設定 debug off
-		D3D11_BUFFER_DESC bd_vertex;
-		bd_vertex.ByteWidth = sizeof(VERTEX) * dbgMMVertex.numVertex;
-		bd_vertex.Usage = D3D11_USAGE_DEFAULT;
-		bd_vertex.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-		bd_vertex.CPUAccessFlags = 0;
-		bd_vertex.MiscFlags = 0;
-		bd_vertex.StructureByteStride = 0;
-		D3D11_SUBRESOURCE_DATA data_vertex;
-		data_vertex.pSysMem = dbgMMVertex.Vertices;
-		pDevice->CreateBuffer(&bd_vertex, &data_vertex, &VerBuffer);
-#endif
-
-
-
-#ifndef __FBX_DEBUG__
-			//// 頂点データ用バッファの設定 debug off
-	
-		DemonModel.InitIndexBuffer(pDevice);
-#endif
+//#ifndef __FBX_DEBUG_MY_FBX__
+//
+//		//// 頂点データ用バッファの設定 debug off
+//		D3D11_BUFFER_DESC bd_vertex;
+//		bd_vertex.ByteWidth = sizeof(VERTEX) * dbgMMVertex.numVertex;
+//		bd_vertex.Usage = D3D11_USAGE_DEFAULT;
+//		bd_vertex.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+//		bd_vertex.CPUAccessFlags = 0;
+//		bd_vertex.MiscFlags = 0;
+//		bd_vertex.StructureByteStride = 0;
+//		D3D11_SUBRESOURCE_DATA data_vertex;
+//		data_vertex.pSysMem = dbgMMVertex.Vertices;
+//		pDevice->CreateBuffer(&bd_vertex, &data_vertex, &VerBuffer);
+//#endif
 
 
 
-#ifdef __FBX_DEBUG_MY_FBX__
+
+
+#ifdef __FBX_DEBUG__
 
 		//// インデックスデータの取り出しとバッファの設定
 		D3D11_BUFFER_DESC bd_index;
@@ -338,21 +345,28 @@ LRESULT CALLBACK WinProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 		pDevice->CreateBuffer(&bd_index, &data_index, &IndBuffer);
 #endif
 
-#ifndef __FBX_DEBUG_MY_FBX__
 
-		//// インデックスデータの取り出しとバッファの設定 debugoff
-		D3D11_BUFFER_DESC bd_index;
-		bd_index.ByteWidth = sizeof(int) * dbgMMVertex.numFace;
-		bd_index.Usage = D3D11_USAGE_DEFAULT;
-		bd_index.BindFlags = D3D11_BIND_INDEX_BUFFER;
-		bd_index.CPUAccessFlags = 0;
-		bd_index.MiscFlags = 0;
-		bd_index.StructureByteStride = 0;
-		D3D11_SUBRESOURCE_DATA data_index;
-		data_index.pSysMem = dbgFbx.GetMesh()->GetPolygonVertices();
-		pDevice->CreateBuffer(&bd_index, &data_index, &IndBuffer);
+#ifndef __FBX_DEBUG__
 
+		DemonModel.InitIndexBuffer(pDevice);
 #endif
+
+
+//#ifndef __FBX_DEBUG_MY_FBX__
+//
+//		//// インデックスデータの取り出しとバッファの設定 debugoff
+//		D3D11_BUFFER_DESC bd_index;
+//		bd_index.ByteWidth = sizeof(int) * dbgMMVertex.numFace;
+//		bd_index.Usage = D3D11_USAGE_DEFAULT;
+//		bd_index.BindFlags = D3D11_BIND_INDEX_BUFFER;
+//		bd_index.CPUAccessFlags = 0;
+//		bd_index.MiscFlags = 0;
+//		bd_index.StructureByteStride = 0;
+//		D3D11_SUBRESOURCE_DATA data_index;
+//		data_index.pSysMem = dbgFbx.GetMesh()->GetPolygonVertices();
+//		pDevice->CreateBuffer(&bd_index, &data_index, &IndBuffer);
+//
+//#endif
 
 
 		// ラスタライザの設定
@@ -384,7 +398,7 @@ LRESULT CALLBACK WinProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 
 #ifndef __FBX_DEBUG__		//debugoff
 		pDeviceContext->IASetVertexBuffers(0, 1, DemonModel.GetVertexBuffer(), &stride, &offset);
-		pDeviceContext->IASetIndexBuffer(DemonModel.GetIndexBuffer(), DXGI_FORMAT_R32_UINT, 0);
+		pDeviceContext->IASetIndexBuffer(*(DemonModel.GetIndexBuffer()), DXGI_FORMAT_R32_UINT, 0);
 #endif
 
 		pDeviceContext->IASetInputLayout(pVertexLayout);

@@ -2,28 +2,42 @@
 
 bool MyFbx::MyFbx::LoadFBX(MY_MODEL_VERTEX_INFO * const pModelInfo, FbxString const &FileName) {
 	m_pfbxManager = FbxManager::Create();
-	if (m_pfbxManager == NULL) {
-		return false;
+	if (m_pfbxManager == false) {
+		//m_pfbxManager->GetLastErrorString();
+		MessageBox(NULL, "FBXManeger Create: Failed", "FbxCreateError", 0);
+		PostQuitMessage(0);
 	}
 	m_pfbxScene = FbxScene::Create(m_pfbxManager, "fbxscene");
-	if (m_pfbxScene == NULL) {
-		return false;
+	if (m_pfbxScene == false) {
+		MessageBox(NULL, "FBXScene Create: Failed", "FbxCreateError", 0);
+		PostQuitMessage(0);
 	}
 	
 	m_pfbxImporter = FbxImporter::Create(m_pfbxManager, "imp");
 	
-	if (m_pfbxImporter == NULL) {
-		return false;
+	if (m_pfbxImporter == false) {
+		MessageBox(NULL, "FBXImporter Create: Failed", "FbxCreateError", 0);
+		PostQuitMessage(0);
+
 	}
 
-	m_pfbxImporter->Initialize(FileName.Buffer(), -1, m_pfbxManager->GetIOSettings());
-	m_pfbxImporter->Import(m_pfbxScene);
+	if (!m_pfbxImporter->Initialize(FileName.Buffer(), -1, m_pfbxManager->GetIOSettings()))
+	{
+		MessageBox(NULL, "FbxImporterInitialize : Failed", "Importer Error", 0);
+		PostQuitMessage(0);
+	}
+
+
+	if (!m_pfbxImporter->Import(m_pfbxScene)) {
+		MessageBox(NULL, "FbxImport : Failed", "Import Error", 0);
+		PostQuitMessage(0);
+	}
+	
 	m_pfbxImporter->Destroy();
 
 	//for (int i = 0; i < m_pfbxScene->GetRootNode()->GetChildCount(); i++) {
-	if (!RecursiveNode(m_pfbxScene->GetRootNode())) {
-		return false;
-	}
+	RecursiveNode(m_pfbxScene->GetRootNode());
+
 	//pModel->InitVertices(m_pMesh->GetControlPointsCount());
 	int numVertex = m_pMesh->GetControlPointsCount();
 	int numFace = m_pMesh->GetPolygonVertexCount();

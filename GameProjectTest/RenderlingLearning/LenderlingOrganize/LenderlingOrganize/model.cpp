@@ -27,7 +27,11 @@ bool MyModel::Model::InitVertexBuffer(ID3D11Device *inDevice) {
 		bd_vertex.StructureByteStride = 0;
 		D3D11_SUBRESOURCE_DATA data_vertex;
 		data_vertex.pSysMem = m_MyVertex.Vertices;
-		inDevice->CreateBuffer(&bd_vertex, &data_vertex, &m_pVerBuffer);
+		if (inDevice->CreateBuffer(&bd_vertex, &data_vertex, &m_pVerBuffer) != S_OK)
+		{
+			MessageBox(NULL, "InitVertexBufferError", "InitError", 0);
+		}
+		
 		InitVertexBufferflg = true;
 	}
 	return true;
@@ -44,7 +48,10 @@ bool MyModel::Model::InitIndexBuffer(ID3D11Device *inDevice) {
 		bd_index.StructureByteStride = 0;
 		D3D11_SUBRESOURCE_DATA data_index;
 		data_index.pSysMem = m_myFbx.GetMesh()->GetPolygonVertices();
-		inDevice->CreateBuffer(&bd_index, &data_index, &m_pIndBuffer);
+		if (inDevice->CreateBuffer(&bd_index, &data_index, &m_pIndBuffer) != S_OK)
+		{
+			MessageBox(NULL, "InitIndexBufferError", "InitError", 0);
+		}
 		InitIndexBufferflg = true;
 	}
 	return true;

@@ -1,6 +1,7 @@
 #pragma once
 #include <fbxsdk.h>
 #include <DirectXMath.h>
+#include <Windows.h>
 //#include <d3d11.h>
 //#include "model.h"
 
