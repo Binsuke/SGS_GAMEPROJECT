@@ -54,7 +54,7 @@ struct VERTEX {
 #endif
 
 
-#define __FBX_DEBUG_MY_FBX__
+//#define __FBX_DEBUG_MY_FBX__
 
 #ifdef __FBX_DEBUG_MY_FBX__
 
@@ -72,6 +72,11 @@ MyFbx::MyFbx dbgFbx;
 
 #ifndef __MY_MODEL_VERTEX_INFO__
 #define __MY_MODEL_VERTEX_INFO__
+
+struct MY_VERTEX {
+	DirectX::XMFLOAT3 Pos;
+};
+
 struct MY_MODEL_VERTEX_INFO {
 	MY_VERTEX *Vertices;
 	int numVertex;
@@ -87,29 +92,10 @@ struct MY_MODEL_VERTEX_INFO {
 		delete[] Vertices;
 	}
 };
+
+#endif
 
 MY_MODEL_VERTEX_INFO dbgMMVertex;
-#endif
-
-#endif
-#ifndef __MY_MODEL_VERTEX_INFO__
-#define __MY_MODEL_VERTEX_INFO__
-struct MY_MODEL_VERTEX_INFO {
-	MY_VERTEX *Vertices;
-	int numVertex;
-	int numFace;
-	//int numPolyVertex;
-	MY_MODEL_VERTEX_INFO()
-		:Vertices(NULL)
-		, numVertex(0)
-		, numFace(0)
-		//, numPolyVertex(0){};
-	{};
-	~MY_MODEL_VERTEX_INFO() {
-		delete[] Vertices;
-	}
-};
-
 #endif
 
 #ifdef __FBX_DEBUG__
@@ -171,8 +157,12 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hInstancePrev, LPSTR pCmdLine,
 			pDeviceContext->Unmap(pConstantBuffer, 0);
 
 			// 描画実行
-#ifdef __FBX_DEBUG__
+#ifdef __FBX_DEBUG_MY_FBX__
 			pDeviceContext->DrawIndexed(mesh->GetPolygonVertexCount(), 0, 0);
+#endif
+
+#ifdef __FBX_DEBUG_MY_FBX__
+			pDeviceContext->DrawIndexed(dbgMMVertex.numFace, 0, 0);
 #endif
 #ifndef __FBX_DEBUG__
 			pDeviceContext->DrawIndexed(DemonModel.GetNumFace(), 0, 0);
@@ -283,7 +273,7 @@ LRESULT CALLBACK WinProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 #endif
 
 #ifndef __FBX_DEBUG_MY_FBX__
-		//dbgFbx
+		dbgFbx.LoadFBX(&dbgMMVertex, "demonwalking.fbx");
 
 #endif
 
@@ -305,6 +295,21 @@ LRESULT CALLBACK WinProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 		bd_vertex.StructureByteStride = 0;
 		D3D11_SUBRESOURCE_DATA data_vertex;
 		data_vertex.pSysMem = vertices;
+		pDevice->CreateBuffer(&bd_vertex, &data_vertex, &VerBuffer);
+#endif
+
+#ifndef __FBX_DEBUG_MY_FBX__
+
+		//// 頂点データ用バッファの設定 debug off
+		D3D11_BUFFER_DESC bd_vertex;
+		bd_vertex.ByteWidth = sizeof(VERTEX) * dbgMMVertex.numVertex;
+		bd_vertex.Usage = D3D11_USAGE_DEFAULT;
+		bd_vertex.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+		bd_vertex.CPUAccessFlags = 0;
+		bd_vertex.MiscFlags = 0;
+		bd_vertex.StructureByteStride = 0;
+		D3D11_SUBRESOURCE_DATA data_vertex;
+		data_vertex.pSysMem = dbgMMVertex.Vertices;
 		pDevice->CreateBuffer(&bd_vertex, &data_vertex, &VerBuffer);
 #endif
 
@@ -331,6 +336,22 @@ LRESULT CALLBACK WinProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 		D3D11_SUBRESOURCE_DATA data_index;
 		data_index.pSysMem = mesh->GetPolygonVertices();
 		pDevice->CreateBuffer(&bd_index, &data_index, &IndBuffer);
+#endif
+
+#ifndef __FBX_DEBUG_MY_FBX__
+
+		//// インデックスデータの取り出しとバッファの設定 debugoff
+		D3D11_BUFFER_DESC bd_index;
+		bd_index.ByteWidth = sizeof(int) * dbgMMVertex.numFace;
+		bd_index.Usage = D3D11_USAGE_DEFAULT;
+		bd_index.BindFlags = D3D11_BIND_INDEX_BUFFER;
+		bd_index.CPUAccessFlags = 0;
+		bd_index.MiscFlags = 0;
+		bd_index.StructureByteStride = 0;
+		D3D11_SUBRESOURCE_DATA data_index;
+		data_index.pSysMem = dbgFbx.GetMesh()->GetPolygonVertices();
+		pDevice->CreateBuffer(&bd_index, &data_index, &IndBuffer);
+
 #endif
 
 
@@ -397,9 +418,12 @@ LRESULT CALLBACK WinProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 		pConstantBuffer->Release();
 		
 #ifdef __FBX_DEBUG__
-
 		VerBuffer->Release();
+#endif
 
+#ifdef __FBX_DEBUG_MY_FBX__
+
+		
 		fbxScene->Destroy();
 		fbxManager->Destroy();
 
