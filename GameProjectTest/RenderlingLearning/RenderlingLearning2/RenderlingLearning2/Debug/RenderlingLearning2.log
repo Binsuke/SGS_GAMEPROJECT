@@ -1,0 +1,255 @@
+﻿  main.cpp
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(12): warning C4005: 'DXGI_STATUS_OCCLUDED': マクロが再定義されました。
+  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55460): note: 'DXGI_STATUS_OCCLUDED' の以前の定義を確認してください
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(13): warning C4005: 'DXGI_STATUS_CLIPPED': マクロが再定義されました。
+  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55469): note: 'DXGI_STATUS_CLIPPED' の以前の定義を確認してください
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(14): warning C4005: 'DXGI_STATUS_NO_REDIRECTION': マクロが再定義されました。
+  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55478): note: 'DXGI_STATUS_NO_REDIRECTION' の以前の定義を確認してください
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(15): warning C4005: 'DXGI_STATUS_NO_DESKTOP_ACCESS': マクロが再定義されました。
+  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55487): note: 'DXGI_STATUS_NO_DESKTOP_ACCESS' の以前の定義を確認してください
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(16): warning C4005: 'DXGI_STATUS_GRAPHICS_VIDPN_SOURCE_IN_USE': マクロが再定義されました。
+  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55496): note: 'DXGI_STATUS_GRAPHICS_VIDPN_SOURCE_IN_USE' の以前の定義を確認してください
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(17): warning C4005: 'DXGI_STATUS_MODE_CHANGED': マクロが再定義されました。
+  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55505): note: 'DXGI_STATUS_MODE_CHANGED' の以前の定義を確認してください
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(18): warning C4005: 'DXGI_STATUS_MODE_CHANGE_IN_PROGRESS': マクロが再定義されました。
+  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55514): note: 'DXGI_STATUS_MODE_CHANGE_IN_PROGRESS' の以前の定義を確認してください
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(21): warning C4005: 'DXGI_ERROR_INVALID_CALL': マクロが再定義されました。
+  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55529): note: 'DXGI_ERROR_INVALID_CALL' の以前の定義を確認してください
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(22): warning C4005: 'DXGI_ERROR_NOT_FOUND': マクロが再定義されました。
+  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55538): note: 'DXGI_ERROR_NOT_FOUND' の以前の定義を確認してください
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(23): warning C4005: 'DXGI_ERROR_MORE_DATA': マクロが再定義されました。
+  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55547): note: 'DXGI_ERROR_MORE_DATA' の以前の定義を確認してください
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(24): warning C4005: 'DXGI_ERROR_UNSUPPORTED': マクロが再定義されました。
+  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55556): note: 'DXGI_ERROR_UNSUPPORTED' の以前の定義を確認してください
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(25): warning C4005: 'DXGI_ERROR_DEVICE_REMOVED': マクロが再定義されました。
+  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55565): note: 'DXGI_ERROR_DEVICE_REMOVED' の以前の定義を確認してください
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(26): warning C4005: 'DXGI_ERROR_DEVICE_HUNG': マクロが再定義されました。
+  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55574): note: 'DXGI_ERROR_DEVICE_HUNG' の以前の定義を確認してください
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(27): warning C4005: 'DXGI_ERROR_DEVICE_RESET': マクロが再定義されました。
+  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55584): note: 'DXGI_ERROR_DEVICE_RESET' の以前の定義を確認してください
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(28): warning C4005: 'DXGI_ERROR_WAS_STILL_DRAWING': マクロが再定義されました。
+  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55593): note: 'DXGI_ERROR_WAS_STILL_DRAWING' の以前の定義を確認してください
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(29): warning C4005: 'DXGI_ERROR_FRAME_STATISTICS_DISJOINT': マクロが再定義されました。
+  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55603): note: 'DXGI_ERROR_FRAME_STATISTICS_DISJOINT' の以前の定義を確認してください
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(30): warning C4005: 'DXGI_ERROR_GRAPHICS_VIDPN_SOURCE_IN_USE': マクロが再定義されました。
+  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55612): note: 'DXGI_ERROR_GRAPHICS_VIDPN_SOURCE_IN_USE' の以前の定義を確認してください
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(31): warning C4005: 'DXGI_ERROR_DRIVER_INTERNAL_ERROR': マクロが再定義されました。
+  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55622): note: 'DXGI_ERROR_DRIVER_INTERNAL_ERROR' の以前の定義を確認してください
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(32): warning C4005: 'DXGI_ERROR_NONEXCLUSIVE': マクロが再定義されました。
+  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55631): note: 'DXGI_ERROR_NONEXCLUSIVE' の以前の定義を確認してください
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(33): warning C4005: 'DXGI_ERROR_NOT_CURRENTLY_AVAILABLE': マクロが再定義されました。
+  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55640): note: 'DXGI_ERROR_NOT_CURRENTLY_AVAILABLE' の以前の定義を確認してください
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(34): warning C4005: 'DXGI_ERROR_REMOTE_CLIENT_DISCONNECTED': マクロが再定義されました。
+  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55650): note: 'DXGI_ERROR_REMOTE_CLIENT_DISCONNECTED' の以前の定義を確認してください
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(35): warning C4005: 'DXGI_ERROR_REMOTE_OUTOFMEMORY': マクロが再定義されました。
+  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55659): note: 'DXGI_ERROR_REMOTE_OUTOFMEMORY' の以前の定義を確認してください
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\d3d11.h(917): warning C4005: 'D3D11_ERROR_TOO_MANY_UNIQUE_STATE_OBJECTS': マクロが再定義されました。
+  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55923): note: 'D3D11_ERROR_TOO_MANY_UNIQUE_STATE_OBJECTS' の以前の定義を確認してください
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\d3d11.h(918): warning C4005: 'D3D11_ERROR_FILE_NOT_FOUND': マクロが再定義されました。
+  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55932): note: 'D3D11_ERROR_FILE_NOT_FOUND' の以前の定義を確認してください
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\d3d11.h(919): warning C4005: 'D3D11_ERROR_TOO_MANY_UNIQUE_VIEW_OBJECTS': マクロが再定義されました。
+  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55942): note: 'D3D11_ERROR_TOO_MANY_UNIQUE_VIEW_OBJECTS' の以前の定義を確認してください
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\d3d11.h(920): warning C4005: 'D3D11_ERROR_DEFERRED_CONTEXT_MAP_WITHOUT_INITIAL_DISCARD': マクロが再定義されました。
+  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55951): note: 'D3D11_ERROR_DEFERRED_CONTEXT_MAP_WITHOUT_INITIAL_DISCARD' の以前の定義を確認してください
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\d3d10.h(608): warning C4005: 'D3D10_ERROR_TOO_MANY_UNIQUE_STATE_OBJECTS': マクロが再定義されました。
+  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55899): note: 'D3D10_ERROR_TOO_MANY_UNIQUE_STATE_OBJECTS' の以前の定義を確認してください
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\d3d10.h(609): warning C4005: 'D3D10_ERROR_FILE_NOT_FOUND': マクロが再定義されました。
+  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55908): note: 'D3D10_ERROR_FILE_NOT_FOUND' の以前の定義を確認してください
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.h(59): error C2143: 構文エラー: ';' が '*' の前にありません。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.h(59): error C4430: 型指定子がありません - int と仮定しました。メモ: C++ は int を既定値としてサポートしていません
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.h(59): error C2238: ';' の前に無効なトークンがあります。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.h(60): error C2143: 構文エラー: ';' が '*' の前にありません。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.h(60): error C4430: 型指定子がありません - int と仮定しました。メモ: C++ は int を既定値としてサポートしていません
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.h(60): error C2238: ';' の前に無効なトークンがあります。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.h(61): error C2143: 構文エラー: ';' が '*' の前にありません。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.h(61): error C4430: 型指定子がありません - int と仮定しました。メモ: C++ は int を既定値としてサポートしていません
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.h(61): error C2238: ';' の前に無効なトークンがあります。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.h(82): error C2143: 構文エラー: ';' が '*' の前にありません。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.h(82): error C4430: 型指定子がありません - int と仮定しました。メモ: C++ は int を既定値としてサポートしていません
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.h(82): error C2238: ';' の前に無効なトークンがあります。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\main.cpp(79): error C2440: '=': 'WCHAR [22]' から 'LPCSTR' に変換できません。
+  d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\main.cpp(79): note: 指示された型は関連がありません。変換には reinterpret_cast、C スタイル キャストまたは関数スタイルのキャストが必要です。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\main.cpp(83): error C2664: 'HWND CreateWindowExA(DWORD,LPCSTR,LPCSTR,DWORD,int,int,int,int,HWND,HMENU,HINSTANCE,LPVOID)': 引数 2 を 'WCHAR [22]' から 'LPCSTR' へ変換できません。
+  d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\main.cpp(84): note: 指示された型は関連がありません。変換には reinterpret_cast、C スタイル キャストまたは関数スタイルのキャストが必要です。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\main.cpp(205): error C2664: 'HRESULT D3DX11CompileFromFileA(LPCSTR,const D3D10_SHADER_MACRO *,LPD3D10INCLUDE,LPCSTR,LPCSTR,UINT,UINT,ID3DX11ThreadPump *,ID3D10Blob **,ID3D10Blob **,HRESULT *)': 引数 1 を 'const wchar_t [31]' から 'LPCSTR' へ変換できません。
+  d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\main.cpp(205): note: 指示された型は関連がありません。変換には reinterpret_cast、C スタイル キャストまたは関数スタイルのキャストが必要です。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\main.cpp(207): error C2664: 'int MessageBoxA(HWND,LPCSTR,LPCSTR,UINT)': 引数 2 を 'const wchar_t [11]' から 'LPCSTR' へ変換できません。
+  d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\main.cpp(207): note: 指示された型は関連がありません。変換には reinterpret_cast、C スタイル キャストまたは関数スタイルのキャストが必要です。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\main.cpp(215): error C2664: 'int MessageBoxA(HWND,LPCSTR,LPCSTR,UINT)': 引数 2 を 'const wchar_t [16]' から 'LPCSTR' へ変換できません。
+  d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\main.cpp(215): note: 指示された型は関連がありません。変換には reinterpret_cast、C スタイル キャストまたは関数スタイルのキャストが必要です。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\main.cpp(234): error C2664: 'HRESULT D3DX11CompileFromFileA(LPCSTR,const D3D10_SHADER_MACRO *,LPD3D10INCLUDE,LPCSTR,LPCSTR,UINT,UINT,ID3DX11ThreadPump *,ID3D10Blob **,ID3D10Blob **,HRESULT *)': 引数 1 を 'const wchar_t [31]' から 'LPCSTR' へ変換できません。
+  d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\main.cpp(234): note: 指示された型は関連がありません。変換には reinterpret_cast、C スタイル キャストまたは関数スタイルのキャストが必要です。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\main.cpp(236): error C2664: 'int MessageBoxA(HWND,LPCSTR,LPCSTR,UINT)': 引数 2 を 'const wchar_t [11]' から 'LPCSTR' へ変換できません。
+  d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\main.cpp(236): note: 指示された型は関連がありません。変換には reinterpret_cast、C スタイル キャストまたは関数スタイルのキャストが必要です。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\main.cpp(243): error C2664: 'int MessageBoxA(HWND,LPCSTR,LPCSTR,UINT)': 引数 2 を 'const wchar_t [14]' から 'LPCSTR' へ変換できません。
+  d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\main.cpp(243): note: 指示された型は関連がありません。変換には reinterpret_cast、C スタイル キャストまたは関数スタイルのキャストが必要です。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\main.cpp(299): error C2664: 'HRESULT MY_MESH::CreateFromFBX(CHAR *)': 引数 1 を 'const char [10]' から 'CHAR *' へ変換できません。
+  d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\main.cpp(299): note: 文字列リテラルからの変換では const 修飾子が失われます (/Zc:strictStrings を参照)
+  MyMesh.cpp
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(12): warning C4005: 'DXGI_STATUS_OCCLUDED': マクロが再定義されました。
+  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55460): note: 'DXGI_STATUS_OCCLUDED' の以前の定義を確認してください
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(13): warning C4005: 'DXGI_STATUS_CLIPPED': マクロが再定義されました。
+  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55469): note: 'DXGI_STATUS_CLIPPED' の以前の定義を確認してください
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(14): warning C4005: 'DXGI_STATUS_NO_REDIRECTION': マクロが再定義されました。
+  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55478): note: 'DXGI_STATUS_NO_REDIRECTION' の以前の定義を確認してください
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(15): warning C4005: 'DXGI_STATUS_NO_DESKTOP_ACCESS': マクロが再定義されました。
+  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55487): note: 'DXGI_STATUS_NO_DESKTOP_ACCESS' の以前の定義を確認してください
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(16): warning C4005: 'DXGI_STATUS_GRAPHICS_VIDPN_SOURCE_IN_USE': マクロが再定義されました。
+  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55496): note: 'DXGI_STATUS_GRAPHICS_VIDPN_SOURCE_IN_USE' の以前の定義を確認してください
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(17): warning C4005: 'DXGI_STATUS_MODE_CHANGED': マクロが再定義されました。
+  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55505): note: 'DXGI_STATUS_MODE_CHANGED' の以前の定義を確認してください
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(18): warning C4005: 'DXGI_STATUS_MODE_CHANGE_IN_PROGRESS': マクロが再定義されました。
+  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55514): note: 'DXGI_STATUS_MODE_CHANGE_IN_PROGRESS' の以前の定義を確認してください
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(21): warning C4005: 'DXGI_ERROR_INVALID_CALL': マクロが再定義されました。
+  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55529): note: 'DXGI_ERROR_INVALID_CALL' の以前の定義を確認してください
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(22): warning C4005: 'DXGI_ERROR_NOT_FOUND': マクロが再定義されました。
+  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55538): note: 'DXGI_ERROR_NOT_FOUND' の以前の定義を確認してください
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(23): warning C4005: 'DXGI_ERROR_MORE_DATA': マクロが再定義されました。
+  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55547): note: 'DXGI_ERROR_MORE_DATA' の以前の定義を確認してください
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(24): warning C4005: 'DXGI_ERROR_UNSUPPORTED': マクロが再定義されました。
+  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55556): note: 'DXGI_ERROR_UNSUPPORTED' の以前の定義を確認してください
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(25): warning C4005: 'DXGI_ERROR_DEVICE_REMOVED': マクロが再定義されました。
+  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55565): note: 'DXGI_ERROR_DEVICE_REMOVED' の以前の定義を確認してください
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(26): warning C4005: 'DXGI_ERROR_DEVICE_HUNG': マクロが再定義されました。
+  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55574): note: 'DXGI_ERROR_DEVICE_HUNG' の以前の定義を確認してください
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(27): warning C4005: 'DXGI_ERROR_DEVICE_RESET': マクロが再定義されました。
+  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55584): note: 'DXGI_ERROR_DEVICE_RESET' の以前の定義を確認してください
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(28): warning C4005: 'DXGI_ERROR_WAS_STILL_DRAWING': マクロが再定義されました。
+  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55593): note: 'DXGI_ERROR_WAS_STILL_DRAWING' の以前の定義を確認してください
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(29): warning C4005: 'DXGI_ERROR_FRAME_STATISTICS_DISJOINT': マクロが再定義されました。
+  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55603): note: 'DXGI_ERROR_FRAME_STATISTICS_DISJOINT' の以前の定義を確認してください
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(30): warning C4005: 'DXGI_ERROR_GRAPHICS_VIDPN_SOURCE_IN_USE': マクロが再定義されました。
+  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55612): note: 'DXGI_ERROR_GRAPHICS_VIDPN_SOURCE_IN_USE' の以前の定義を確認してください
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(31): warning C4005: 'DXGI_ERROR_DRIVER_INTERNAL_ERROR': マクロが再定義されました。
+  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55622): note: 'DXGI_ERROR_DRIVER_INTERNAL_ERROR' の以前の定義を確認してください
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(32): warning C4005: 'DXGI_ERROR_NONEXCLUSIVE': マクロが再定義されました。
+  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55631): note: 'DXGI_ERROR_NONEXCLUSIVE' の以前の定義を確認してください
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(33): warning C4005: 'DXGI_ERROR_NOT_CURRENTLY_AVAILABLE': マクロが再定義されました。
+  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55640): note: 'DXGI_ERROR_NOT_CURRENTLY_AVAILABLE' の以前の定義を確認してください
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(34): warning C4005: 'DXGI_ERROR_REMOTE_CLIENT_DISCONNECTED': マクロが再定義されました。
+  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55650): note: 'DXGI_ERROR_REMOTE_CLIENT_DISCONNECTED' の以前の定義を確認してください
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\dxgitype.h(35): warning C4005: 'DXGI_ERROR_REMOTE_OUTOFMEMORY': マクロが再定義されました。
+  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55659): note: 'DXGI_ERROR_REMOTE_OUTOFMEMORY' の以前の定義を確認してください
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\d3d11.h(917): warning C4005: 'D3D11_ERROR_TOO_MANY_UNIQUE_STATE_OBJECTS': マクロが再定義されました。
+  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55923): note: 'D3D11_ERROR_TOO_MANY_UNIQUE_STATE_OBJECTS' の以前の定義を確認してください
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\d3d11.h(918): warning C4005: 'D3D11_ERROR_FILE_NOT_FOUND': マクロが再定義されました。
+  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55932): note: 'D3D11_ERROR_FILE_NOT_FOUND' の以前の定義を確認してください
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\d3d11.h(919): warning C4005: 'D3D11_ERROR_TOO_MANY_UNIQUE_VIEW_OBJECTS': マクロが再定義されました。
+  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55942): note: 'D3D11_ERROR_TOO_MANY_UNIQUE_VIEW_OBJECTS' の以前の定義を確認してください
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\d3d11.h(920): warning C4005: 'D3D11_ERROR_DEFERRED_CONTEXT_MAP_WITHOUT_INITIAL_DISCARD': マクロが再定義されました。
+  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55951): note: 'D3D11_ERROR_DEFERRED_CONTEXT_MAP_WITHOUT_INITIAL_DISCARD' の以前の定義を確認してください
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\d3d10.h(608): warning C4005: 'D3D10_ERROR_TOO_MANY_UNIQUE_STATE_OBJECTS': マクロが再定義されました。
+  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55899): note: 'D3D10_ERROR_TOO_MANY_UNIQUE_STATE_OBJECTS' の以前の定義を確認してください
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\d3d10.h(609): warning C4005: 'D3D10_ERROR_FILE_NOT_FOUND': マクロが再定義されました。
+  c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55908): note: 'D3D10_ERROR_FILE_NOT_FOUND' の以前の定義を確認してください
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.h(59): error C2143: 構文エラー: ';' が '*' の前にありません。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.h(59): error C4430: 型指定子がありません - int と仮定しました。メモ: C++ は int を既定値としてサポートしていません
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.h(59): error C2238: ';' の前に無効なトークンがあります。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.h(60): error C2143: 構文エラー: ';' が '*' の前にありません。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.h(60): error C4430: 型指定子がありません - int と仮定しました。メモ: C++ は int を既定値としてサポートしていません
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.h(60): error C2238: ';' の前に無効なトークンがあります。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.h(61): error C2143: 構文エラー: ';' が '*' の前にありません。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.h(61): error C4430: 型指定子がありません - int と仮定しました。メモ: C++ は int を既定値としてサポートしていません
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.h(61): error C2238: ';' の前に無効なトークンがあります。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.h(82): error C2143: 構文エラー: ';' が '*' の前にありません。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.h(82): error C4430: 型指定子がありません - int と仮定しました。メモ: C++ は int を既定値としてサポートしていません
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.h(82): error C2238: ';' の前に無効なトークンがあります。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.cpp(25): warning C4018: '<': signed と unsigned の数値を比較しようとしました。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.cpp(38): error C2065: 'm_pSdkManager': 定義されていない識別子です。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.cpp(38): error C2653: 'KFbxSdkManager': 識別子がクラス名でも名前空間名でもありません。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.cpp(38): error C3861: 'Create': 識別子が見つかりませんでした
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.cpp(40): error C2065: 'm_pImporter': 定義されていない識別子です。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.cpp(40): error C2653: 'KFbxImporter': 識別子がクラス名でも名前空間名でもありません。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.cpp(40): error C2065: 'm_pSdkManager': 定義されていない識別子です。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.cpp(40): error C3861: 'Create': 識別子が見つかりませんでした
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.cpp(43): error C2065: 'm_pImporter': 定義されていない識別子です。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.cpp(45): error C2065: 'm_pmyScene': 定義されていない識別子です。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.cpp(45): error C2653: 'KFbxScene': 識別子がクラス名でも名前空間名でもありません。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.cpp(45): error C2065: 'm_pSdkManager': 定義されていない識別子です。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.cpp(45): error C3861: 'Create': 識別子が見つかりませんでした
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.cpp(47): error C2065: 'm_pImporter': 定義されていない識別子です。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.cpp(47): error C2065: 'm_pmyScene': 定義されていない識別子です。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.cpp(56): error C2065: 'IOSREF': 定義されていない識別子です。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.cpp(57): error C2065: 'm_pSdkManager': 定義されていない識別子です。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.cpp(67): error C2664: 'int MessageBoxA(HWND,LPCSTR,LPCSTR,UINT)': 引数 2 を 'const wchar_t [13]' から 'LPCSTR' へ変換できません。
+  d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.cpp(67): note: 指示された型は関連がありません。変換には reinterpret_cast、C スタイル キャストまたは関数スタイルのキャストが必要です。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.cpp(72): error C2065: 'KFbxNode': 定義されていない識別子です。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.cpp(72): error C2065: 'pRootNode': 定義されていない識別子です。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.cpp(72): error C2065: 'm_pmyScene': 定義されていない識別子です。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.cpp(73): error C2065: 'KFbxMesh': 定義されていない識別子です。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.cpp(73): error C2065: 'pFbxMesh': 定義されていない識別子です。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.cpp(74): error C2653: 'KFbxNodeAttribute': 識別子がクラス名でも名前空間名でもありません。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.cpp(74): error C2065: 'EAttributeType': 定義されていない識別子です。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.cpp(74): error C2146: 構文エラー: ';' が、識別子 'type' の前に必要です。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.cpp(74): error C2065: 'type': 定義されていない識別子です。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.cpp(76): error C2065: 'KFbxNodeAttribute': 定義されていない識別子です。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.cpp(76): error C2065: 'pAttr': 定義されていない識別子です。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.cpp(76): error C2065: 'pRootNode': 定義されていない識別子です。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.cpp(77): error C2065: 'pAttr': 定義されていない識別子です。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.cpp(79): error C2065: 'type': 定義されていない識別子です。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.cpp(79): error C2065: 'pAttr': 定義されていない識別子です。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.cpp(80): error C2065: 'type': 定義されていない識別子です。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.cpp(80): error C2653: 'KFbxNodeAttribute': 識別子がクラス名でも名前空間名でもありません。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.cpp(80): error C2065: 'eMESH': 定義されていない識別子です。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.cpp(82): error C2065: 'pFbxMesh': 定義されていない識別子です。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.cpp(82): error C2065: 'pRootNode': 定義されていない識別子です。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.cpp(87): error C2065: 'pRootNode': 定義されていない識別子です。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.cpp(88): error C2065: 'KFbxNode': 定義されていない識別子です。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.cpp(88): error C2065: 'pChildNode': 定義されていない識別子です。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.cpp(88): error C2065: 'pRootNode': 定義されていない識別子です。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.cpp(89): error C2065: 'pAttr': 定義されていない識別子です。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.cpp(89): error C2065: 'pChildNode': 定義されていない識別子です。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.cpp(90): error C2065: 'type': 定義されていない識別子です。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.cpp(90): error C2065: 'pAttr': 定義されていない識別子です。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.cpp(91): error C2065: 'type': 定義されていない識別子です。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.cpp(91): error C2653: 'KFbxNodeAttribute': 識別子がクラス名でも名前空間名でもありません。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.cpp(91): error C2065: 'eMESH': 定義されていない識別子です。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.cpp(93): error C2065: 'pFbxMesh': 定義されていない識別子です。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.cpp(93): error C2065: 'pChildNode': 定義されていない識別子です。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.cpp(97): error C2664: 'int MessageBoxA(HWND,LPCSTR,LPCSTR,UINT)': 引数 2 を 'const wchar_t [12]' から 'LPCSTR' へ変換できません。
+  d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.cpp(97): note: 指示された型は関連がありません。変換には reinterpret_cast、C スタイル キャストまたは関数スタイルのキャストが必要です。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.cpp(101): error C2065: 'pFbxMesh': 定義されていない識別子です。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.cpp(102): error C2065: 'pFbxMesh': 定義されていない識別子です。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.cpp(103): error C2065: 'pFbxMesh': 定義されていない識別子です。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.cpp(108): error C2664: 'int MessageBoxA(HWND,LPCSTR,LPCSTR,UINT)': 引数 2 を 'const wchar_t [59]' から 'LPCSTR' へ変換できません。
+  d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.cpp(108): note: 指示された型は関連がありません。変換には reinterpret_cast、C スタイル キャストまたは関数スタイルのキャストが必要です。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.cpp(116): error C2065: 'KFbxVector4': 定義されていない識別子です。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.cpp(116): error C2065: 'pCoord': 定義されていない識別子です。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.cpp(116): error C2065: 'pFbxMesh': 定義されていない識別子です。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.cpp(120): error C2065: 'pCoord': 定義されていない識別子です。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.cpp(121): error C2065: 'pCoord': 定義されていない識別子です。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.cpp(122): error C2065: 'pCoord': 定義されていない識別子です。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.cpp(125): error C2065: 'pFbxMesh': 定義されていない識別子です。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.cpp(129): error C2065: 'KFbxVector4': 定義されていない識別子です。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.cpp(129): error C2146: 構文エラー: ';' が、識別子 'Normal' の前に必要です。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.cpp(129): error C2065: 'Normal': 定義されていない識別子です。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.cpp(130): error C2065: 'i': 定義されていない識別子です。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.cpp(132): error C2065: 'pFbxMesh': 定義されていない識別子です。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.cpp(132): error C2065: 'i': 定義されていない識別子です。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.cpp(140): error C2065: 'pFbxMesh': 定義されていない識別子です。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.cpp(140): error C2065: 'i': 定義されていない識別子です。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.cpp(140): error C2065: 'Normal': 定義されていない識別子です。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.cpp(141): error C2065: 'Normal': 定義されていない識別子です。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.cpp(142): error C2065: 'Normal': 定義されていない識別子です。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.cpp(143): error C2065: 'Normal': 定義されていない識別子です。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.cpp(145): error C2065: 'pFbxMesh': 定義されていない識別子です。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.cpp(145): error C2065: 'i': 定義されていない識別子です。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.cpp(145): error C2065: 'Normal': 定義されていない識別子です。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.cpp(146): error C2065: 'Normal': 定義されていない識別子です。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.cpp(147): error C2065: 'Normal': 定義されていない識別子です。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.cpp(148): error C2065: 'Normal': 定義されていない識別子です。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.cpp(150): error C2065: 'pFbxMesh': 定義されていない識別子です。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.cpp(150): error C2065: 'i': 定義されていない識別子です。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.cpp(150): error C2065: 'Normal': 定義されていない識別子です。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.cpp(151): error C2065: 'Normal': 定義されていない識別子です。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.cpp(152): error C2065: 'Normal': 定義されていない識別子です。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.cpp(153): error C2065: 'Normal': 定義されていない識別子です。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.cpp(156): error C2065: 'KFbxLayerElementUV': 定義されていない識別子です。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.cpp(156): error C2065: 'pUV': 定義されていない識別子です。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.cpp(157): error C2065: 'pUV': 定義されていない識別子です。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.cpp(157): error C2065: 'pFbxMesh': 定義されていない識別子です。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.cpp(158): error C2065: 'i': 定義されていない識別子です。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.cpp(160): error C2065: 'KFbxVector2': 定義されていない識別子です。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.cpp(160): error C2146: 構文エラー: ';' が、識別子 'v2' の前に必要です。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\renderlinglearning\renderlinglearning2\renderlinglearning2\mymesh.cpp(160): fatal error C1003: プログラム内のエラーが 100 個を超えました。コンパイルは中断されます。
+  コードを生成中...
