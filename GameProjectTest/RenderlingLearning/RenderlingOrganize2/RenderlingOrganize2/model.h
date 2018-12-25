@@ -2,12 +2,36 @@
 #include <DirectXMath.h>
 #include <d3d11.h>
 #include "fbx.h"
+#include <string>
+#include <list>
 
 #ifndef __MY_VERTEX__
 #define __MY_VERTEX__
 struct MY_VERTEX {
-	DirectX::XMFLOAT3 Pos;
+	DirectX::XMFLOAT4 Pos;
+	DirectX::XMFLOAT4 Normal;
 };
+#endif
+
+#ifndef __MY_UV__
+#define __MY_UV__
+
+typedef struct Point2DF {
+	float x, y;
+	bool operator==(Point2DF& val) {
+		if (this->x == val.x && this->y == val.y) {
+			return true;
+		}
+		return false;
+	}
+}point2;
+
+typedef struct __UV_SET__ {
+	std::string uvSetName;
+	std::list<std::string> textures;
+	std::list<point2> uvBuffer;
+}UvSet;
+
 #endif
 
 #ifndef __MY_MODEL_VERTEX_INFO__
@@ -35,6 +59,8 @@ namespace MyModel {
 	private:
 		MyFbx::MyFbx m_myFbx;
 		MY_MODEL_VERTEX_INFO m_MyVertex;
+
+		UvSet m_UvSet;
 		/*VERTEX *m_pVertices;
 		int m_numVertex;
 		int m_numFace;
@@ -52,7 +78,7 @@ namespace MyModel {
 		//Nothing
 	public:
 		bool Load(FbxString const &FileName) {
-			m_myFbx.LoadFBX(&m_MyVertex, FileName);
+			m_myFbx.LoadFBX(&m_MyVertex, FileName,m_UvSet);
 			return true;
 		}
 
