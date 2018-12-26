@@ -5,6 +5,8 @@
 #include <string>
 #include <list>
 
+
+#define SAFE_RELEASE(p){if(p){(p)->Release();(p)=NULL;}}
 #ifndef __MY_VERTEX__
 #define __MY_VERTEX__
 struct MY_VERTEX {
@@ -25,11 +27,27 @@ typedef struct Point2DF {
 		return false;
 	}
 }point2;
+struct MY_MATERIAL {
+	DirectX::XMFLOAT4 Ka;//アンビエント
+	DirectX::XMFLOAT4 Kd;//ディフューズ
+	DirectX::XMFLOAT4 Ks;//スペキュラー
+	ID3D11ShaderResourceView* pTexture;
+	int NumFace;
+	MY_MATERIAL()
+	{
+		ZeroMemory(this, sizeof(__UV_SET__));
+	}
+	~MY_MATERIAL()
+	{
+		SAFE_RELEASE(pTexture);
+	}
+};
 
 typedef struct __UV_SET__ {
 	std::string uvSetName;
 	std::list<std::string> textures;
 	std::list<point2> uvBuffer;
+	std::list<MY_MATERIAL> lMaterial;
 }UvSet;
 
 #endif
@@ -40,11 +58,15 @@ struct MY_MODEL_VERTEX_INFO {
 	MY_VERTEX *Vertices;
 	int numVertex;
 	int numFace;
+	int numUV;
+	int numMaterial;
 	//int numPolyVertex;
 	MY_MODEL_VERTEX_INFO()
 		:Vertices(NULL)
 		, numVertex(0)
 		, numFace(0)
+		, numUV(0)
+		, numMaterial(0)
 		//, numPolyVertex(0){};
 	{};
 	~MY_MODEL_VERTEX_INFO() {

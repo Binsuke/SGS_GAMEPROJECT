@@ -247,7 +247,7 @@ void MyFbx::MyFbx::GetVertexUV(FbxMesh* pMesh, UvSet *const pUvset) {
 						int UVIndex = UseIndex ? UVElement->GetIndexArray().GetAt(PolyIndexCounter) : PolyIndexCounter;
 						
 						temp.x = UVElement->GetDirectArray().GetAt(UVIndex)[0];
-						temp.y = UVElement->GetDirectArray().GetAt(UVIndex)[1];
+						temp.y = 1.0f - UVElement->GetDirectArray().GetAt(UVIndex)[1];
 						pUvset->uvBuffer.push_back(temp);
 						//UVValue = UVElement->GetDirectArray().GetAt(UVIndex);
 
@@ -337,4 +337,28 @@ void MyFbx::MyFbx::GetTextureName(FbxMesh* pMesh, UvSet * const pUvSet) {
 		}
 	}
 
+}
+
+void MyFbx::MyFbx::GetMaterial(FbxMesh* pMesh, UvSet * const cUVSet,MY_MODEL_VERTEX_INFO * const pModelInfo)
+{
+	pModelInfo->numUV = pMesh->GetTextureUVCount();
+	FbxNode* pNode = pMesh->GetNode();
+	pModelInfo->numMaterial = pNode->GetMaterialCount();
+
+	for (int i = 0; i < pModelInfo->numMaterial; i++)
+	{
+		MY_MATERIAL tmpMyMaterial;
+		FbxDouble3 tmpMaterial;
+		FbxSurfaceMaterial* pMaterial = pNode->GetMaterial(i);
+		//FbxSurfacePhong* pPhong = (FbxSurfacePhong*)pMaterial;
+		if (pMaterial != 0) {
+			//Lambertかphongか
+			if (pMaterial->GetClassId.Is(FbxSurfaceLambert::ClassId)) {
+				//Lambertにダウンキャスト
+				FbxSurfaceLambert* lambert = (FbxSurfaceLambert*)pMaterial;
+				//tmpMaterial = lambert->Ambient.Get();
+				
+			}
+		}
+	}
 }
