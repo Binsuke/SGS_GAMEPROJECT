@@ -31,7 +31,8 @@ struct MY_MATERIAL {
 	DirectX::XMFLOAT4 Ka;//アンビエント
 	DirectX::XMFLOAT4 Kd;//ディフューズ
 	DirectX::XMFLOAT4 Ks;//スペキュラー
-	ID3D11ShaderResourceView* pTexture;
+	ID3D11ShaderResourceView* pSRVTexture;
+	ID3D11Texture2D*   pTexture;
 	int NumFace;
 	MY_MATERIAL()
 	{

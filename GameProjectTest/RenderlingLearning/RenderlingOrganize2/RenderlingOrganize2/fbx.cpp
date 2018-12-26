@@ -1,4 +1,5 @@
 #include "fbx.h"
+#include <fbxsdk.h>
 
 bool MyFbx::MyFbx::LoadFBX(MY_MODEL_VERTEX_INFO * const pModelInfo, FbxString const &FileName, UvSet *const pUvset) {
 	m_pfbxManager = FbxManager::Create();
@@ -339,7 +340,7 @@ void MyFbx::MyFbx::GetTextureName(FbxMesh* pMesh, UvSet * const pUvSet) {
 
 }
 
-void MyFbx::MyFbx::GetMaterial(FbxMesh* pMesh, UvSet * const cUVSet,MY_MODEL_VERTEX_INFO * const pModelInfo)
+void MyFbx::MyFbx::GetMaterial(FbxMesh* pMesh, UvSet * const cUVSet,MY_MODEL_VERTEX_INFO * const pModelInfo, ID3D11Device *inDevice)
 {
 	pModelInfo->numUV = pMesh->GetTextureUVCount();
 	FbxNode* pNode = pMesh->GetNode();
@@ -357,8 +358,101 @@ void MyFbx::MyFbx::GetMaterial(FbxMesh* pMesh, UvSet * const cUVSet,MY_MODEL_VER
 				//Lambertにダウンキャスト
 				FbxSurfaceLambert* lambert = (FbxSurfaceLambert*)pMaterial;
 				//tmpMaterial = lambert->Ambient.Get();
-				
+				tmpMyMaterial.Ka.x = lambert->Ambient.Get()[0];
+				tmpMyMaterial.Ka.y = lambert->Ambient.Get()[1];
+				tmpMyMaterial.Ka.z = lambert->Ambient.Get()[2];
+
+				tmpMyMaterial.Kd.x = lambert->Diffuse.Get()[0];
+				tmpMyMaterial.Kd.y = lambert->Diffuse.Get()[1];
+				tmpMyMaterial.Kd.z = lambert->Diffuse.Get()[2];
+
+				//えっみしぶとバンプについてはとりあえず保留
 			}
+			else if (pMaterial->GetClassId.Is(FbxSurfacePhong::ClassId)) {
+				FbxSurfacePhong *phong = (FbxSurfacePhong*)pMaterial;
+				tmpMyMaterial.Ka.x = phong->Ambient.Get()[0];
+				tmpMyMaterial.Ka.y = phong->Ambient.Get()[1];
+				tmpMyMaterial.Ka.z = phong->Ambient.Get()[2];
+
+				tmpMyMaterial.Kd.x = phong->Diffuse.Get()[0];
+				tmpMyMaterial.Kd.y = phong->Diffuse.Get()[1];
+				tmpMyMaterial.Kd.z = phong->Diffuse.Get()[2];
+
+
+				//スペキュラ
+				tmpMyMaterial.Ks.x = phong->Specular.Get()[0];
+				tmpMyMaterial.Ks.y = phong->Specular.Get()[1];
+				tmpMyMaterial.Ks.z = phong->Specular.Get()[2];
+
+			}
+		/*	FbxProperty Property;
+			Property = pMaterial->FindProperty(FbxSurfaceMaterial::sDiffuse);
+		*/	//FbxTexture* texture = FbxCast<FbxTexture>(Property.GetSrcObject<FbxTexture::ClassId>(i));
+		/*	int layerNum = Property.GetSrcObjectCount(FbxLayeredTexture::ClassId);
+			if (layerNum == 0) {
+				int numGeneralTexture = Property.GetSrcObjectCount(FbxTexture::ClassId);
+				for (int i = 0; i < numGeneralTexture; i++) {
+					FbxTexture* texture = FbxCast<FbxTexture>(Property.GetSrcObject(FbxTexture::ClassId, i));
+
+				}
+			}*/
+			FbxProperty prop = pMaterial->FindProperty(FbxSurfaceMaterial::sDiffuse);
+
+
+			int fileTextureCount = prop.GetSrcObjectCount<FbxFileTexture>();
+
+			if (0 < fileTextureCount) {
+				//テクスチャの数だけ繰り返す
+				for (int j = 0; j < fileTextureCount; j++) {
+					//テクスチャを取得
+					FbxFileTexture* texture = prop.GetSrcObject<FbxFileTexture>(j);
+					if (texture) {
+						//テクスチャ名を取得
+						std::string textureName = texture->GetRelativeFileName();
+						//UVset名を取得
+						std::string UVSetName = texture->UVSet.Get().Buffer();
+
+						//if(FAILED())
+						DXGI_SURFACE_DESC *pDesc;
+						D3D11_TEXTURE2D_DESC desc;
+						ZeroMemory(&desc, sizeof(desc));
+						desc.Width = pDesc->Width;
+						desc.Height = pDesc->Height;
+						desc.Usage = D3D11_USAGE_DEFAULT;
+						desc.Format = DXGI_FORMAT_R8G8B8A8_TYPELESS;
+						desc.BindFlags = D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE;
+						desc.CPUAccessFlags = 0;
+						desc.MipLevels = 1;
+						desc.ArraySize = 1;
+						desc.SampleDesc.Count = 1;
+						desc.SampleDesc.Quality = 0;
+
+						HRESULT hr;
+						ID3D11Texture2D* ptmpTex;
+						hr = inDevice->CreateTexture2D(&desc, NULL, &ptmpTex);
+						if (FAILED(hr))
+						{
+							MessageBox(NULL, "ID3D11Device::CreateTexure2D() Failed,", "error", 0);
+							PostQuitMessage(0);
+						}
+						ID3D11ShaderResourceView* ptmpSRVTex;
+
+						D3D11_RENDER_TARGET_VIEW_DESC rtvDesc;
+
+						memset(&rtvDesc, 0, sizeof(rtvDesc));
+
+						rtvDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+						rtvDesc.ViewDimension = D3D11_RTV_DIMENSION_TEXTURE2D;
+
+						//hr = inDevice->CreateRenderTargetView(&ptmpTex, &rtvDesc, &ptmpSRVTex);
+
+
+					}
+				}
+			//リソースビューはテクスチャーごとに作ればよいだろうから　リストにデータがなければ読み込んで
+			//インデックスを渡し、あればインデックスだけを渡すというような仕組みに作り直すがとりあえず動くかのために全部作る
+
+
 		}
 	}
 }

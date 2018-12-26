@@ -46,7 +46,7 @@ namespace MyFbx {
 		void GetNormals(FbxNode* pNode,MY_MODEL_VERTEX_INFO * const pModelinfo);
 		void GetVertexUV(FbxMesh* pmesh, UvSet * const pUvset);
 		void GetTextureName(FbxMesh* pMesh, UvSet * const pUvSet);
-		void GetMaterial(FbxMesh* pMesh, UvSet * const pUvSet, MY_MODEL_VERTEX_INFO * const pModelInfo);
+		void GetMaterial(FbxMesh* pMesh, UvSet * const pUvSet, MY_MODEL_VERTEX_INFO * const pModelInfo, ID3D11Device *inDevice);
 		//bool Init();
 		void Release();
 	protected:
