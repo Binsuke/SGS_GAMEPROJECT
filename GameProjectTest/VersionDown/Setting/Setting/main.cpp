@@ -177,7 +177,7 @@ HRESULT MAIN::InitD3D()
 	sd.BufferDesc.RefreshRate.Denominator = 1;//Denominatorとは分母という意味らしい　なので　60/1リフレッシュレートということになるのか？
 
 	sd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;//Usageとは使用法という意味なので　これをどのように使用するかについて設定していると思う
-	sd.OutputWindow - m_hWnd;//どのウィンドウを表示するのか
+	sd.OutputWindow = m_hWnd;//どのウィンドウを表示するのか
 	sd.SampleDesc.Count = 1;//Descとは説明、サンプルの説明がいくつある課だと思う
 	sd.SampleDesc.Quality = 0;//これは解像度の細かさとかに関係するものかな？
 
@@ -317,3 +317,181 @@ HRESULT MAIN::InitD3D()
 	return S_OK;
 }
 
+//HRESULT MAIN::MakeShader(LPSTR szFileName,LPSTR szFuncName,LPSTR szProfileName,void** ppShader,ID3DBlob** ppBlob)
+//hlslファイルを読み込みシェーダーを作成する
+HRESULT MAIN::MakeShader(LPSTR szFileName, LPSTR szFuncName, LPSTR szProfileName, void** ppShader, ID3DBlob** ppBlob)
+{
+	ID3DBlob *pErrors = NULL;
+	if (FAILED(D3DX11CompileFromFileA(szFileName, NULL, NULL, szFuncName, szProfileName, D3D10_SHADER_DEBUG | D3D10_SHADER_SKIP_OPTIMIZATION, 0, NULL, ppBlob, &pErrors, NULL)))
+	{
+		char* p = (char*)pErrors->GetBufferPointer();
+		MessageBoxA(0, p, 0, MB_OK);
+		return E_FAIL;
+	}
+	SAFE_RELEASE(pErrors);
+	char szProfile[3] = { 0 };
+	memcpy(szProfile, szProfileName, 2);//プロファイルネーム２文字をコピー
+
+	if (strcmp(szProfile, "vs") == 0)//vertexshader
+	{
+		if (FAILED(m_pDevice->CreateVertexShader((*ppBlob)->GetBufferPointer(), (*ppBlob)->GetBufferSize(), NULL, (ID3D11VertexShader**)ppShader)))
+		{
+			return E_FAIL;
+		}
+	}
+
+	if (strcmp(szProfile, "ps") == 0)//pixel Shader
+	{
+		if (FAILED(m_pDevice->CreatePixelShader((*ppBlob)->GetBufferPointer(), (*ppBlob)->GetBufferSize(), NULL, (ID3D11PixelShader**)ppShader)))
+		{
+			return E_FAIL;
+		}
+	}
+
+	if (strcmp(szProfile, "gs") == 0) //GeometryShader
+	{
+		if (FAILED(m_pDevice->CreateGeometryShader((*ppBlob)->GetBufferPointer(), (*ppBlob)->GetBufferSize(), NULL, (ID3D11GeometryShader**)ppShader)))
+		{
+			return E_FAIL;
+		}
+	}
+
+
+	if (strcmp(szProfile, "hs") == 0) //HullShader
+	{
+		if (FAILED(m_pDevice->CreateHullShader((*ppBlob)->GetBufferPointer(), (*ppBlob)->GetBufferSize(), NULL, (ID3D11HullShader**)ppShader)))
+		{
+			return E_FAIL;
+		}
+	}
+
+	if (strcmp(szProfile, "ds") == 0)//Domain Shader
+	{
+		if (FAILED(m_pDevice->CreateDomainShader((*ppBlob)->GetBufferPointer(), (*ppBlob)->GetBufferSize(), NULL, (ID3D11DomainShader**)ppShader)))
+		{
+			return E_FAIL;
+		}
+	}
+	if (strcmp(szProfile, "cs") == 0)//Compute Shader
+	{
+		if (FAILED(m_pDevice->CreateComputeShader((*ppBlob)->GetBufferPointer(), (*ppBlob)->GetBufferSize(), NULL, (ID3D11ComputeShader**)ppShader)))
+		{
+			return E_FAIL;
+		}
+	}
+	return S_OK;
+}
+
+//HRESULT MAIN::InitModel()
+//ポリゴン、メッシュなどのジオメトリ関連を初期化（ここでは”点”用
+
+HRESULT MAIN::InitModel()
+{
+	//バーテックスバッファー作成
+	SimpleVertex vertices[] =
+	{
+		D3DXVECTOR3(-0.5f,0.5f,0.0f),
+	};
+	D3D11_BUFFER_DESC bd; //説明
+	bd.Usage = D3D11_USAGE_DEFAULT;//使用法
+	bd.ByteWidth = sizeof(SimpleVertex) * 1;//本来はバーテックスの数によって変わると思う
+	bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+	bd.CPUAccessFlags = 0;
+	bd.MiscFlags = 0;
+
+	D3D11_SUBRESOURCE_DATA InitData; //データを作るためにいろいろ詰め込むための箱
+
+	InitData.pSysMem = vertices;
+
+	if (FAILED(m_pDevice->CreateBuffer(&bd, &InitData, &m_pVertexBuffer)))
+	{
+		return E_FAIL;
+	}
+
+	UINT stride = sizeof(SimpleVertex);
+	UINT offset = 0;
+
+	m_pDeviceContext->IASetVertexBuffers(0, 1, &m_pVertexBuffer, &stride, &offset);
+
+	return S_OK;
+
+}
+
+void MAIN::Render()
+{
+	//画面クリア
+	float ClearColor[4] = { 0,0,0.5,1 }; //クリア色　RGBA
+
+	m_pDeviceContext->ClearRenderTargetView(m_pBackBuffer_TexRTV, ClearColor);//カラー
+	m_pDeviceContext->ClearDepthStencilView(m_pBackBuffer_DSTexDSV, D3D11_CLEAR_DEPTH, 1.0f, 0);//デプスステンシル
+
+	D3DXMATRIX World;
+	D3DXMATRIX View;
+	D3DXMATRIX Proj;
+
+	//ワールドトランスフォーム
+	static float x = 0;
+
+	x += 0.00001;
+	D3DXMATRIX Tran;
+	D3DXMatrixTranslation(&Tran, x, 0, 0);
+	World = Tran;
+
+	//ビュートランスフォーム
+	D3DXVECTOR3 vEyePt(0.0f, 0.0f, -2.0f); //視点位置
+	D3DXVECTOR3 vLookatPt(0.0f, 0.0f, 0.0f);//注視位置
+	D3DXVECTOR3 vUpVec(0.0f, 1.0f, 0.0f);//上方位置
+	D3DXMatrixLookAtLH(&View, &vEyePt, &vLookatPt, &vUpVec);
+
+	//プロジェクショントランスフォーム
+	D3DXMatrixPerspectiveFovLH(&Proj, D3DX_PI / 4,(FLOAT)WINDOW_WIDTH / (FLOAT)WINDOW_HEIGHT, 0.1f, 100.0f);
+
+	m_pDeviceContext->VSSetShader(m_pVertexShader, NULL, 0);
+	m_pDeviceContext->PSSetShader(m_pPixelShader, NULL, 0);
+
+	//シェーダーのコンスタントバッファーに各種データを渡す
+	D3D11_MAPPED_SUBRESOURCE pData;
+	SIMPLESHADER_CONSTANT_BUFFER cb;
+	if (SUCCEEDED(m_pDeviceContext->Map(m_pConstantBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &pData)))
+	{
+		//ワールド　カメラ　射影行列を渡す
+		D3DXMATRIX m = World * View*Proj;
+		D3DXMatrixTranspose(&m, &m);
+		cb.mWVP = m;
+
+		memcpy_s(pData.pData, pData.RowPitch, (void*)(&cb), sizeof(cb));
+		m_pDeviceContext->Unmap(m_pConstantBuffer, 0);
+	}
+
+	//このコンスタントバッファーをどのシェーダーで使うか
+	m_pDeviceContext->VSSetConstantBuffers(0, 1, &m_pConstantBuffer);
+	m_pDeviceContext->PSSetConstantBuffers(0, 1, &m_pConstantBuffer);
+
+	//頂点レイアウトをセット
+	m_pDeviceContext->IASetInputLayout(m_pVertexLayout);
+
+	//プリミティブトポロジーをセット
+	m_pDeviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_POINTLIST);
+
+	//プリミティブをレンダリング
+	m_pDeviceContext->Draw(1, 0);
+
+	m_pSwapChain->Present(0, 0);//画面更新
+
+}
+
+
+void MAIN::DestroyD3D()
+{
+	SAFE_RELEASE(m_pConstantBuffer);
+	SAFE_RELEASE(m_pVertexShader);
+	SAFE_RELEASE(m_pPixelShader);
+	SAFE_RELEASE(m_pVertexBuffer);
+	SAFE_RELEASE(m_pVertexLayout);
+	SAFE_RELEASE(m_pSwapChain);
+	SAFE_RELEASE(m_pBackBuffer_TexRTV);
+	SAFE_RELEASE(m_pBackBuffer_DSTexDSV);
+	SAFE_RELEASE(m_pBackBuffer_DSTex);
+	SAFE_RELEASE(m_pDeviceContext);
+	SAFE_RELEASE(m_pDevice);
+}

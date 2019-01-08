@@ -1,10 +1,15 @@
 #pragma once
 //ヘッダーファイルのインクルード
-#include <Windows.h>	//ウィンドウプログラミングに必要なもの
-#include <d3d11.h>		//d3d11
-#include <d3dx10.h>　　	//d3dx系列
-#include <d3dx11.h>		//d3dx系列
-#include <d3dcompiler.h>//シェーダーファイルの読み込み関連が入ってたはず
+#include <Windows.h>	
+//ウィンドウプログラミングに必要なもの
+#include <d3d11.h>		
+//d3d11
+#include <d3dx10.h>　　	
+//d3dx系列
+#include <d3dx11.h>		
+//d3dx系列
+#include <d3dcompiler.h>
+//シェーダーファイルの読み込み関連が入ってたはず
 
 //必要なライブラリファイルのロード
 #pragma comment(lib,"winmm.lib")
@@ -30,7 +35,7 @@
 struct SimpleVertex
 {
 	D3DXVECTOR3 Pos; //位置
-	SimpleVertex():Pos(0) {}//コンストラクタ初期化式で初期化
+	//SimpleVertex() :Pos(0, 0, 0) {};//コンストラクタ初期化式で初期化
 };
 
 //Simpleシェーダー用のコンスタントバッファーをアプリ側定義　　これをのちにシェーダー側とやり取りする箱として使う
@@ -81,5 +86,5 @@ public:
 	ID3D11VertexShader* m_pVertexShader;		//Vertexシェーダーの本体
 	ID3D11PixelShader* m_pPixelShader;			//Pixelシェーダーの本体
 	ID3D11Buffer* m_pConstantBuffer;			//コンスタントバッファーを作るためのバッファ
-
+	ID3D11Buffer* m_pVertexBuffer;
 };
