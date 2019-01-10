@@ -18,13 +18,13 @@ struct VS_OUTPUT
 //
 //
 //バーテックスシェーダー
-PS_INPUT VS(float4 Pos : POSITION,float2 Tex : TEXCOORD)
+VS_OUTPUT VS(float4 Pos : POSITION,float2 Tex : TEXCOORD)
 {
 	VS_OUTPUT output = (VS_OUTPUT)0;
 	output.Pos = mul(Pos, g_WVP);
 	output.Tex = Tex;
 	
-	return Out;
+	return output;
 }
 //
 //
@@ -32,4 +32,5 @@ PS_INPUT VS(float4 Pos : POSITION,float2 Tex : TEXCOORD)
 float4 PS(VS_OUTPUT input) : SV_Target
 {
 	return g_texColor.Sample(g_samLinear,input.Tex);// テクスチャーの本体とサンプラーをもとに input.texのUV座標から色を決定してそれを返している
+	//return float4(1,1,1,1);
 }

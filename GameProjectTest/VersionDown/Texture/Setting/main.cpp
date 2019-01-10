@@ -262,6 +262,17 @@ HRESULT MAIN::InitD3D()
 
 	//シェーダー初期化を行う　　
 
+	if (FAILED(InitShader()))
+	{
+		return E_FAIL;
+	}
+
+	//ポリゴン作成
+	if (FAILED(InitPolygon()))
+	{
+		return E_FAIL;
+	}
+
 	////hlslファイル読み込み　ブロブ作成
 	//ID3DBlob* pCompileShader = NULL;//これも先ほどのD3D11系列の説明書で作っていたパターンと同じようなものだと思う
 
@@ -391,6 +402,51 @@ HRESULT MAIN::InitShader()
 	return S_OK;
 }
 
+
+HRESULT MAIN::InitPolygon()
+{
+	SimpleVertex vertices[] =
+	{
+		D3DXVECTOR3(-0.5f,-0.5f,0.0f),D3DXVECTOR2(0,1),//頂点１
+		D3DXVECTOR3(-0.5f,0.5f,0.0f),D3DXVECTOR2(0,0),//頂点２
+		D3DXVECTOR3(0.5f,-0.5f,0.0f),D3DXVECTOR2(1,1),//頂点３
+		D3DXVECTOR3(0.5f,0.5f,0.0f),D3DXVECTOR2(1,0),//頂点４
+	};
+	D3D11_BUFFER_DESC bd;	//説明書
+	bd.Usage = D3D11_USAGE_DEFAULT;//使用法
+	bd.ByteWidth = sizeof(SimpleVertex) * 4;
+	bd.BindFlags = D3D11_BIND_VERTEX_BUFFER; //バインドするっていうのがどう紐づけるかってことだと思う
+	bd.CPUAccessFlags = 0;
+	bd.MiscFlags = 0;
+
+	D3D11_SUBRESOURCE_DATA InitData;
+	InitData.pSysMem = vertices;
+	if (FAILED(m_pDevice->CreateBuffer(&bd, &InitData, &m_pVertexBuffer)))
+	{
+		return E_FAIL;
+	}
+
+	//バーテックスバッファーをセット
+	UINT stride = sizeof(SimpleVertex);
+	UINT offset = 0;
+	m_pDeviceContext->IASetVertexBuffers(0, 1, &m_pVertexBuffer, &stride, &offset);
+	//テクスチャー用サンプラー作成
+	D3D11_SAMPLER_DESC SamDesc; //サンプラー用の説明書
+	ZeroMemory(&SamDesc, sizeof(D3D11_SAMPLER_DESC));
+	SamDesc.Filter = D3D11_FILTER_MIN_LINEAR_MAG_POINT_MIP_LINEAR;//どういう設定だろう？
+	SamDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP; //ラップする　繰り返すだと思う
+	SamDesc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
+	SamDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP; //U,V,W どの方向もラップする
+
+	m_pDevice->CreateSamplerState(&SamDesc, &m_pSampleLinear);//説明書からサンプラーを作成
+	//テクスチャー作成
+	if (FAILED(D3DX11CreateShaderResourceViewFromFile(m_pDevice, (LPCSTR)"Sprite.jpg", NULL, NULL, &m_pTexture, NULL)))
+	{
+		MessageBox(NULL, "TextureLoadError", "errot", MB_OK);
+		return E_FAIL;
+	}
+	return S_OK;
+}
 ////HRESULT MAIN::MakeShader(LPSTR szFileName,LPSTR szFuncName,LPSTR szProfileName,void** ppShader,ID3DBlob** ppBlob)
 ////hlslファイルを読み込みシェーダーを作成する
 //HRESULT MAIN::MakeShader(LPSTR szFileName, LPSTR szFuncName, LPSTR szProfileName, void** ppShader, ID3DBlob** ppBlob)
@@ -514,10 +570,11 @@ void MAIN::Render()
 	static float x = 0;
 
 	//x += 0.00001;
-	D3DXMATRIX Tran;
+	/*D3DXMATRIX Tran;
 	D3DXMatrixTranslation(&Tran, x, 0, 0);
 	World = Tran;
-
+*/
+	D3DXMatrixRotationY(&World, timeGetTime() / 100.0f);
 	//ビュートランスフォーム
 	D3DXVECTOR3 vEyePt(0.0f, 0.0f, -2.0f); //視点位置
 	D3DXVECTOR3 vLookatPt(0.0f, 0.0f, 0.0f);//注視位置
@@ -540,6 +597,9 @@ void MAIN::Render()
 		D3DXMatrixTranspose(&m, &m);
 		cb.mWVP = m;
 
+		//カラーを渡す
+		D3DXVECTOR4 vColor(1, 0, 0, 1);
+		cb.vColor = vColor;
 		memcpy_s(pData.pData, pData.RowPitch, (void*)(&cb), sizeof(cb));
 		m_pDeviceContext->Unmap(m_pConstantBuffer, 0);
 	}
@@ -553,6 +613,10 @@ void MAIN::Render()
 
 	//プリミティブトポロジーをセット
 	m_pDeviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);//線にするために変更
+
+	//テクスチャーをシェーダーに渡す
+	m_pDeviceContext->PSSetSamplers(0, 1, &m_pSampleLinear);
+	m_pDeviceContext->PSSetShaderResources(0, 1, &m_pTexture);
 
 	//プリミティブをレンダリング
 	m_pDeviceContext->Draw(4, 0);//バーテックスが3つになったからここも変更
