@@ -4,23 +4,23 @@ MyPoly::Poly::Poly() : InitFlg(false),m_pVertexBuffer(NULL) {
 
 }
 void MyPoly::Poly::Init() {
-	//if (!InitFlg) {
-	//	m_pVertices = new SimpleVertex[4];
-	//	m_pVertices[0].Pos = D3DXVECTOR3(-0.5f, -0.5f, 0.0f);
-	//	m_pVertices[0].vTex = D3DXVECTOR2(0, 1);
+	if (!InitFlg) {
+		m_pVertices = new SimpleVertex[4];
+		m_pVertices[0].Pos = D3DXVECTOR3(-0.5f, -0.5f, 0.0f);
+		m_pVertices[0].vTex = D3DXVECTOR2(0, 1);
 
-	//	m_pVertices[1].Pos = D3DXVECTOR3(-0.5f, 0.5f, 0.0f);
-	//	m_pVertices[1].vTex = D3DXVECTOR2(0, 0);
+		m_pVertices[1].Pos = D3DXVECTOR3(-0.5f, 0.5f, 0.0f);
+		m_pVertices[1].vTex = D3DXVECTOR2(0, 0);
 
-	//	m_pVertices[2].Pos = D3DXVECTOR3(0.5f, -0.5f, 0.0f);
-	//	m_pVertices[2].vTex = D3DXVECTOR2(1, 1);
+		m_pVertices[2].Pos = D3DXVECTOR3(0.5f, -0.5f, 0.0f);
+		m_pVertices[2].vTex = D3DXVECTOR2(1, 1);
 
-	//	m_pVertices[3].Pos = D3DXVECTOR3(0.5f, 0.5f, 0.0f);
-	//	m_pVertices[3].vTex = D3DXVECTOR2(1, 0);
+		m_pVertices[3].Pos = D3DXVECTOR3(0.5f, 0.5f, 0.0f);
+		m_pVertices[3].vTex = D3DXVECTOR2(1, 0);
 
 
-	//	InitFlg = true;
-	//}
+		InitFlg = true;
+	}
 }
 
 void MyPoly::Poly::Release() {

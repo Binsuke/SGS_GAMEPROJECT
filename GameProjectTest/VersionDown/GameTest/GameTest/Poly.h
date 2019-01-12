@@ -30,7 +30,7 @@ public:
 protected:
 private:
 	bool InitFlg;
-	//SimpleVertex *m_pVertices;
+	SimpleVertex *m_pVertices;
 	ID3D11Buffer* m_pVertexBuffer;				//バーテックスバッファー
 
 	ID3D11SamplerState* m_pSampleLinear;			//テクスチャーのサンプラー
