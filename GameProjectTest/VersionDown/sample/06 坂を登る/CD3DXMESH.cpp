@@ -9,8 +9,8 @@ CD3DXMESH::CD3DXMESH()
 {
 	ZeroMemory(this,sizeof(CD3DXMESH));
 	m_fScale=1.0f;
-	m_AxisX=D3DXVECTOR3(1,0,0);
-	m_AxisZ=D3DXVECTOR3(0,0,1);
+	m_AxisX=D3DXVECTOR3(1,0,0);			//横に移動する際のベクトル
+	m_AxisZ=D3DXVECTOR3(0,0,1);			//前に進む際のベクトル
 }
 //
 //
@@ -26,20 +26,20 @@ CD3DXMESH::~CD3DXMESH()
 //
 HRESULT CD3DXMESH::Init(HWND hWnd,ID3D11Device* pDevice11,ID3D11DeviceContext* pContext11,LPSTR FileName)
 {
-	m_hWnd=hWnd;
-	m_pDevice11=pDevice11;
-	m_pDeviceContext11=pContext11;
+	m_hWnd=hWnd;				//mainクラスから初期化でハンドルウィンドウをこっちでも持たせているのか
+	m_pDevice11=pDevice11;		//同じくダイレクトｘ１１デバイスも初期化時に保持している
+	m_pDeviceContext11=pContext11;//コンテキストも同様
 
-	if(FAILED(InitDx9()))
+	if(FAILED(InitDx9()))		//DirectX9の初期化を行っている
 	{
 		return E_FAIL;
 	}
-	if(FAILED(LoadXMesh(FileName)))
+	if(FAILED(LoadXMesh(FileName)))	//メッシュのロードを行う
 	{
 		return E_FAIL;
 	}
 
-	if(FAILED(InitShader()))
+	if(FAILED(InitShader()))		//シェーダーの初期化
 	{
 		return E_FAIL;
 	}
@@ -101,7 +101,7 @@ HRESULT CD3DXMESH::LoadXMesh(LPSTR FileName)
 {
 	LPD3DXBUFFER pD3DXMtrlBuffer = NULL;
 
-	if( FAILED( D3DXLoadMeshFromXA(FileName, D3DXMESH_SYSTEMMEM | D3DXMESH_32BIT, 
+	if( FAILED( D3DXLoadMeshFromXA(FileName, D3DXMESH_SYSTEMMEM | D3DXMESH_32BIT,//D3DX9のパーサーを使用してのロード 
 			m_pDevice9, NULL, &pD3DXMtrlBuffer, NULL,
 			&m_dwNumMaterial, &m_pMesh ) ) )
 	{
@@ -110,15 +110,15 @@ HRESULT CD3DXMESH::LoadXMesh(LPSTR FileName)
 	}
 
 	//この時点で、ファイルから取り出したメッシュデータが、Dx9のD3DXメッシュに入っている、
-	D3D11_BUFFER_DESC bd;
-	D3D11_SUBRESOURCE_DATA InitData;
+	D3D11_BUFFER_DESC bd;					//説明書
+	D3D11_SUBRESOURCE_DATA InitData;		//バーテックスバッファーを作るのに必要なサブリソースデータ
 
 	//あとは、そこから好きな情報を取り出してDx11の自前メッシュに利用するだけ。
-	D3DXMATERIAL* d3dxMaterials = (D3DXMATERIAL*)pD3DXMtrlBuffer->GetBufferPointer();
-	m_pMaterial = new MY_MATERIAL[m_dwNumMaterial];
-	m_ppIndexBuffer=new ID3D11Buffer*[m_dwNumMaterial];
+	D3DXMATERIAL* d3dxMaterials = (D3DXMATERIAL*)pD3DXMtrlBuffer->GetBufferPointer();//情報を抜き取るための準備
+	m_pMaterial = new MY_MATERIAL[m_dwNumMaterial];//パーサーにより読み込んだデータからマテリアル数が入っているのでそれをもとに　m_pMaterialを動的確保している
+	m_ppIndexBuffer=new ID3D11Buffer*[m_dwNumMaterial];//インデックスバッファーについても同様に動的確保を行っている　マテリアルの数と同じだけ
 
-	for( DWORD i=0; i<m_dwNumMaterial; i++ )
+	for( DWORD i=0; i<m_dwNumMaterial; i++ )//それぞれのデータをコピーしている
 	{
 		//アンビエント
 		m_pMaterial[i].Ambient.x=d3dxMaterials[i].MatD3D.Ambient.r;
@@ -137,12 +137,12 @@ HRESULT CD3DXMESH::LoadXMesh(LPSTR FileName)
 		m_pMaterial[i].Specular.w=d3dxMaterials[i].MatD3D.Specular.a;
 		//テクスチャーがあれば
 		if( d3dxMaterials[i].pTextureFilename != NULL && 
-			lstrlenA(d3dxMaterials[i].pTextureFilename) > 0 )
+			lstrlenA(d3dxMaterials[i].pTextureFilename) > 0 )			//テクスチャーがあれば
 		{
-			m_Texture=true;
-			strcpy(m_pMaterial[i].szTextureName,d3dxMaterials[i].pTextureFilename);
+			m_Texture=true;												//テクスチャーがあればトゥルーにする　ただテクスチャ１枚にしか対応してない？
+			strcpy(m_pMaterial[i].szTextureName,d3dxMaterials[i].pTextureFilename);//テクスチャ名をコピー
 			//テクスチャーを作成
-			if(FAILED(D3DX11CreateShaderResourceViewFromFileA(m_pDevice11,
+			if(FAILED(D3DX11CreateShaderResourceViewFromFileA(m_pDevice11,			//テクスチャーを読み込んでいる
 				m_pMaterial[i].szTextureName, NULL, NULL, &m_pMaterial[i].pTexture, NULL )))
 			{
 				return E_FAIL;
@@ -156,9 +156,9 @@ HRESULT CD3DXMESH::LoadXMesh(LPSTR FileName)
 	D3DXATTRIBUTERANGE* pAttrTable=NULL;
 	
 	m_pMesh->OptimizeInplace(D3DXMESHOPT_COMPACT | D3DXMESHOPT_ATTRSORT,0,0,0,0);
-	m_pMesh->GetAttributeTable(NULL,&m_NumAttr);
-	pAttrTable= new D3DXATTRIBUTERANGE[m_NumAttr];
-	if(FAILED(m_pMesh->GetAttributeTable(pAttrTable,&m_NumAttr)))
+	m_pMesh->GetAttributeTable(NULL,&m_NumAttr);							//階層メッシュなどの場合はアトリビュート（階層？）の情報が必要になる
+	pAttrTable= new D3DXATTRIBUTERANGE[m_NumAttr];							//階層いくつあるかを調べたのでそれをもとに　アトリビュートの配列を動的確保
+	if(FAILED(m_pMesh->GetAttributeTable(pAttrTable,&m_NumAttr)))			//p_Mashからアトリビュートを受け取る
 	{
 		MessageBoxA(0,"属性テーブル取得失敗","",MB_OK);
 		return E_FAIL;

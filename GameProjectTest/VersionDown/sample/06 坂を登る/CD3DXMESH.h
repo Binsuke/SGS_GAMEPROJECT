@@ -92,10 +92,10 @@ public:
 	ID3D11InputLayout* m_pVertexLayout;
 	ID3D11VertexShader* m_pVertexShader;
 	ID3D11PixelShader* m_pPixelShader;
-	ID3D11Buffer* m_pConstantBuffer0;
+	ID3D11Buffer* m_pConstantBuffer0;			//コンスタントバッファーが二つ
 	ID3D11Buffer* m_pConstantBuffer1;
-	ID3D11Buffer* m_pVertexBuffer;
-	ID3D11Buffer** m_ppIndexBuffer;
+	ID3D11Buffer* m_pVertexBuffer;				//バーテックスバッファー
+	ID3D11Buffer** m_ppIndexBuffer;				//インデックスバッファー
 	//resource
 	char m_TextureFileName[8][256];//テクスチャーファイル名（８枚まで）
 	ID3D11SamplerState* m_pSampleLinear;//テクスチャーのサンプラー
@@ -104,9 +104,9 @@ public:
 	//Method
 	CD3DXMESH();
 	~CD3DXMESH();
-	HRESULT Init(HWND hWnd,ID3D11Device*,ID3D11DeviceContext*,LPSTR);
-	HRESULT InitDx9();
-	HRESULT LoadXMesh(LPSTR FileName);
-	HRESULT InitShader();
-	void Render(D3DXMATRIX& mView,D3DXMATRIX& mProj,D3DXVECTOR3& vLight,D3DXVECTOR3& vEye);
+	HRESULT Init(HWND hWnd,ID3D11Device*,ID3D11DeviceContext*,LPSTR);			//初期化
+	HRESULT InitDx9();															//ダイレクトX９の初期化
+	HRESULT LoadXMesh(LPSTR FileName);											//メッシュのロード
+	HRESULT InitShader();														//シェーダーの初期化
+	void Render(D3DXMATRIX& mView,D3DXMATRIX& mProj,D3DXVECTOR3& vLight,D3DXVECTOR3& vEye);//レンダリング　主にこの辺りを見る
 };

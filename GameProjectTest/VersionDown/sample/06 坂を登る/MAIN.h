@@ -40,14 +40,14 @@ public:
 	HRESULT FindVerticesOnPoly(LPD3DXMESH,DWORD,D3DXVECTOR3*);
 	D3DXVECTOR3 Slip(D3DXVECTOR3 L,D3DXVECTOR3 N);
 
-	HWND m_hWnd;
-	ID3D11Device* m_pDevice;
-	ID3D11DeviceContext *m_pDeviceContext;
-	IDXGISwapChain* m_pSwapChain;
-	ID3D11RenderTargetView* m_pBackBuffer_TexRTV;
-	ID3D11DepthStencilView* m_pBackBuffer_DSTexDSV;
-	ID3D11Texture2D* m_pBackBuffer_DSTex;
+	HWND m_hWnd;									//ウィンドウハンドル
+	ID3D11Device* m_pDevice;						//デバイス本体
+	ID3D11DeviceContext *m_pDeviceContext;			//デバイスコンテキスト本体
+	IDXGISwapChain* m_pSwapChain;					//スワップチェイン
+	ID3D11RenderTargetView* m_pBackBuffer_TexRTV;	//レンダーターゲットビュー（バックバッファー
+	ID3D11DepthStencilView* m_pBackBuffer_DSTexDSV;	//デプスステンシルビュー(バックバッファー
+	ID3D11Texture2D* m_pBackBuffer_DSTex;			//バックバッファー用のテクスチャ
 	
-	CD3DXMESH* m_pRobotMesh;
-	CD3DXMESH* m_pSlopeMesh;
+	CD3DXMESH* m_pRobotMesh;						//RobotMesh
+	CD3DXMESH* m_pSlopeMesh;						//SlopeMesh
 };

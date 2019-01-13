@@ -350,8 +350,9 @@ HRESULT MAIN::InitShader()
 HRESULT MAIN::InitPolygon()
 {
 	m_pTestPoly = new MyPoly::Poly();
-	m_pTestPoly->CreateVertexBuffer(m_pDevice);
-	m_pTestPoly->CreateTexture(m_pDevice);
+	m_pTestPoly->Init(m_pDevice, m_pDeviceContext);
+	m_pTestPoly->CreateVertexBuffer();
+	m_pTestPoly->CreateTexture();
 
 	//SimpleVertex vertices[] =
 	//{
@@ -465,7 +466,33 @@ void MAIN::Render()
 	////プリミティブをレンダリング
 	//m_pDeviceContext->Draw(4, 0);//バーテックスが3つになったからここも変更
 
-	m_pTestPoly->Render(m_pDeviceContext,Tran);
+	m_pTestPoly->Render(Tran);
+
+
+	D3DXMatrixTranslation(&World, 1, 0, 0);
+	//シェーダーのコンスタントバッファーに各種データを渡す
+	//pData = NULL;
+	//cb = NULL;
+	if (SUCCEEDED(m_pDeviceContext->Map(m_pConstantBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &pData)))
+	{
+		//ワールド　カメラ　射影行列を渡す
+		D3DXMATRIX m = World * View*Proj;
+		D3DXMatrixTranspose(&m, &m);
+		cb.mWVP = m;
+
+		//カラーを渡す
+		D3DXVECTOR4 vColor(1, 0, 0, 1);
+		cb.vColor = vColor;
+		memcpy_s(pData.pData, pData.RowPitch, (void*)(&cb), sizeof(cb));
+		m_pDeviceContext->Unmap(m_pConstantBuffer, 0);
+	}
+
+	//このコンスタントバッファーをどのシェーダーで使うか
+	m_pDeviceContext->VSSetConstantBuffers(0, 1, &m_pConstantBuffer);
+	m_pDeviceContext->PSSetConstantBuffers(0, 1, &m_pConstantBuffer);
+
+
+	m_pTestPoly->Render(Tran);
 	m_pSwapChain->Present(0, 0);//画面更新
 
 }
