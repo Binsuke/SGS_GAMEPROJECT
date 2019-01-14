@@ -124,6 +124,7 @@
   <ItemGroup>
     <ClInclude Include="main.h" />
     <ClInclude Include="Poly.h" />
+    <ClInclude Include="ShaderUtility.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="SimpleTexture.hlsl">
