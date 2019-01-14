@@ -7,7 +7,7 @@ void MyPoly::Poly::Init(ID3D11Device* inDevice, ID3D11DeviceContext* inDeviceCon
 	
 	m_pDevice = inDevice;
 	m_pDeviceContext = inDeviceContext;
-
+	//InitConstantBuffer();
 	//InitConstantBuffer();
 	/*if (!InitFlg) {
 		m_pVertices = new SimpleVertex[4];
@@ -78,13 +78,28 @@ HRESULT MyPoly::Poly::CreateTexture()
 	return S_OK;
 }
 
-void MyPoly::Poly::Render( D3DXMATRIX mW) {
+void MyPoly::Poly::Render( D3DXMATRIX inWVP) {
 	
+	//バーテックスバッファーセット
 	UINT stride = sizeof(SimpleVertex);
 	UINT offset = 0;
 	m_pDeviceContext->IASetVertexBuffers(0, 1, &m_pVertexBuffer,&stride,&offset);
+	//バーテックスシェーダーセット
+	//m_pDeviceContext->VSSetShader(m_pVertexShader, NULL, 0);
+	////ピクセルシェーダーセット
+	//m_pDeviceContext->PSSetShader(m_pPixelShader, NULL, 0);
+	////コンスタントバッファーセット
+	//SetConstantBuffer(inWVP);
+	////頂点レイアウトをセット
+	//m_pDeviceContext->IASetInputLayout(m_pVertexLayout);
+	////トポロジーセット
+	//m_pDeviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
+
+	//テクスチャのサンプラーを登録
 	m_pDeviceContext->PSSetSamplers(0, 1, &m_pSampleLinear);
+	//テクスチャをシェーダーに渡す
 	m_pDeviceContext->PSSetShaderResources(0, 1, &m_pTexture);
+	//板ポリゴンを描画
 	m_pDeviceContext->Draw(4, 0);
 }
 
@@ -106,23 +121,39 @@ void MyPoly::Poly::SetConstantBuffer(D3DXMATRIX WVP)
 		memcpy_s(pData.pData, pData.RowPitch, (void*)(&cb), sizeof(cb));
 		m_pDeviceContext->Unmap(m_pConstantBuffer, 0);
 	}
+
+	m_pDeviceContext->VSSetConstantBuffers(0, 1, &m_pConstantBuffer);
+	m_pDeviceContext->PSSetConstantBuffers(0, 1, &m_pConstantBuffer);
 }
 
 
-
-void MyPoly::Poly::InitConstantBuffer()
+void MyPoly::Poly::SetVertexLayout(ID3D11InputLayout* inInputLayout)
 {
-	D3D11_BUFFER_DESC cb;//説明書
-	cb.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
-	cb.ByteWidth = sizeof(SIMPLESHADER_CONSTANT_BUFFER);
-	cb.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE; //CPUにアクセスするフラグ設定
-	cb.MiscFlags = 0;
-	cb.StructureByteStride = 0;
-	cb.Usage = D3D11_USAGE_DYNAMIC;//使用法
-
-	if (FAILED(m_pDevice->CreateBuffer(&cb, NULL, &m_pConstantBuffer)))
-	{
-		MessageBox(NULL, "ConstantBuffer Create Failed", "CreateError", MB_OK);
-		return;
-	}
+	m_pVertexLayout = inInputLayout;
 }
+
+void MyPoly::Poly::SetVertexShader(ID3D11VertexShader* inVertexShader) {
+	m_pVertexShader = inVertexShader;
+}
+void MyPoly::Poly::SetPixelShader(ID3D11PixelShader* inPixelShader) {
+	m_pPixelShader = inPixelShader;
+}
+void MyPoly::Poly::SetConstantBuffer(ID3D11Buffer* inConstantBuffer) {
+	m_pConstantBuffer = inConstantBuffer;
+}
+//void MyPoly::Poly::InitConstantBuffer()
+//{
+//	D3D11_BUFFER_DESC cb;//説明書
+//	cb.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+//	cb.ByteWidth = sizeof(SIMPLESHADER_CONSTANT_BUFFER);
+//	cb.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE; //CPUにアクセスするフラグ設定
+//	cb.MiscFlags = 0;
+//	cb.StructureByteStride = 0;
+//	cb.Usage = D3D11_USAGE_DYNAMIC;//使用法
+//
+//	if (FAILED(m_pDevice->CreateBuffer(&cb, NULL, &m_pConstantBuffer)))
+//	{
+//		MessageBox(NULL, "ConstantBuffer Create Failed", "CreateError", MB_OK);
+//		return;
+//	}
+//}

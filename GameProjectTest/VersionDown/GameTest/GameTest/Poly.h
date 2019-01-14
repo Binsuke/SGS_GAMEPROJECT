@@ -40,15 +40,32 @@ class Poly {
 public:
 	Poly();
 	void Init(ID3D11Device* inDevice,ID3D11DeviceContext* inDeviceContext);
+	/*void SetVertexLayout(ID3D11InputLayout* inInputLayout) {
+		m_pVertexLayout = inInputLayout;
+	}
+	void SetVertexShader(ID3D11VertexShader* inVertexShader) {
+		m_pVertexShader = inVertexShader;
+	}
+	void SetPixelShader(ID3D11PixelShader* inPixelShader) {
+		m_pPixelShader = inPixelShader;
+	}
+	void SetConstantBuffer(ID3D11Buffer* inConstantBuffer) {
+		m_pConstantBuffer = inConstantBuffer;
+	}*/
+	void SetVertexLayout(ID3D11InputLayout* inInputLayout);
+	void SetVertexShader(ID3D11VertexShader* inVertexShader);
+	void SetPixelShader(ID3D11PixelShader* inPixelShader);
+	void SetConstantBuffer(ID3D11Buffer* inConstantBuffer);
 	void Release();
 	//void SetConstantBuffer();
 	void Render(D3DXMATRIX mWVP);//worldの変換行列を渡すことで　そこに移動する
 	HRESULT CreateVertexBuffer();//バーテックスバッファー作成用
 	HRESULT CreateTexture();
+	//void InitConstantBuffer();//イニシャライズに入れてもよかったけれど、明示的に初期化させたほうが意識しやすそう
+
 protected:
 private:
 	void SetConstantBuffer(D3DXMATRIX WVP);
-	void InitConstantBuffer();
 	ID3D11Device* m_pDevice;
 	ID3D11DeviceContext* m_pDeviceContext;
 	bool InitFlg;
@@ -60,6 +77,13 @@ private:
 												//例えばミラーや同じ色で塗りつぶすなどの設定をいれておいて　教えるための情報源
 
 	ID3D11ShaderResourceView* m_pTexture;  //テクスチャー本体　　シェーダーに渡すリソース
+
+	//使うシェーダーを自分自身で保持しておいたほうが何かと便利なので
+	//デバイスと同じように　最初に受け取っておく
+
+	ID3D11InputLayout* m_pVertexLayout;			//バーテックスのレイアウトを作る際に使う、このレイアウトをもとに頂点の形を決める
+	ID3D11VertexShader* m_pVertexShader;		//Vertexシェーダーの本体
+	ID3D11PixelShader* m_pPixelShader;			//Pixelシェーダーの本体
 
 	ID3D11Buffer* m_pConstantBuffer;			//コンスタントバッファーを作るためのバッファ
 

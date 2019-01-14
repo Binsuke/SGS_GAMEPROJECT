@@ -297,6 +297,9 @@ HRESULT MAIN::InitShader()
 		return E_FAIL;
 	}
 
+	m_pVertexBuffer;
+	//m_pTestPoly->SetVertexShader(m_pVertexShader);
+
 	//頂点インプットレイアウトを定義
 	//今回ここは VS_OUTPUTのレイアウトをもとに　　POSITION と UVになるTEXCOORDを設定
 	D3D11_INPUT_ELEMENT_DESC layout[] =
@@ -313,6 +316,8 @@ HRESULT MAIN::InitShader()
 		return FALSE;
 	}
 
+	//m_pTestPoly->SetVertexLayout(m_pVertexLayout);
+
 	//ブロブからピクセルシェーダー作成
 	if (FAILED(D3DX11CompileFromFile((LPCSTR)"SimpleTexture.hlsl", NULL, NULL, "PS", "ps_5_0", 0, 0, NULL, &pCompiledShader, &pErrors, NULL)))
 	{
@@ -321,6 +326,8 @@ HRESULT MAIN::InitShader()
 	}
 	SAFE_RELEASE(pErrors);
 
+	
+
 	if (FAILED(m_pDevice->CreatePixelShader(pCompiledShader->GetBufferPointer(), pCompiledShader->GetBufferSize(), NULL, &m_pPixelShader)))
 	{
 		SAFE_RELEASE(pCompiledShader);
@@ -328,6 +335,8 @@ HRESULT MAIN::InitShader()
 		return E_FAIL;
 	}
 	SAFE_RELEASE(pCompiledShader);
+
+	//m_pTestPoly->SetPixelShader(m_pPixelShader);
 
 	//コンスタントバッファー作成　　ここでは変換行列渡し用
 	D3D11_BUFFER_DESC cb;//説明書
@@ -342,6 +351,9 @@ HRESULT MAIN::InitShader()
 	{
 		return E_FAIL;
 	}
+
+	//m_pTestPoly->InitConstantBuffer();
+	//m_pTestPoly->SetConstantBuffer(m_pConstantBuffer);
 
 	return S_OK;
 }
@@ -418,6 +430,7 @@ void MAIN::Render()
 	D3DXMATRIX Tran;
 	D3DXMatrixTranslation(&Tran, 0, 0, 0);
 	World = Tran;
+	D3DXMATRIX mWVP;
 
 	//D3DXMatrixRotationY(&World, timeGetTime() / 100.0f);
 	//ビュートランスフォーム
@@ -428,6 +441,8 @@ void MAIN::Render()
 
 	//プロジェクショントランスフォーム
 	D3DXMatrixPerspectiveFovLH(&Proj, D3DX_PI / 4, (FLOAT)WINDOW_WIDTH / (FLOAT)WINDOW_HEIGHT, 0.1f, 100.0f);
+
+	mWVP = World * View * Proj;
 
 	m_pDeviceContext->VSSetShader(m_pVertexShader, NULL, 0);
 	m_pDeviceContext->PSSetShader(m_pPixelShader, NULL, 0);
@@ -441,6 +456,7 @@ void MAIN::Render()
 		D3DXMATRIX m = World * View*Proj;
 		D3DXMatrixTranspose(&m, &m);
 		cb.mWVP = m;
+		//mWVP = m;
 
 		//カラーを渡す
 		D3DXVECTOR4 vColor(1, 0, 0, 1);
@@ -466,13 +482,12 @@ void MAIN::Render()
 	////プリミティブをレンダリング
 	//m_pDeviceContext->Draw(4, 0);//バーテックスが3つになったからここも変更
 
-	m_pTestPoly->Render(Tran);
+	m_pTestPoly->Render(mWVP);
 
 
 	D3DXMatrixTranslation(&World, 1, 0, 0);
+	mWVP = World * View * Proj;
 	//シェーダーのコンスタントバッファーに各種データを渡す
-	//pData = NULL;
-	//cb = NULL;
 	if (SUCCEEDED(m_pDeviceContext->Map(m_pConstantBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &pData)))
 	{
 		//ワールド　カメラ　射影行列を渡す
@@ -492,7 +507,7 @@ void MAIN::Render()
 	m_pDeviceContext->PSSetConstantBuffers(0, 1, &m_pConstantBuffer);
 
 
-	m_pTestPoly->Render(Tran);
+	m_pTestPoly->Render(mWVP);
 	m_pSwapChain->Present(0, 0);//画面更新
 
 }
