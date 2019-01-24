@@ -14,6 +14,9 @@
 #include <d3dcompiler.h>
 //シェーダーファイルの読み込み関連が入ってたはず
 #include "Poly.h"
+#include "PixelShaderUtility.h"
+#include "VertexShaderUtility.h"
+#include "ConstantBuffer.h"
 //必要なライブラリファイルのロード
 #pragma comment(lib,"winmm.lib")
 #pragma comment(lib,"d3dx10.lib")
@@ -31,9 +34,10 @@
 #define APP_NAME L"テクスチャーを張る"
 
 //マクロ
+#ifndef SAFE_RELEASE
 #define SAFE_RELEASE(x) if(x){x->Release();x=NULL;} //渡されたオブジェクトのリリース関数を呼び出してそのあとにNULLを入れている
 													//マクロで行っているけど、テンプレートで行うほうがいいとは思う
-
+#endif SAFE_RELEASE
 //class MAIN
 //MAIN クラス
 
@@ -65,13 +69,16 @@ public:
 
 	//モデルの種類ごとに必要、というよりモデルに使うシェーダーごとにレイアウトなどが変わるので
 	//その時に必要になるはず
-	ID3D11InputLayout* m_pVertexLayout;			//バーテックスのレイアウトを作る際に使う、このレイアウトをもとに頂点の形を決める
-	ID3D11VertexShader* m_pVertexShader;		//Vertexシェーダーの本体
-	ID3D11PixelShader* m_pPixelShader;			//Pixelシェーダーの本体
-	ID3D11Buffer* m_pConstantBuffer;			//コンスタントバッファーを作るためのバッファ
+	//ID3D11InputLayout* m_pVertexLayout;			//バーテックスのレイアウトを作る際に使う、このレイアウトをもとに頂点の形を決める
+	//ID3D11VertexShader* m_pVertexShader;		//Vertexシェーダーの本体
+	//ID3D11PixelShader* m_pPixelShader;			//Pixelシェーダーの本体
+	//ID3D11Buffer* m_pConstantBuffer;			//コンスタントバッファーを作るためのバッファ
 
 private:
 	MyPoly::Poly* m_pTestPoly;
+	VertexShaderUtil m_VertexShader;
+	PixelShaderUtil m_PixelShader;
+	MyConstantBuffer m_ConstantBuffer;
 };
 
 #endif

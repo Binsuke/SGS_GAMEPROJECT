@@ -23,6 +23,8 @@ struct SimpleVertex
 	D3DXVECTOR2 vTex;
 };
 
+#ifndef SIMPLESHADER_CONSTANT_BUFFER_DEF
+#define SIMPLESHADER_CONSTANT_BUFFER_DEF
 struct SIMPLESHADER_CONSTANT_BUFFER
 {
 	D3DXMATRIX mWVP;   //world * view * projection ÇÃçsóÒÇìnÇ∑
@@ -39,6 +41,7 @@ struct SIMPLESHADER_CONSTANT_BUFFER
 	D3DXVECTOR4 vColor;
 
 };
+#endif
 
 namespace MyPoly {
 	class Poly {

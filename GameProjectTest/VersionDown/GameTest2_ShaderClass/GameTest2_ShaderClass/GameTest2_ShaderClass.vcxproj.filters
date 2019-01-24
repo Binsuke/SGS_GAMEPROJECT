@@ -13,6 +13,18 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="ヘッダー ファイル\Shader">
+      <UniqueIdentifier>{d70a05e8-f607-405c-ae4d-de37a9714550}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Shader">
+      <UniqueIdentifier>{133f9416-72e7-4e94-9da9-5dd9849623a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\etc">
+      <UniqueIdentifier>{8a3929c3-aaed-4ee9-b7e0-620fe1bc5a56}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\etc">
+      <UniqueIdentifier>{f58099df-9439-4fbc-869b-0579a5720a6d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -20,6 +32,30 @@
     </ClCompile>
     <ClCompile Include="Poly.cpp">
       <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="PixelShaderUtility.cpp">
+      <Filter>ソース ファイル\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="VertexShaderUtility.cpp">
+      <Filter>ソース ファイル\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="ShaderResource.cpp">
+      <Filter>ソース ファイル\etc</Filter>
+    </ClCompile>
+    <ClCompile Include="InputLayout.cpp">
+      <Filter>ソース ファイル\etc</Filter>
+    </ClCompile>
+    <ClCompile Include="MyModel.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="MyShader.cpp">
+      <Filter>ソース ファイル\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="ConstantBuffer.cpp">
+      <Filter>ソース ファイル\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="ShaderUtility.cpp">
+      <Filter>ソース ファイル\etc</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -29,8 +65,29 @@
     <ClInclude Include="Poly.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="ShaderUtility.h">
+    <ClInclude Include="PixelShaderUtility.h">
+      <Filter>ヘッダー ファイル\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="VertexShaderUtility.h">
+      <Filter>ヘッダー ファイル\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="ShaderResource.h">
+      <Filter>ヘッダー ファイル\etc</Filter>
+    </ClInclude>
+    <ClInclude Include="InputLayout.h">
+      <Filter>ヘッダー ファイル\etc</Filter>
+    </ClInclude>
+    <ClInclude Include="MyModel.h">
       <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="MyShader.h">
+      <Filter>ヘッダー ファイル\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="ConstantBuffer.h">
+      <Filter>ヘッダー ファイル\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="ShaderUtility.h">
+      <Filter>ヘッダー ファイル\etc</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

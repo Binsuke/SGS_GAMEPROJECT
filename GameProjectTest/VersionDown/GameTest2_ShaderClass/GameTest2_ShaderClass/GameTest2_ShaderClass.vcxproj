@@ -118,13 +118,28 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ConstantBuffer.cpp" />
+    <ClCompile Include="InputLayout.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MyModel.cpp" />
+    <ClCompile Include="MyShader.cpp" />
+    <ClCompile Include="PixelShaderUtility.cpp" />
     <ClCompile Include="Poly.cpp" />
+    <ClCompile Include="ShaderResource.cpp" />
+    <ClCompile Include="ShaderUtility.cpp" />
+    <ClCompile Include="VertexShaderUtility.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ConstantBuffer.h" />
+    <ClInclude Include="InputLayout.h" />
     <ClInclude Include="main.h" />
+    <ClInclude Include="MyModel.h" />
+    <ClInclude Include="MyShader.h" />
+    <ClInclude Include="PixelShaderUtility.h" />
     <ClInclude Include="Poly.h" />
+    <ClInclude Include="ShaderResource.h" />
     <ClInclude Include="ShaderUtility.h" />
+    <ClInclude Include="VertexShaderUtility.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="SimpleTexture.hlsl">

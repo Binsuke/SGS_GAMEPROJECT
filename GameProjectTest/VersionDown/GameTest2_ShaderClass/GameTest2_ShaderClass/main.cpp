@@ -278,45 +278,65 @@ HRESULT MAIN::InitD3D()
 
 HRESULT MAIN::InitShader()
 {
+
+	
 	//hlslファイル読み込み　ブロブ作成　
 	ID3DBlob *pCompiledShader = NULL;
 	ID3DBlob *pErrors = NULL;
 	//ブロブからバーテックスシェーダーを作成
 
-	if (FAILED(D3DX11CompileFromFile((LPCSTR)"SimpleTexture.hlsl", NULL, NULL, "VS", "vs_5_0", 0, 0, NULL, &pCompiledShader, &pErrors, NULL)))
-	{
-		MessageBox(0, (LPCSTR)"hlsl読み込み失敗", NULL, MB_OK);
-		return E_FAIL;
-	}
-	SAFE_RELEASE(pErrors);
+	int tmpnum;
+	
 
-	if (FAILED(m_pDevice->CreateVertexShader(pCompiledShader->GetBufferPointer(), pCompiledShader->GetBufferSize(), NULL, &m_pVertexShader)))
-	{
-		SAFE_RELEASE(pCompiledShader);
-		MessageBox(0, "バーテックスシェーダー作成失敗", NULL, MB_OK);
-		return E_FAIL;
-	}
+	m_VertexShader.Init(m_pDevice, m_pDeviceContext);
 
 
-	//頂点インプットレイアウトを定義
-	//今回ここは VS_OUTPUTのレイアウトをもとに　　POSITION と UVになるTEXCOORDを設定
 	D3D11_INPUT_ELEMENT_DESC layout[] =
 	{
 		{"POSITION",0,DXGI_FORMAT_R32G32B32_FLOAT,0,0,D3D11_INPUT_PER_VERTEX_DATA,0},
 		{"TEXCOORD",0,DXGI_FORMAT_R32G32_FLOAT,0,12,D3D11_INPUT_PER_VERTEX_DATA,0},
 	};
 	UINT numElements = sizeof(layout) / sizeof(layout[0]); //この作業を行うのは　本来はシェーダーの情報をもとにレイアウトを作る必要がでてくるため、シェーダーごとに
-														//こういった計算でいくつのエレメントを持っているかを求める必要がある
 
-	//頂点インプットレイアウトを作成
-	if (FAILED(m_pDevice->CreateInputLayout(layout, numElements, pCompiledShader->GetBufferPointer(), pCompiledShader->GetBufferSize(), &m_pVertexLayout)))
-	{
-		return FALSE;
-	}
+	m_VertexShader.CreateShaderFromFileV("SimpleTexture.hlsl", "VS", "vs_5_0", &tmpnum, layout, numElements);
+	//if (FAILED(D3DX11CompileFromFile((LPCSTR)"SimpleTexture.hlsl", NULL, NULL, "VS", "vs_5_0", 0, 0, NULL, &pCompiledShader, &pErrors, NULL)))
+	//{
+	//	MessageBox(0, (LPCSTR)"hlsl読み込み失敗", NULL, MB_OK);
+	//	return E_FAIL;
+	//}
+	//SAFE_RELEASE(pErrors);
+
+	//if (FAILED(m_pDevice->CreateVertexShader(pCompiledShader->GetBufferPointer(), pCompiledShader->GetBufferSize(), NULL, &m_pVertexShader)))
+	//{
+	//	SAFE_RELEASE(pCompiledShader);
+	//	MessageBox(0, "バーテックスシェーダー作成失敗", NULL, MB_OK);
+	//	return E_FAIL;
+	//}
+
+
+	////頂点インプットレイアウトを定義
+	////今回ここは VS_OUTPUTのレイアウトをもとに　　POSITION と UVになるTEXCOORDを設定
+	//D3D11_INPUT_ELEMENT_DESC layout[] =
+	//{
+	//	{"POSITION",0,DXGI_FORMAT_R32G32B32_FLOAT,0,0,D3D11_INPUT_PER_VERTEX_DATA,0},
+	//	{"TEXCOORD",0,DXGI_FORMAT_R32G32_FLOAT,0,12,D3D11_INPUT_PER_VERTEX_DATA,0},
+	//};
+	//UINT numElements = sizeof(layout) / sizeof(layout[0]); //この作業を行うのは　本来はシェーダーの情報をもとにレイアウトを作る必要がでてくるため、シェーダーごとに
+	//													//こういった計算でいくつのエレメントを持っているかを求める必要がある
+
+	////頂点インプットレイアウトを作成
+	//if (FAILED(m_pDevice->CreateInputLayout(layout, numElements, pCompiledShader->GetBufferPointer(), pCompiledShader->GetBufferSize(), &m_pVertexLayout)))
+	//{
+	//	return FALSE;
+	//}
 
 	
 	//ブロブからピクセルシェーダー作成
-	if (FAILED(D3DX11CompileFromFile((LPCSTR)"SimpleTexture.hlsl", NULL, NULL, "PS", "ps_5_0", 0, 0, NULL, &pCompiledShader, &pErrors, NULL)))
+
+	m_PixelShader.Init(m_pDevice, m_pDeviceContext);
+	m_PixelShader.CreateShaderFromFile("SimpleTexture.hlsl", "PS", "ps_5_0", &tmpnum);
+
+	/*if (FAILED(D3DX11CompileFromFile((LPCSTR)"SimpleTexture.hlsl", NULL, NULL, "PS", "ps_5_0", 0, 0, NULL, &pCompiledShader, &pErrors, NULL)))
 	{
 		MessageBox(0, "hlsl読み込み失敗", NULL, MB_OK);
 		return E_FAIL;
@@ -332,8 +352,9 @@ HRESULT MAIN::InitShader()
 		return E_FAIL;
 	}
 	SAFE_RELEASE(pCompiledShader);
-
+*/
 	
+	m_ConstantBuffer.Init(m_pDevice, m_pDeviceContext);
 	//コンスタントバッファー作成　　ここでは変換行列渡し用
 	D3D11_BUFFER_DESC cb;//説明書
 	cb.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
@@ -343,10 +364,11 @@ HRESULT MAIN::InitShader()
 	cb.StructureByteStride = 0;
 	cb.Usage = D3D11_USAGE_DYNAMIC;//使用法
 
-	if (FAILED(m_pDevice->CreateBuffer(&cb, NULL, &m_pConstantBuffer)))
+	m_ConstantBuffer.CreateConstantBuffer(cb);
+	/*if (FAILED(m_pDevice->CreateBuffer(&cb, NULL, &m_pConstantBuffer)))
 	{
 		return E_FAIL;
-	}
+	}*/
 	return S_OK;
 }
 
@@ -394,57 +416,69 @@ void MAIN::Render()
 
 	mWVP = World * View * Proj;
 
-	m_pDeviceContext->VSSetShader(m_pVertexShader, NULL, 0);
-	m_pDeviceContext->PSSetShader(m_pPixelShader, NULL, 0);
+	//m_pDeviceContext->VSSetShader(m_pVertexShader, NULL, 0);
+	m_VertexShader.SetShader(0);
+	m_VertexShader.SetLayout();
+	m_PixelShader.SetShader(0);
+	
+	//m_pDeviceContext->PSSetShader(m_pPixelShader, NULL, 0);
 
+	m_ConstantBuffer.SetConstantBuffer(World, View, Proj);
 	//シェーダーのコンスタントバッファーに各種データを渡す
-	D3D11_MAPPED_SUBRESOURCE pData;
-	SIMPLESHADER_CONSTANT_BUFFER cb;
-	if (SUCCEEDED(m_pDeviceContext->Map(m_pConstantBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &pData)))
-	{
-		//ワールド　カメラ　射影行列を渡す
-		D3DXMATRIX m = World * View*Proj;
-		D3DXMatrixTranspose(&m, &m);
-		cb.mWVP = m;
-		//mWVP = m;
+	//D3D11_MAPPED_SUBRESOURCE pData;
+	//SIMPLESHADER_CONSTANT_BUFFER cb;
+	//if (SUCCEEDED(m_pDeviceContext->Map(m_pConstantBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &pData)))
+	//{
+	//	//ワールド　カメラ　射影行列を渡す
+	//	D3DXMATRIX m = World * View*Proj;
+	//	D3DXMatrixTranspose(&m, &m);
+	//	cb.mWVP = m;
+	//	//mWVP = m;
 
-		//カラーを渡す
-		D3DXVECTOR4 vColor(1, 0, 0, 1);
-		cb.vColor = vColor;
-		memcpy_s(pData.pData, pData.RowPitch, (void*)(&cb), sizeof(cb));
-		m_pDeviceContext->Unmap(m_pConstantBuffer, 0);
-	}
+	//	//カラーを渡す
+	//	D3DXVECTOR4 vColor(1, 0, 0, 1);
+	//	cb.vColor = vColor;
+	//	memcpy_s(pData.pData, pData.RowPitch, (void*)(&cb), sizeof(cb));
+	//	m_pDeviceContext->Unmap(m_pConstantBuffer, 0);
+	//}
+
+	m_ConstantBuffer.SetCBtoVS();
+	m_ConstantBuffer.SetCBtoPS();
 
 	//このコンスタントバッファーをどのシェーダーで使うか
-	m_pDeviceContext->VSSetConstantBuffers(0, 1, &m_pConstantBuffer);
-	m_pDeviceContext->PSSetConstantBuffers(0, 1, &m_pConstantBuffer);
+	//m_pDeviceContext->VSSetConstantBuffers(0, 1, &m_pConstantBuffer);
+	//m_pDeviceContext->PSSetConstantBuffers(0, 1, &m_pConstantBuffer);
 
 	//頂点レイアウトをセット
-	m_pDeviceContext->IASetInputLayout(m_pVertexLayout);
+	//m_pDeviceContext->IASetInputLayout(m_pVertexLayout);
 
 	m_pTestPoly->Render();
 
 
 	D3DXMatrixTranslation(&World, 1, 0, 0);
 	mWVP = World * View * Proj;
-	//シェーダーのコンスタントバッファーに各種データを渡す
-	if (SUCCEEDED(m_pDeviceContext->Map(m_pConstantBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &pData)))
-	{
-		//ワールド　カメラ　射影行列を渡す
-		D3DXMATRIX m = World * View*Proj;
-		D3DXMatrixTranspose(&m, &m);
-		cb.mWVP = m;
+	m_ConstantBuffer.SetConstantBuffer(World, View, Proj);
+	////シェーダーのコンスタントバッファーに各種データを渡す
+	//if (SUCCEEDED(m_pDeviceContext->Map(m_pConstantBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &pData)))
+	//{
+	//	//ワールド　カメラ　射影行列を渡す
+	//	D3DXMATRIX m = World * View*Proj;
+	//	D3DXMatrixTranspose(&m, &m);
+	//	cb.mWVP = m;
 
-		//カラーを渡す
-		D3DXVECTOR4 vColor(1, 0, 0, 1);
-		cb.vColor = vColor;
-		memcpy_s(pData.pData, pData.RowPitch, (void*)(&cb), sizeof(cb));
-		m_pDeviceContext->Unmap(m_pConstantBuffer, 0);
-	}
+	//	//カラーを渡す
+	//	D3DXVECTOR4 vColor(1, 0, 0, 1);
+	//	cb.vColor = vColor;
+	//	memcpy_s(pData.pData, pData.RowPitch, (void*)(&cb), sizeof(cb));
+	//	m_pDeviceContext->Unmap(m_pConstantBuffer, 0);
+	//}
+
+	m_ConstantBuffer.SetCBtoVS();
+	m_ConstantBuffer.SetCBtoPS();
 
 	//このコンスタントバッファーをどのシェーダーで使うか
-	m_pDeviceContext->VSSetConstantBuffers(0, 1, &m_pConstantBuffer);
-	m_pDeviceContext->PSSetConstantBuffers(0, 1, &m_pConstantBuffer);
+	//m_pDeviceContext->VSSetConstantBuffers(0, 1, &m_pConstantBuffer);
+	//m_pDeviceContext->PSSetConstantBuffers(0, 1, &m_pConstantBuffer);
 
 
 	m_pTestPoly->Render();

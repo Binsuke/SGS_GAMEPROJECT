@@ -17,18 +17,18 @@
 //書くシェーダークラス実装の時にそこでこの構造体を継承してあげればいい
 //今は識別になる変数しか入ってないが　全体に追加が必要になったときは
 //こっちに追加してあげる
-struct BASE_SHADER_RESOURCE {
-	int Num;
-};
+//struct BASE_SHADER_RESOURCE {
+//	int Num;
+//};    クラス化してリスト構造にしたほうがよさげ
 
+#ifndef SHADER_UTILITY_H
+#define SHADER_UTILITY_H
 
 class BASE_SHADER_CLASS{
 public:
 	//こちらもデバイスをいちいち受け取るのは面倒なので
 	//デバイスのポインターを保持しておく
-	void Init(ID3D11Device* inDevice) {
-		m_pDevice = inDevice;
-	}
+	void Init(ID3D11Device* inDevice, ID3D11DeviceContext* inDeviceContext);
 	//ファイルネームはシェーダーのファイルの名前を指定する
 	//バージョンに関しては　シェーダーのファイルのバージョン
 	//ShaderNameはシェーダーファイル内に記載してある　PSなどのシェーダー関数名を指定
@@ -42,7 +42,10 @@ public:
 	
 	//指定された識別子のシェーダーをセットする
 	virtual void SetShader(int Num)=0;
-private:
+protected:
 	ID3D11Device* m_pDevice;
+	ID3D11DeviceContext* m_pDeviceContext;
 
 };
+
+#endif
