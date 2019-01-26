@@ -12,6 +12,8 @@
 //d3dx系列
 #include <d3dcompiler.h>
 
+#include <string>
+
 //マクロ
 #ifndef SAFE_RELEASE
 #define SAFE_RELEASE(x) if(x){x->Release();x=NULL;} //渡されたオブジェクトのリリース関数を呼び出してそのあとにNULLを入れている
@@ -63,7 +65,7 @@ namespace MyPoly {
 		//正直今はテクスチャーも入れているけれど、テクスチャーすら必要ではなくなると思う
 		//ただテクスチャーを使えるようにしておけば、後々いろいろな応用がきくとおもうので
 		//また変更の可能性はある
-		HRESULT CreateTexture();
+		HRESULT CreateTexture(std::string filename);
 	
 	protected:
 	private:

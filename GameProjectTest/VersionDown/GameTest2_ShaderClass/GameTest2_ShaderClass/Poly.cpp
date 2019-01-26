@@ -43,7 +43,7 @@ HRESULT MyPoly::Poly::CreateVertexBuffer() {
 	return S_OK;
 }
 
-HRESULT MyPoly::Poly::CreateTexture()
+HRESULT MyPoly::Poly::CreateTexture(std::string filename)
 {
 	//テクスチャー用サンプラー作成
 	D3D11_SAMPLER_DESC SamDesc; //サンプラー用の説明書
@@ -56,7 +56,7 @@ HRESULT MyPoly::Poly::CreateTexture()
 	m_pDevice->CreateSamplerState(&SamDesc, &m_pSampleLinear);//説明書からサンプラーを作成
 
 	//テクスチャー作成
-	if (FAILED(D3DX11CreateShaderResourceViewFromFile(m_pDevice, (LPCSTR)"Sprite.jpg", NULL, NULL, &m_pTexture, NULL)))
+	if (FAILED(D3DX11CreateShaderResourceViewFromFile(m_pDevice, filename.c_str(), NULL, NULL, &m_pTexture, NULL)))
 	{
 		MessageBox(NULL, "TextureLoadError", "errot", MB_OK);
 		return E_FAIL;

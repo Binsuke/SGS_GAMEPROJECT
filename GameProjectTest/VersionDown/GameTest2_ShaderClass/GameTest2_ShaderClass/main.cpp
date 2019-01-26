@@ -378,7 +378,7 @@ HRESULT MAIN::InitPolygon()
 	m_pTestPoly = new MyPoly::Poly();
 	m_pTestPoly->Init(m_pDevice, m_pDeviceContext);
 	m_pTestPoly->CreateVertexBuffer();
-	m_pTestPoly->CreateTexture();
+	m_pTestPoly->CreateTexture("Sprite.jpg");
 
 	return S_OK;
 }
@@ -489,11 +489,14 @@ void MAIN::Render()
 
 void MAIN::DestroyD3D()
 {
-	SAFE_RELEASE(m_pConstantBuffer);
+	/*SAFE_RELEASE(m_pConstantBuffer);
 	SAFE_RELEASE(m_pVertexShader);
 	SAFE_RELEASE(m_pPixelShader);
 
-	SAFE_RELEASE(m_pVertexLayout);
+	SAFE_RELEASE(m_pVertexLayout);*/
+	m_VertexShader.Release();
+	m_PixelShader.Release();
+	m_ConstantBuffer.Release();
 	SAFE_RELEASE(m_pSwapChain);
 	SAFE_RELEASE(m_pBackBuffer_TexRTV);
 	SAFE_RELEASE(m_pBackBuffer_DSTexDSV);
