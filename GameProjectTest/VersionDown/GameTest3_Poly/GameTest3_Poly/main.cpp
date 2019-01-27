@@ -296,7 +296,13 @@ HRESULT MAIN::InitShader()
 	
 	m_TestModel.m_VertexShader.Init(m_pDevice, m_pDeviceContext);
 
-	m_VertexShader.Init(m_pDevice, m_pDeviceContext);
+	for (int i = 0; i < 3; i++)
+	{
+		m_EnemyModel[i].m_VertexShader.Init(m_pDevice, m_pDeviceContext);
+	}
+
+	m_Ground.m_VertexShader.Init(m_pDevice, m_pDeviceContext);
+	//m_VertexShader.Init(m_pDevice, m_pDeviceContext);
 
 
 	D3D11_INPUT_ELEMENT_DESC layout[] =
@@ -306,9 +312,13 @@ HRESULT MAIN::InitShader()
 	};
 	UINT numElements = sizeof(layout) / sizeof(layout[0]); //この作業を行うのは　本来はシェーダーの情報をもとにレイアウトを作る必要がでてくるため、シェーダーごとに
 
-	m_VertexShader.CreateShaderFromFileV("SimpleTexture.hlsl", "VS", "vs_5_0", &tmpnum, layout, numElements);
+	//m_VertexShader.CreateShaderFromFileV("SimpleTexture.hlsl", "VS", "vs_5_0", &tmpnum, layout, numElements);
 
+	for (int i = 0; i < 3; i++) {
+		m_EnemyModel[i].m_VertexShader.CreateShaderFromFileV("SimpleTexture.hlsl", "VS", "vs_5_0", &tmpnum, layout, numElements);
+	}
 	m_TestModel.m_VertexShader.CreateShaderFromFileV("SimpleTexture.hlsl", "VS", "vs_5_0", &tmpnum, layout, numElements);
+	m_Ground.m_VertexShader.CreateShaderFromFileV("SimpleTexture.hlsl", "VS", "vs_5_0", &tmpnum, layout, numElements);
 	//if (FAILED(D3DX11CompileFromFile((LPCSTR)"SimpleTexture.hlsl", NULL, NULL, "VS", "vs_5_0", 0, 0, NULL, &pCompiledShader, &pErrors, NULL)))
 	//{
 	//	MessageBox(0, (LPCSTR)"hlsl読み込み失敗", NULL, MB_OK);
@@ -346,8 +356,16 @@ HRESULT MAIN::InitShader()
 	m_TestModel.m_PixelShader.Init(m_pDevice, m_pDeviceContext);
 	m_TestModel.m_PixelShader.CreateShaderFromFile("SimpleTexture.hlsl", "PS", "ps_5_0", &tmpnum);
 
-	m_PixelShader.Init(m_pDevice, m_pDeviceContext);
-	m_PixelShader.CreateShaderFromFile("SimpleTexture.hlsl", "PS", "ps_5_0", &tmpnum);
+	for (int i = 0; i < 3; i++)
+	{
+		m_EnemyModel[i].m_PixelShader.Init(m_pDevice, m_pDeviceContext);
+		m_EnemyModel[i].m_PixelShader.CreateShaderFromFile("SimpleTexture.hlsl", "PS", "ps_5_0", &tmpnum);
+	}
+
+	m_Ground.m_PixelShader.Init(m_pDevice, m_pDeviceContext);
+	m_Ground.m_PixelShader.CreateShaderFromFile("SimpleTexture.hlsl", "PS", "ps_5_0", &tmpnum);
+	//m_PixelShader.Init(m_pDevice, m_pDeviceContext);
+	//m_PixelShader.CreateShaderFromFile("SimpleTexture.hlsl", "PS", "ps_5_0", &tmpnum);
 
 	/*if (FAILED(D3DX11CompileFromFile((LPCSTR)"SimpleTexture.hlsl", NULL, NULL, "PS", "ps_5_0", 0, 0, NULL, &pCompiledShader, &pErrors, NULL)))
 	{
@@ -369,7 +387,8 @@ HRESULT MAIN::InitShader()
 
 	m_TestModel.m_ConstantBuffer.Init(m_pDevice, m_pDeviceContext);
 
-	m_ConstantBuffer.Init(m_pDevice, m_pDeviceContext);
+	
+	//m_ConstantBuffer.Init(m_pDevice, m_pDeviceContext);
 	//コンスタントバッファー作成　　ここでは変換行列渡し用
 	D3D11_BUFFER_DESC cb;//説明書
 	cb.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
@@ -381,7 +400,15 @@ HRESULT MAIN::InitShader()
 
 	m_TestModel.m_ConstantBuffer.CreateConstantBuffer(cb);
 
-	m_ConstantBuffer.CreateConstantBuffer(cb);
+	for (int i = 0; i < 3; i++)
+	{
+		m_EnemyModel[i].m_ConstantBuffer.Init(m_pDevice, m_pDeviceContext);
+		m_EnemyModel[i].m_ConstantBuffer.CreateConstantBuffer(cb);
+	}
+
+	m_Ground.m_ConstantBuffer.Init(m_pDevice, m_pDeviceContext);
+	m_Ground.m_ConstantBuffer.CreateConstantBuffer(cb);
+	//m_ConstantBuffer.CreateConstantBuffer(cb);
 	/*if (FAILED(m_pDevice->CreateBuffer(&cb, NULL, &m_pConstantBuffer)))
 	{
 		return E_FAIL;
@@ -397,11 +424,21 @@ HRESULT MAIN::InitPolygon()
 	m_TestModel.m_Cube.CreateVertexBuffer();
 	m_TestModel.m_Cube.CreateTexture("white.jpg");
 
+	for (int i = 0; i < 3; i++) {
+		m_EnemyModel[i].PosInit();
+		m_EnemyModel[i].m_Cube.Init(m_pDevice, m_pDeviceContext);
+		m_EnemyModel[i].m_Cube.CreateVertexBuffer();
+		m_EnemyModel[i].m_Cube.CreateTexture("red.jpg");
+	}
 
-	m_pTestPoly = new MyPoly::Poly();
-	m_pTestPoly->Init(m_pDevice, m_pDeviceContext);
-	m_pTestPoly->CreateVertexBuffer();
-	m_pTestPoly->CreateTexture("white.jpg");
+	m_Ground.PosInit();
+	m_Ground.m_Ground.Init(m_pDevice, m_pDeviceContext);
+	m_Ground.m_Ground.CreateVertexBuffer();
+	m_Ground.m_Ground.CreateTexture("white.jpg");
+	//m_pTestPoly = new MyPoly::Poly();
+	//m_pTestPoly->Init(m_pDevice, m_pDeviceContext);
+	//m_pTestPoly->CreateVertexBuffer();
+	//m_pTestPoly->CreateTexture("white.jpg");
 
 	return S_OK;
 }
@@ -420,20 +457,34 @@ void MAIN::Render()
 
 
 	//ワールドトランスフォーム
-	static float x = 0;
+	static float sx = 1;
+	static float sy = 1;
+	static float sz = 1;
 	static float y = 0;
 
 	if(GetKeyState('A') & 0x80) {
-		y -= 0.05;
+		sx -= 0.001;
+		//sy -= 0.001;
+		//sz -= 0.001;
 	}
 	if (GetKeyState('D') & 0x80) {
-		y += 0.05;
+		sx += 0.001;
+		//sy += 0.001;
+		//sz += 0.001;
+	}
+	if (GetKeyState('W') & 0x80) {
+		sz += 0.01;
+	}
+	if (GetKeyState('S') & 0x80) {
+		sz -= 0.01;
 	}
 
-	//y += 0.00001 / 360;
+	y += 0.00001;
 	D3DXMATRIX Tran;
 	D3DXMATRIX Yaw;
-	D3DXMatrixTranslation(&Tran, 0, 0, 0);
+	//D3DXMATRIX Scale;
+	//D3DXMatrixScaling(&Scale, sx, sy, sz);
+	D3DXMatrixTranslation(&Tran, sx, 0, sz);
 
 	D3DXMatrixRotationY(&Yaw, y);
 	World = Yaw * Tran;
@@ -441,7 +492,7 @@ void MAIN::Render()
 
 	//D3DXMatrixRotationY(&World, timeGetTime() / 100.0f);
 	//ビュートランスフォーム
-	D3DXVECTOR3 vEyePt(1.0f, 1.0f, view); //視点位置
+	D3DXVECTOR3 vEyePt(0.0f, 0.0f, view); //視点位置
 	D3DXVECTOR3 vLookatPt(0.0f, 0.0f, 0.0f);//注視位置
 	D3DXVECTOR3 vUpVec(0.0f, 1.0f, 0.0f);//上方位置
 	D3DXMatrixLookAtLH(&View, &vEyePt, &vLookatPt, &vUpVec);
@@ -492,10 +543,16 @@ void MAIN::Render()
 
 
 
-	m_TestModel.Render(View, Proj);
+	m_TestModel.Render(View, Proj,Tran,Yaw);
 
-
+	for (int i = 0; i < 3; i++)
+	{
+		D3DXMatrixTranslation(&Tran, (i+1)*1 + sx, 0, (i+1)*1 + sz);
+		m_EnemyModel[i].Render(View, Proj, Tran, Yaw);
+	}
 	
+	m_Ground.Render(View,Proj);
+
 	m_pSwapChain->Present(0, 0);//画面更新
 
 }
@@ -508,9 +565,9 @@ void MAIN::DestroyD3D()
 	SAFE_RELEASE(m_pPixelShader);
 
 	SAFE_RELEASE(m_pVertexLayout);*/
-	m_VertexShader.Release();
-	m_PixelShader.Release();
-	m_ConstantBuffer.Release();
+	//m_VertexShader.Release();
+	//m_PixelShader.Release();
+	//m_ConstantBuffer.Release();
 	SAFE_RELEASE(m_pSwapChain);
 	SAFE_RELEASE(m_pBackBuffer_TexRTV);
 	SAFE_RELEASE(m_pBackBuffer_DSTexDSV);

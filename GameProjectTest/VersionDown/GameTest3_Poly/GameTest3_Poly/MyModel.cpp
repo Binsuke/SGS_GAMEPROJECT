@@ -2,14 +2,25 @@
 
 void MyModel::PosInit()
 {
-	for (int x = 0; x < Modelx; x++) {
+	/*for (int x = 0; x < Modelx; x++) {
 		for (int y = 0; y < Modely; y++) {
 			for (int z = 0; z < Modelz; z++) {
 				D3DXMatrixTranslation(&ModelPos[x][y][z], 0, 0, 0);
 			}
 		}
-	}
+	}*/
+
 	for (int x = 0; x < Modelx; x++)
+	{
+		for (int y = 0; y < Modely; y++) {
+			for (int z = 0; z < Modelz; z++) {
+				D3DXMATRIX tran;
+				D3DXMatrixTranslation(&tran, (-0.6 + (x*0.2)), (-0.6 + (y*0.2)), (-0.6 + (z*0.2)));
+				ModelPos[x][y][z] = tran;//ModelPos[x][y][z] * tran;
+			}
+		}
+	}
+	/*for (int x = 0; x < Modelx; x++)
 	{
 		for (int y = 0; y < Modely; y++)
 		{
@@ -49,7 +60,7 @@ void MyModel::PosInit()
 				}
 			}
 		}
-	}
+	}*/
 }
 
 
@@ -80,6 +91,74 @@ void MyModel::Render(D3DXMATRIX view,D3DXMATRIX proj)
 	}
 }
 
+void MyModel::Render(D3DXMATRIX view, D3DXMATRIX proj, D3DXMATRIX tran) 
+{
+	m_VertexShader.SetShader(0);
+	m_VertexShader.SetLayout();
+	m_PixelShader.SetShader(0);
+
+	for (int x = 0; x < Modelx; x++)
+	{
+		for (int y = 0; y < Modely; y++)
+		{
+			for (int z = 0; z < Modelz; z++)
+			{
+				D3DXMATRIX tmpmatrix;
+				tmpmatrix = ModelPos[x][y][z] * tran;
+				m_ConstantBuffer.SetConstantBuffer(tmpmatrix, view, proj);
+				m_ConstantBuffer.SetCBtoPS();
+				m_ConstantBuffer.SetCBtoVS();
+				m_Cube.Render();
+			}
+		}
+	}
+}
+void MyModel::Render(D3DXMATRIX view, D3DXMATRIX proj, D3DXMATRIX tran, D3DXMATRIX rotation)
+{
+	m_VertexShader.SetShader(0);
+	m_VertexShader.SetLayout();
+	m_PixelShader.SetShader(0);
+
+	for (int x = 0; x < Modelx; x++)
+	{
+		for (int y = 0; y < Modely; y++)
+		{
+			for (int z = 0; z < Modelz; z++)
+			{
+				D3DXMATRIX TmpMatrix;
+				TmpMatrix = ModelPos[x][y][z] * rotation * tran;
+				m_ConstantBuffer.SetConstantBuffer(TmpMatrix, view, proj);
+				m_ConstantBuffer.SetCBtoPS();
+				m_ConstantBuffer.SetCBtoVS();
+				m_Cube.Render();
+			}
+		}
+	}
+}
+
+
+void MyModel::Render(D3DXMATRIX view, D3DXMATRIX proj, D3DXMATRIX tran, D3DXMATRIX rotation,D3DXMATRIX scale)
+{
+	m_VertexShader.SetShader(0);
+	m_VertexShader.SetLayout();
+	m_PixelShader.SetShader(0);
+
+	for (int x = 0; x < Modelx; x++)
+	{
+		for (int y = 0; y < Modely; y++)
+		{
+			for (int z = 0; z < Modelz; z++)
+			{
+				D3DXMATRIX TmpMatrix;
+				TmpMatrix = scale * ModelPos[x][y][z] * rotation * tran;
+				m_ConstantBuffer.SetConstantBuffer(TmpMatrix, view, proj);
+				m_ConstantBuffer.SetCBtoPS();
+				m_ConstantBuffer.SetCBtoVS();
+				m_Cube.Render();
+			}
+		}
+	}
+}
 
 //
 //void MyModel::Init(ID3D11Device* indevice, ID3D11DeviceContext* indevicecontext, D3DXMATRIX initpos)

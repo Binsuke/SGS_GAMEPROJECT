@@ -119,6 +119,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ConstantBuffer.cpp" />
+    <ClCompile Include="Ground.cpp" />
+    <ClCompile Include="GroundPanel.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MyModel.cpp" />
     <ClCompile Include="PixelShaderUtility.cpp" />
@@ -127,6 +129,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ConstantBuffer.h" />
+    <ClInclude Include="Ground.h" />
+    <ClInclude Include="GroundPanel.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="MyModel.h" />
     <ClInclude Include="PixelShaderUtility.h" />

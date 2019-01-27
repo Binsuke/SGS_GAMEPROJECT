@@ -19,11 +19,14 @@
 #define SAFE_RELEASE(x) if(x){x->Release();x=NULL;} //渡されたオブジェクトのリリース関数を呼び出してそのあとにNULLを入れている
 #endif
 
+#ifndef SIMPLE_VERTEX
+#define SIMPLE_VERTEX
 struct SimpleVertex
 {
 	D3DXVECTOR3 Pos;
 	D3DXVECTOR2 vTex;
 };
+#endif
 
 #ifndef SIMPLESHADER_CONSTANT_BUFFER_DEF
 #define SIMPLESHADER_CONSTANT_BUFFER_DEF

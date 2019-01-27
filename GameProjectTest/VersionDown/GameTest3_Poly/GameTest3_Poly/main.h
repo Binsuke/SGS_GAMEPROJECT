@@ -19,6 +19,7 @@
 #include "ConstantBuffer.h"
 
 #include "MyModel.h"
+#include "Ground.h"
 //必要なライブラリファイルのロード
 #pragma comment(lib,"winmm.lib")
 #pragma comment(lib,"d3dx10.lib")
@@ -77,12 +78,14 @@ public:
 	//ID3D11Buffer* m_pConstantBuffer;			//コンスタントバッファーを作るためのバッファ
 
 private:
-	MyPoly::Poly* m_pTestPoly;
+	/*MyPoly::Poly* m_pTestPoly;
 	VertexShaderUtil m_VertexShader;
 	PixelShaderUtil m_PixelShader;
 	MyConstantBuffer m_ConstantBuffer;
-
+*/
 	MyModel m_TestModel;
+	MyModel m_EnemyModel[3];
+	MyGround m_Ground;
 	float view;
 };
 
