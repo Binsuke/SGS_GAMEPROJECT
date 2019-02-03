@@ -463,12 +463,12 @@ void MAIN::Render()
 	static float y = 0;
 
 	if(GetKeyState('A') & 0x80) {
-		sx -= 0.001;
+		sx -= 0.01;
 		//sy -= 0.001;
 		//sz -= 0.001;
 	}
 	if (GetKeyState('D') & 0x80) {
-		sx += 0.001;
+		sx += 0.01;
 		//sy += 0.001;
 		//sz += 0.001;
 	}
@@ -479,76 +479,64 @@ void MAIN::Render()
 		sz -= 0.01;
 	}
 
-	y += 0.00001;
-	D3DXMATRIX Tran;
-	D3DXMATRIX Yaw;
+
+	if (GetKeyState(VK_RIGHT) & 0x80) {
+		y += 0.01;
+	}
+	if (GetKeyState(VK_LEFT) & 0x80) {
+		y -= 0.01;
+	}
+
+
+	//y += 0.00001;
+	D3DXMATRIX Tranx;
+	D3DXMATRIX Tranz;
+	D3DXMATRIX CamYaw;
+	D3DXMATRIX TmpMat;
 	//D3DXMATRIX Scale;
 	//D3DXMatrixScaling(&Scale, sx, sy, sz);
-	D3DXMatrixTranslation(&Tran, sx, 0, sz);
-
-	D3DXMatrixRotationY(&Yaw, y);
-	World = Yaw * Tran;
-	D3DXMATRIX mWVP;
-
-	//D3DXMatrixRotationY(&World, timeGetTime() / 100.0f);
+	D3DXMatrixTranslation(&Tranx, sx, 0, 0);
+	D3DXMatrixTranslation(&Tranz, 0, 0, sz);
+	
+	
 	//ビュートランスフォーム
-	D3DXVECTOR3 vEyePt(0.0f, 0.0f, view); //視点位置
-	D3DXVECTOR3 vLookatPt(0.0f, 0.0f, 0.0f);//注視位置
+	D3DXVECTOR3 dirz(0.0f, 0.0f, 1.0f);
+	D3DXVECTOR3 dirx(1.0f, 0.0f, 0.0f);
+	
+	D3DXMatrixRotationY(&CamYaw, y);
+
+	D3DXVec3TransformCoord(&dirz, &dirz, &CamYaw);
+	D3DXVec3TransformCoord(&dirx, &dirx, &CamYaw);
+
+	dirz = dirz * sz;
+	dirx = dirx * sx;
+	D3DXMatrixTranslation(&Tranx, dirx.x, dirx.y, dirx.z);
+	D3DXMatrixTranslation(&Tranz, dirz.x, dirz.y, dirz.z);
+
+	D3DXMATRIX Tran = Tranx * Tranz;
+	D3DXVECTOR3 vEyePt(-1.5f, 1.5f, -3.0f); //視点位置
+	D3DXVECTOR3 vLookatPt(0.0f, 0.7f, 0.0f);//注視位置
 	D3DXVECTOR3 vUpVec(0.0f, 1.0f, 0.0f);//上方位置
+
+
+
+	TmpMat = CamYaw * Tran;
+
+	D3DXVec3TransformCoord(&vEyePt, &vEyePt, &TmpMat);
+	D3DXVec3TransformCoord(&vLookatPt, &vLookatPt, &TmpMat);
+
 	D3DXMatrixLookAtLH(&View, &vEyePt, &vLookatPt, &vUpVec);
 
 	//プロジェクショントランスフォーム
 	D3DXMatrixPerspectiveFovLH(&Proj, D3DX_PI / 4, (FLOAT)WINDOW_WIDTH / (FLOAT)WINDOW_HEIGHT, 0.1f, 100.0f);
 
-	mWVP = World * View * Proj;
-
-	//m_pDeviceContext->VSSetShader(m_pVertexShader, NULL, 0);
-	//m_VertexShader.SetShader(0);
-	//m_VertexShader.SetLayout();
-	//m_PixelShader.SetShader(0);
-	
-	//m_pDeviceContext->PSSetShader(m_pPixelShader, NULL, 0);
-
-	//m_ConstantBuffer.SetConstantBuffer(World, View, Proj);
-	//シェーダーのコンスタントバッファーに各種データを渡す
-	//D3D11_MAPPED_SUBRESOURCE pData;
-	//SIMPLESHADER_CONSTANT_BUFFER cb;
-	//if (SUCCEEDED(m_pDeviceContext->Map(m_pConstantBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &pData)))
-	//{
-	//	//ワールド　カメラ　射影行列を渡す
-	//	D3DXMATRIX m = World * View*Proj;
-	//	D3DXMatrixTranspose(&m, &m);
-	//	cb.mWVP = m;
-	//	//mWVP = m;
-
-	//	//カラーを渡す
-	//	D3DXVECTOR4 vColor(1, 0, 0, 1);
-	//	cb.vColor = vColor;
-	//	memcpy_s(pData.pData, pData.RowPitch, (void*)(&cb), sizeof(cb));
-	//	m_pDeviceContext->Unmap(m_pConstantBuffer, 0);
-	//}
-
-	//m_ConstantBuffer.SetCBtoVS();
-	//m_ConstantBuffer.SetCBtoPS();
-
-	//このコンスタントバッファーをどのシェーダーで使うか
-	//m_pDeviceContext->VSSetConstantBuffers(0, 1, &m_pConstantBuffer);
-	//m_pDeviceContext->PSSetConstantBuffers(0, 1, &m_pConstantBuffer);
-
-	//頂点レイアウトをセット
-	//m_pDeviceContext->IASetInputLayout(m_pVertexLayout);
-
-	//m_pTestPoly->Render();
-
-
-
-
-	m_TestModel.Render(View, Proj,Tran,Yaw);
+	m_TestModel.Render(View, Proj,Tran);
 
 	for (int i = 0; i < 3; i++)
 	{
-		D3DXMatrixTranslation(&Tran, (i+1)*1 + sx, 0, (i+1)*1 + sz);
-		m_EnemyModel[i].Render(View, Proj, Tran, Yaw);
+		D3DXMatrixTranslation(&Tran, (i+1)*1, 0, (i+1)*1);
+
+		m_EnemyModel[i].Render(View, Proj, Tran);
 	}
 	
 	m_Ground.Render(View,Proj);
