@@ -530,7 +530,7 @@ void MAIN::Render()
 	//プロジェクショントランスフォーム
 	D3DXMatrixPerspectiveFovLH(&Proj, D3DX_PI / 4, (FLOAT)WINDOW_WIDTH / (FLOAT)WINDOW_HEIGHT, 0.1f, 100.0f);
 
-	m_TestModel.Render(View, Proj,Tran);
+	m_TestModel.Render(View, Proj,Tran,CamYaw);
 
 	for (int i = 0; i < 3; i++)
 	{
