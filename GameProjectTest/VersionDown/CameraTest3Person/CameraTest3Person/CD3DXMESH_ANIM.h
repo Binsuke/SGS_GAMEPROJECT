@@ -116,6 +116,7 @@ public:
 
 class CD3DXMESH_ANIM
 {
+public:
 	//Data
 	HWND m_hWnd;  //ウィンドウハンドル
 	DWORD m_dwNumMaterial; //マテリアルの数

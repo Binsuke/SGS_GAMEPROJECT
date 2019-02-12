@@ -18,7 +18,7 @@ HRESULT MY_HIERARCHY::CreateFrame(LPCSTR Name, LPD3DXFRAME *ppNewFrame)
 		return E_FAIL;
 	}
 
-	strcpy(pFrame->Name, Name);
+	strcpy_s(pFrame->Name,lstrlenA(Name)+1, Name);
 
 	D3DXMatrixIdentity(&pFrame->TransformationMatrix);//単位行列の作成、これを行うことで回転などの起点になる行列の作成を行っている
 	D3DXMatrixIdentity(&pFrame->CombinedTransformationMatrix);//こちらも単位行列の作成
@@ -62,7 +62,7 @@ HRESULT MY_HIERARCHY::CreateMeshContainer(LPCSTR Name, CONST D3DXMESHDATA* pMesh
 	{
 		return E_FAIL;
 	}
-	strcpy(pMeshContainer->Name, Name);//Nameのコピー
+	strcpy_s(pMeshContainer->Name,strlen(Name)+1, Name);//Nameのコピー
 	pMesh->GetDevice(&pDevice);//デバイスを渡している？
 	iFacesAmount = pMesh->GetNumFaces();//面の数を取得
 
@@ -112,7 +112,7 @@ HRESULT MY_HIERARCHY::CreateMeshContainer(LPCSTR Name, CONST D3DXMESHDATA* pMesh
 			if (pMaterials[iMaterial].pTextureFilename != NULL)//テクスチャーがあったら
 			{
 				pMeshContainer->pMaterials[iMaterial].pTextureFilename = new char[strlen(pMaterials[iMaterial].pTextureFilename)];
-				strcpy(pMeshContainer->pMaterials[iMaterial].pTextureFilename, pMaterials[iMaterial].pTextureFilename);
+				strcpy_s(pMeshContainer->pMaterials[iMaterial].pTextureFilename,strlen(pMaterials[iMaterial].pTextureFilename), pMaterials[iMaterial].pTextureFilename);
 
 			}
 		}
@@ -351,7 +351,7 @@ HRESULT CD3DXMESH_ANIM::CreateAppMeshFromD3DXMesh(LPD3DXFRAME p)
 			lstrlenA(pFrame->pMeshContainer->pMaterials[i].pTextureFilename) > 0)
 		{
 			pAppMesh->Tex = true;
-			strcpy(pAppMesh->pMaterial[i].szTextureName, pFrame->pMeshContainer->pMaterials[i].pTextureFilename);
+			strcpy_s(pAppMesh->pMaterial[i].szTextureName,strlen(pFrame->pMeshContainer->pMaterials[i].pTextureFilename), pFrame->pMeshContainer->pMaterials[i].pTextureFilename);
 			//テクスチャーを作成
 			if (FAILED(D3DX11CreateShaderResourceViewFromFileA(m_pDevice11,
 				pAppMesh->pMaterial[i].szTextureName, NULL, NULL, &pAppMesh->pMaterial[i].pTexture, NULL)))
