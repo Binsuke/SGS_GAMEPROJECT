@@ -1,4 +1,4 @@
-﻿  main.cpp
+﻿  MyModel.cpp
 d:\directx\include\dxgitype.h(12): warning C4005: 'DXGI_STATUS_OCCLUDED': マクロが再定義されました。
   c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55460): note: 'DXGI_STATUS_OCCLUDED' の以前の定義を確認してください
 d:\directx\include\dxgitype.h(13): warning C4005: 'DXGI_STATUS_CLIPPED': マクロが再定義されました。
@@ -55,5 +55,7 @@ d:\directx\include\d3d10.h(608): warning C4005: 'D3D10_ERROR_TOO_MANY_UNIQUE_STA
   c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55899): note: 'D3D10_ERROR_TOO_MANY_UNIQUE_STATE_OBJECTS' の以前の定義を確認してください
 d:\directx\include\d3d10.h(609): warning C4005: 'D3D10_ERROR_FILE_NOT_FOUND': マクロが再定義されました。
   c:\program files (x86)\windows kits\10\include\10.0.17763.0\shared\winerror.h(55908): note: 'D3D10_ERROR_FILE_NOT_FOUND' の以前の定義を確認してください
-d:\githubrepositories\sgs_gameproject\gameprojecttest\versiondown\gametest3_poly12_animation\gametest3_poly\main.cpp(623): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\versiondown\gametest3_poly12_animation\gametest3_poly\mymodel.cpp(68): warning C4244: '引数': 'double' から 'FLOAT' への変換です。データが失われる可能性があります。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\versiondown\gametest3_poly12_animation\gametest3_poly\mymodel.cpp(332): warning C4244: '+=': 'double' から 'float' への変換です。データが失われる可能性があります。
+d:\githubrepositories\sgs_gameproject\gameprojecttest\versiondown\gametest3_poly12_animation\gametest3_poly\mymodel.cpp(346): warning C4244: '引数': 'int' から 'FLOAT' への変換です。データが失われる可能性があります。
   GameTest3_Poly.vcxproj -> D:\GitHubRepositories\SGS_GAMEPROJECT\GameProjectTest\VersionDown\GameTest3_Poly12_Animation\Debug\GameTest3_Poly.exe

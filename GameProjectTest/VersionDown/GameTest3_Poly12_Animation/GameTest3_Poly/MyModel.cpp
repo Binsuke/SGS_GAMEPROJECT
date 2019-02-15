@@ -76,7 +76,7 @@ void MyModel::Render(D3DXMATRIX view,D3DXMATRIX proj)
 				m_ConstantBuffer.SetCBtoVS();
 				m_Cube.Render();
 	}
-	UpdateCenter();
+	//UpdateCenter();
 }
 
 void MyModel::Render(D3DXMATRIX view, D3DXMATRIX proj, D3DXMATRIX tran) 
@@ -337,7 +337,7 @@ D3DXVECTOR3 MyModel::GetCameraTarget()
 bool MyModel::AnimationLocalRight(float deltaTime) {
 	if (m_bAnimeFlg == false) {
 		m_bAnimeFlg = true;
-
+		m_vAnimationPrevPos = m_vPos;
 		m_fAnimeWaitTime = 0;
 		m_fAnimationRotX = 0;
 	}
@@ -347,11 +347,19 @@ bool MyModel::AnimationLocalRight(float deltaTime) {
 		
 		m_fAnimationRotX += -90.0f * deltaTime / (m_fAnimTime * m_iLV) / m_iModelSizeX ;
 
+		if (m_vPos.x  >= m_vAnimationPrevPos.x + m_fPolySize * m_iModelSizeX )
+		{
+			m_vPos.x = m_vAnimationPrevPos.x + m_fPolySize * m_iModelSizeX;
+		}
+
 		if ((m_fAnimTime*m_iLV) * m_iModelSizeX  <= m_fAnimeWaitTime) {
+			
+			//m_vPos = m_vAnimationPrevPos + m_fPolySize * m_iModelSizeX * m_vLocalRight;
 			m_fAnimeWaitTime = 0;
 			m_bAnimeFlg = false;
 			return true;
 		}
 	}
+	UpdateCenter();
 	return false;
 }
