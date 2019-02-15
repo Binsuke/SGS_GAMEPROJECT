@@ -2,10 +2,12 @@
 
 void MyGround::PosInit()
 {
+	float size = MyPoly::Poly::PolySize;
+	float halfsize = MyPoly::Poly::PolyHalfSize;
 	for (int x = 0; x < Modelx; x++) {
 		for (int z = 0; z < Modelz; z++) {
 			D3DXMATRIX tran;
-			D3DXMatrixTranslation(&tran, x * 2, 0, z * 2);
+			D3DXMatrixTranslation(&tran, x * size + halfsize, 0, z * size + halfsize);
 			ModelPos[x][z] = tran;
 		}
 	}

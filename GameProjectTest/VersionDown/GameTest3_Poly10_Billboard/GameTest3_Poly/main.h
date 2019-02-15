@@ -21,6 +21,7 @@
 #include "MyModel.h"
 #include "Ground.h"
 #include "Camera.h"
+#include "MoveUI.h"
 
 #include "FPS.h"
 //必要なライブラリファイルのロード
@@ -75,6 +76,8 @@ public:
 
 	ID3D11Texture2D* m_pBackBuffer_DSTex;		//バックバッファーの深度バッファーに使うためのテクスチャ
 
+	ID3D11BlendState* m_pBlendState;
+
 	//モデルの種類ごとに必要、というよりモデルに使うシェーダーごとにレイアウトなどが変わるので
 	//その時に必要になるはず
 	//ID3D11InputLayout* m_pVertexLayout;			//バーテックスのレイアウトを作る際に使う、このレイアウトをもとに頂点の形を決める
@@ -107,6 +110,8 @@ private:
 	MyModel* m_pTestModel;
 	MyModel* m_pEnemyModel[3];
 	MyGround* m_pGround;
+	
+	MoveUI* m_pMoveUI;
 	float view;
 	
 };

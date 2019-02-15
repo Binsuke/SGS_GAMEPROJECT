@@ -49,6 +49,7 @@ void MAIN::InitModel()
 		m_pEnemyModel[i] = new MyModel;
 	}
 	m_pGround = new MyGround;
+	m_pMoveUI = new MoveUI;
 }
 
 void MAIN::ReleaseModel()
@@ -58,6 +59,7 @@ void MAIN::ReleaseModel()
 		delete m_pEnemyModel[i];
 	}
 	delete m_pGround;
+	delete m_pMoveUI;
 }
 //コンストラクタ
 MAIN::MAIN()
@@ -293,6 +295,30 @@ HRESULT MAIN::InitD3D()
 
 	SAFE_RELEASE(pIr);
 
+	//アルファブレンド用ブレンドステート作成
+	//pngファイル内にアルファ情報がある。アルファにより透過するよう指定している
+	D3D11_BLEND_DESC bd;
+	ZeroMemory(&bd, sizeof(D3D11_BLEND_DESC));
+	bd.IndependentBlendEnable = false;
+	bd.AlphaToCoverageEnable = false;
+	bd.RenderTarget[0].BlendEnable = true;
+	bd.RenderTarget[0].SrcBlend = D3D11_BLEND_SRC_ALPHA;
+	bd.RenderTarget[0].DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
+	bd.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
+	bd.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ONE;
+	bd.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ZERO;
+	bd.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
+	bd.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+
+	if (FAILED(m_pDevice->CreateBlendState(&bd, &m_pBlendState)))
+	{
+		return E_FAIL;
+	}
+
+	UINT mask = 0xffffffff;
+	m_pDeviceContext->OMSetBlendState(m_pBlendState, NULL, mask);
+
+
 	//シェーダー初期化を行う　　
 
 	if (FAILED(InitShader()))
@@ -328,7 +354,7 @@ HRESULT MAIN::InitShader()
 	}
 
 	m_pGround->m_VertexShader.Init(m_pDevice, m_pDeviceContext);
-
+	m_pMoveUI->m_VertexShader.Init(m_pDevice, m_pDeviceContext);
 
 	D3D11_INPUT_ELEMENT_DESC layout[] =
 	{
@@ -344,7 +370,7 @@ HRESULT MAIN::InitShader()
 	}
 	m_pTestModel->m_VertexShader.CreateShaderFromFileV("SimpleTexture.hlsl", "VS", "vs_5_0", &tmpnum, layout, numElements);
 	m_pGround->m_VertexShader.CreateShaderFromFileV("SimpleTexture.hlsl", "VS", "vs_5_0", &tmpnum, layout, numElements);
-	
+	m_pMoveUI->m_VertexShader.CreateShaderFromFileV("SimpleTexture.hlsl", "VS", "vs_5_0", &tmpnum, layout, numElements);
 
 
 	////頂点インプットレイアウトを定義
@@ -365,6 +391,10 @@ HRESULT MAIN::InitShader()
 
 	m_pGround->m_PixelShader.Init(m_pDevice, m_pDeviceContext);
 	m_pGround->m_PixelShader.CreateShaderFromFile("SimpleTexture.hlsl", "PS", "ps_5_0", &tmpnum);
+
+	m_pMoveUI->m_PixelShader.Init(m_pDevice, m_pDeviceContext);
+	m_pMoveUI->m_PixelShader.CreateShaderFromFile("SimpleTexture.hlsl", "PS", "ps_5_0", &tmpnum);
+
 
 	m_pTestModel->m_ConstantBuffer.Init(m_pDevice, m_pDeviceContext);
 
@@ -389,6 +419,10 @@ HRESULT MAIN::InitShader()
 	m_pGround->m_ConstantBuffer.Init(m_pDevice, m_pDeviceContext);
 	m_pGround->m_ConstantBuffer.CreateConstantBuffer(cb);
 
+	m_pMoveUI->m_ConstantBuffer.Init(m_pDevice, m_pDeviceContext);
+	m_pMoveUI->m_ConstantBuffer.CreateConstantBuffer(cb);
+
+
 	return S_OK;
 }
 
@@ -412,6 +446,11 @@ HRESULT MAIN::InitPolygon()
 	m_pGround->m_Ground.CreateVertexBuffer();
 	m_pGround->m_Ground.CreateTexture("white.jpg");
 
+	/*m_pMoveUI->m_PanelW.Init(m_pDevice, m_pDeviceContext);
+	m_pMoveUI->m_PanelW.CreateVertexBuffer();
+	m_pMoveUI->m_PanelW.CreateTexture("UI_W.png");
+*/
+	m_pMoveUI->MovePanelInit(m_pDevice,m_pDeviceContext);
 	return S_OK;
 }
 
@@ -556,6 +595,9 @@ void MAIN::Render()
 	
 	m_pGround->Render(mView, mProjection);
 
+	
+	m_pMoveUI->Render(mView, mProjection, m_pTestModel->GetCenter(),m_pTestModel->GetSizeY() * 1.1,MainCamera->GetWorldForward());
+	
 	g_pMain->m_FPS->PrintFps(m_hWnd);
 
 	m_pSwapChain->Present(0, 0);//画面更新

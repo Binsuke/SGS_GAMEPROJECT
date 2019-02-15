@@ -31,7 +31,7 @@ public:
 	
 
 
-	//D3DXVECTOR3 GetCenter() { return m_vCenter; }
+	D3DXVECTOR3 GetCenter() { return m_vCenter; }
 	void SetPos(D3DXVECTOR3 vPos);
 	void SetPos(float x, float y, float z);
 

@@ -85,6 +85,9 @@ public:
 
 	//void UpdateLocalVec(float deltaTime);
 	
+	D3DXVECTOR3 GetWorldForward() {
+		return m_vWorldForward;
+	}
 
 
 private:

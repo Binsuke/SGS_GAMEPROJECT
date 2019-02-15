@@ -128,6 +128,8 @@
     <ClCompile Include="Ground.cpp" />
     <ClCompile Include="GroundPanel.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MoveUI.cpp" />
+    <ClCompile Include="MoveUIPanel.cpp" />
     <ClCompile Include="MyModel.cpp" />
     <ClCompile Include="PixelShaderUtility.cpp" />
     <ClCompile Include="Poly.cpp" />
@@ -140,6 +142,8 @@
     <ClInclude Include="Ground.h" />
     <ClInclude Include="GroundPanel.h" />
     <ClInclude Include="main.h" />
+    <ClInclude Include="MoveUI.h" />
+    <ClInclude Include="MoveUIPanel.h" />
     <ClInclude Include="MyModel.h" />
     <ClInclude Include="PixelShaderUtility.h" />
     <ClInclude Include="Poly.h" />

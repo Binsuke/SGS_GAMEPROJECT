@@ -14,12 +14,14 @@ void GroundPanel::Release() {
 
 HRESULT GroundPanel::CreateVertexBuffer() {
 
+	float size = MyPoly::Poly::PolySize;
+	float halfsize = MyPoly::Poly::PolyHalfSize;
 	SimpleVertex vertices[] =
 	{
-		D3DXVECTOR3(-1.0f,0.0f,-1.0f),D3DXVECTOR2(0,1),//í∏ì_ÇP
-		D3DXVECTOR3(-1.0f,0.0f,1.0f),D3DXVECTOR2(0,0),//í∏ì_ÇQ
-		D3DXVECTOR3(1.0f,0.0f,-1.0f),D3DXVECTOR2(1,1),//í∏ì_ÇR
-		D3DXVECTOR3(1.0f,0.0f,1.0f),D3DXVECTOR2(1,0),//í∏ì_ÇS
+		D3DXVECTOR3(-halfsize,0.0f,-halfsize),D3DXVECTOR2(0,1),//í∏ì_ÇP
+		D3DXVECTOR3(-halfsize,0.0f,halfsize),D3DXVECTOR2(0,0),//í∏ì_ÇQ
+		D3DXVECTOR3(halfsize,0.0f,-halfsize),D3DXVECTOR2(1,1),//í∏ì_ÇR
+		D3DXVECTOR3(halfsize,0.0f,halfsize),D3DXVECTOR2(1,0),//í∏ì_ÇS
 	};
 	D3D11_BUFFER_DESC bd; //ê‡ñæèë
 	bd.Usage = D3D11_USAGE_DEFAULT;

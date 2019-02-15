@@ -14,6 +14,8 @@
 
 #include <string>
 
+#include "Poly.h"
+
 //マクロ
 #ifndef SAFE_RELEASE
 #define SAFE_RELEASE(x) if(x){x->Release();x=NULL;} //渡されたオブジェクトのリリース関数を呼び出してそのあとにNULLを入れている
@@ -48,50 +50,50 @@ struct SIMPLESHADER_CONSTANT_BUFFER
 };
 #endif
 
-	class GroundPanel {
-	public:
-		//GroundPanlel();
-		//初期化　デバイス本体を渡しておいてあとから呼ぶときにいちいちデバイスを渡さなくてよくしておく
-		void Init(ID3D11Device* inDevice, ID3D11DeviceContext* inDeviceContext);
+class GroundPanel {
+public:
+	//GroundPanlel();
+	//初期化　デバイス本体を渡しておいてあとから呼ぶときにいちいちデバイスを渡さなくてよくしておく
+	void Init(ID3D11Device* inDevice, ID3D11DeviceContext* inDeviceContext);
 
-		//解放処理、いらなくなったら
-		void Release();
+	//解放処理、いらなくなったら
+	void Release();
 
-		//ワールドのセットなどそういったことも考えていたが、
-		//コンスタントバッファーを持つことができなかったので、このクラスでは呼ばれたらキューブをレンダリングするのみにする
-		void Render();
-		//バーテックスバッファー作成用
-		HRESULT CreateVertexBuffer();
-		//テクスチャー読み込み、これに関してはファイル名を指定して読み込むように変更してもいいけれど
-		//現状、キューブのみでゲームを作る予定なのでそこまで実装する必要がないと判断
-		//正直今はテクスチャーも入れているけれど、テクスチャーすら必要ではなくなると思う
-		//ただテクスチャーを使えるようにしておけば、後々いろいろな応用がきくとおもうので
-		//また変更の可能性はある
-		HRESULT CreateTexture(std::string filename);
+	//ワールドのセットなどそういったことも考えていたが、
+	//コンスタントバッファーを持つことができなかったので、このクラスでは呼ばれたらキューブをレンダリングするのみにする
+	void Render();
+	//バーテックスバッファー作成用
+	HRESULT CreateVertexBuffer();
+	//テクスチャー読み込み、これに関してはファイル名を指定して読み込むように変更してもいいけれど
+	//現状、キューブのみでゲームを作る予定なのでそこまで実装する必要がないと判断
+	//正直今はテクスチャーも入れているけれど、テクスチャーすら必要ではなくなると思う
+	//ただテクスチャーを使えるようにしておけば、後々いろいろな応用がきくとおもうので
+	//また変更の可能性はある
+	HRESULT CreateTexture(std::string filename);
 
-	protected:
-	private:
-		//init関数でデバイス本体を受け取っておくことで、あとでいちいち受け取る必要がない
-		//結合度はあがるけれど、デバイスがないと動作しないものが基本なので気にしてもしかたない
-		ID3D11Device* m_pDevice;
-		ID3D11DeviceContext* m_pDeviceContext;
+protected:
+private:
+	//init関数でデバイス本体を受け取っておくことで、あとでいちいち受け取る必要がない
+	//結合度はあがるけれど、デバイスがないと動作しないものが基本なので気にしてもしかたない
+	ID3D11Device* m_pDevice;
+	ID3D11DeviceContext* m_pDeviceContext;
 
-		//初期化をちゃんとしているかを判定するために追加
-		//bool InitFlg;
+	//初期化をちゃんとしているかを判定するために追加
+	//bool InitFlg;
 
-		//バーテックスバッファーを作ったら正直必要はなくなると思うので
-		//もしかしたら消すかも
+	//バーテックスバッファーを作ったら正直必要はなくなると思うので
+	//もしかしたら消すかも
 
-		//バーテックスバッファー
-		ID3D11Buffer* m_pVertexBuffer;				//バーテックスバッファー
+	//バーテックスバッファー
+	ID3D11Buffer* m_pVertexBuffer;				//バーテックスバッファー
 
-		//サンプラー
-		ID3D11SamplerState* m_pSampleLinear;			//テクスチャーのサンプラー
-													//サンプラーとはテクスチャをどのように扱うか、テクスチャの画像よりも外にある端はどのように扱うか
-													//例えばミラーや同じ色で塗りつぶすなどの設定をいれておいて　教えるための情報源
-		//テクスチャー
-		ID3D11ShaderResourceView* m_pTexture;  //テクスチャー本体　　シェーダーに渡すリソース
+	//サンプラー
+	ID3D11SamplerState* m_pSampleLinear;			//テクスチャーのサンプラー
+												//サンプラーとはテクスチャをどのように扱うか、テクスチャの画像よりも外にある端はどのように扱うか
+												//例えばミラーや同じ色で塗りつぶすなどの設定をいれておいて　教えるための情報源
+	//テクスチャー
+	ID3D11ShaderResourceView* m_pTexture;  //テクスチャー本体　　シェーダーに渡すリソース
 
-	};
+};
 
 #endif

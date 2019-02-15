@@ -41,8 +41,8 @@ private:
 
 	D3DXMATRIX m_World;
 	enum {
-		Modelx = 5,
-		Modelz = 5,
+		Modelx = 100,
+		Modelz = 100,
 	};
 	//ローカル座標のポス保持変数
 	D3DXMATRIX ModelPos[Modelx][Modelz];
