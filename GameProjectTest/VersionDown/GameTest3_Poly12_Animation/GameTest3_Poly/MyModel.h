@@ -49,7 +49,7 @@ public:
 
 	bool AnimationLocalRight(float deltaTime);
 
-	void KeyInput(float deltaTime);
+	//void KeyInput(float deltaTime);
 
 	//キューブ描画用のクラス
 	MyPoly::Poly m_Cube;

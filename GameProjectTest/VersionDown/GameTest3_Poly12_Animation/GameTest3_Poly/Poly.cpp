@@ -18,6 +18,14 @@ void MyPoly::Poly::Init(ID3D11Device* inDevice, ID3D11DeviceContext* inDeviceCon
 void MyPoly::Poly::Release() {
 	delete[] m_pVertices;
 	SAFE_RELEASE(m_pVertexBuffer);
+
+	SAFE_RELEASE(m_pVertexBufferTop);
+	SAFE_RELEASE(m_pVertexBufferDown);
+	SAFE_RELEASE(m_pVertexBufferLeft);
+	SAFE_RELEASE(m_pVertexBufferRight);
+	SAFE_RELEASE(m_pVertexBufferFront);
+	SAFE_RELEASE(m_pVertexBufferBack);
+
 	SAFE_RELEASE(m_pSampleLinear);
 	SAFE_RELEASE(m_pTexture);
 

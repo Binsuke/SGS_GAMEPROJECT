@@ -86,9 +86,6 @@
     <ClInclude Include="PixelShaderUtility.h">
       <Filter>ヘッダー ファイル\Shader</Filter>
     </ClInclude>
-    <ClInclude Include="VertexShaderUtility.h">
-      <Filter>ヘッダー ファイル\Shader</Filter>
-    </ClInclude>
     <ClInclude Include="GroundPanel.h">
       <Filter>ヘッダー ファイル\Ground</Filter>
     </ClInclude>
@@ -106,6 +103,9 @@
     </ClInclude>
     <ClInclude Include="MoveUIPanel.h">
       <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="VertexShaderUtility.h">
+      <Filter>ヘッダー ファイル\Shader</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

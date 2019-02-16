@@ -2,7 +2,8 @@
 #define GROUND_PANEL_H
 //ウィンドウプログラミングに必要なもの
 //ヘッダーファイルのインクルード
-#include <Windows.h>	
+#ifndef D3D_INCLUDE
+#define D3D_INCLUDE
 //ウィンドウプログラミングに必要なもの
 #include <d3d11.h>		
 //d3d11
@@ -11,6 +12,7 @@
 #include <d3dx11.h>		
 //d3dx系列
 #include <d3dcompiler.h>
+#endif
 
 #include <string>
 

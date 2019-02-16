@@ -2,8 +2,19 @@
 
 #ifndef PIXEL_SHADER_UTILITY_H
 #define PIXEL_SHADER_UTILITY_H
-#include "ShaderUtility.h"
-//#include <vector>
+
+
+
+//ウィンドウプログラミングに必要なもの
+#include <d3d11.h>		
+//d3d11
+#include <d3dx10.h>
+//d3dx系列
+#include <d3dx11.h>		
+//d3dx系列
+#include <d3dcompiler.h>
+
+#include <string>
 
 
 
