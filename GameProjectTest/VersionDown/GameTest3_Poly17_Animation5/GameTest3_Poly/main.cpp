@@ -49,9 +49,9 @@ void MAIN::InitModel()
 	for (int i = 0; i < 3; i++) {
 		m_pEnemyModel[i] = new MyModel;
 		//int LV = (m_pEnemyModel[i]->GetLV());
-		m_pEnemyModel[i]->InitLv(i + 3);
+		m_pEnemyModel[i]->InitLv(i + 1);
 		float Size = (m_pEnemyModel[i]->GetSize());
-		m_pEnemyModel[i]->SetPos(0, 0, Size * (i + 1));
+		m_pEnemyModel[i]->SetPos(0, 0, Size * (i + 10));
 	}
 	m_pGround = new MyGround;
 	m_pMoveUI = new MoveUI;
@@ -88,59 +88,71 @@ MAIN::~MAIN()
 
 }
 
+bool MAIN::Colision2(MyModel* pModelA, MyModel* pModelB)
+{
+	D3DXVECTOR3 vLength = pModelB->GetCenter() - pModelA->GetCenter();
+	float fLength = D3DXVec3Length(&vLength);
+	float fModelArad = pModelA->GetSize() *0.5;//sqrt(pow(pModelA->GetSize(), 2) + pow(pModelA->GetSize(), 2))*0.49;
+	float fModelBrad = sqrt(pow(pModelB->GetSize(), 2) + pow(pModelB->GetSize(), 2))*0.49;
+	if (fLength < fModelArad + fModelBrad)
+	{
+		return true;
+	}
+	return false;
+}
 bool MAIN::Colision(MyModel* pModelA, MyModel* pModelB)
 {
-		D3DXVECTOR3 vLength = pModelB->GetCenter() - pModelA->GetCenter();
-		float fLength = D3DXVec3Length(&vLength);
-		float fModelArad = sqrt(pow(pModelA->GetSize(), 2) + pow(pModelA->GetSize(), 2))*0.49;
-		float fModelBrad = sqrt(pow(pModelB->GetSize(), 2) + pow(pModelB->GetSize(), 2))*0.49;
-		if (fLength < fModelArad + fModelBrad)
-		{
-			return true;
-		}
+		//D3DXVECTOR3 vLength = pModelB->GetCenter() - pModelA->GetCenter();
+		//float fLength = D3DXVec3Length(&vLength);
+		//float fModelArad = pModelA->GetSize() *0.49;//sqrt(pow(pModelA->GetSize(), 2) + pow(pModelA->GetSize(), 2))*0.49;
+		//float fModelBrad = sqrt(pow(pModelB->GetSize(), 2) + pow(pModelB->GetSize(), 2))*0.49;
+		//if (fLength < fModelArad + fModelBrad)
+		//{
+		//	return true;
+		//}
 
-			//D3DXVECTOR3 vModelA = pModelA->GetCenter();
-			//D3DXVECTOR3 vModelB = pModelB->GetCenter();
+			D3DXVECTOR3 vModelA = pModelA->GetCenter();
+			D3DXVECTOR3 vModelB = pModelB->GetCenter();
 
-			//D3DXVECTOR2 vTopRightA;
+			D3DXVECTOR2 vTopRightA;
 
-			//float SizeA = pModelA->GetSize();
-			//float SizeB = pModelB->GetSize();
+			float SizeA = pModelA->GetSize() * 0.98;
+			float SizeB = pModelB->GetSize() * 0.98;
 
-			//vTopRightA.x = vModelA.x + SizeA / 2.0f;
-			//vTopRightA.y = vModelA.z + SizeA / 2.0f;
-			//D3DXVECTOR2 vTopLeftA;
-			//vTopLeftA.x = vModelA.x - SizeA / 2.0f;
-			//vTopLeftA.y = vModelA.z + SizeA / 2.0f;
-			//D3DXVECTOR2 vUnderRightA;
-			//vUnderRightA.x = vModelA.x + SizeA / 2.0f;
-			//vUnderRightA.y = vModelA.z - SizeA / 2.0f;
-			//D3DXVECTOR2 vUnderLeftA;
-			//vUnderLeftA.x = vModelA.x - SizeA / 2.0f;
-			//vUnderLeftA.y = vModelA.z - SizeA / 2.0f;
+			vTopRightA.x = vModelA.x + SizeA / 2.0f;
+			vTopRightA.y = vModelA.z + SizeA / 2.0f;
+			D3DXVECTOR2 vTopLeftA;
+			vTopLeftA.x = vModelA.x - SizeA / 2.0f;
+			vTopLeftA.y = vModelA.z + SizeA / 2.0f;
+			D3DXVECTOR2 vUnderRightA;
+			vUnderRightA.x = vModelA.x + SizeA / 2.0f;
+			vUnderRightA.y = vModelA.z - SizeA / 2.0f;
+			D3DXVECTOR2 vUnderLeftA;
+			vUnderLeftA.x = vModelA.x - SizeA / 2.0f;
+			vUnderLeftA.y = vModelA.z - SizeA / 2.0f;
 
 
-			//D3DXVECTOR2 vTopRightB;
-			//vTopRightB.x = vModelB.x + SizeB / 2.0f;
-			//vTopRightB.y = vModelB.z + SizeB / 2.0f;
-			//D3DXVECTOR2 vTopLeftB;
-			//vTopLeftB.x = vModelB.x - SizeB / 2.0f;
-			//vTopLeftB.y = vModelB.z + SizeB / 2.0f;
-			//D3DXVECTOR2 vUnderRightB;
-			//vUnderRightB.x = vModelB.x + SizeB / 2.0f;
-			//vUnderRightB.y = vModelB.z - SizeB / 2.0f;
-			//D3DXVECTOR2 vUnderLeftB;
-			//vUnderLeftB.x = vModelB.x - SizeB; // 2.0f;
-			//vUnderLeftB.y = vModelB.z - SizeB; // 2.0f;
+			D3DXVECTOR2 vTopRightB;
+			vTopRightB.x = vModelB.x + SizeB / 2.0f;
+			vTopRightB.y = vModelB.z + SizeB / 2.0f;
+			D3DXVECTOR2 vTopLeftB;
+			vTopLeftB.x = vModelB.x - SizeB / 2.0f;
+			vTopLeftB.y = vModelB.z + SizeB / 2.0f;
+			D3DXVECTOR2 vUnderRightB;
+			vUnderRightB.x = vModelB.x + SizeB / 2.0f;
+			vUnderRightB.y = vModelB.z - SizeB / 2.0f;
+			D3DXVECTOR2 vUnderLeftB;
+			vUnderLeftB.x = vModelB.x - SizeB; // 2.0f;
+			vUnderLeftB.y = vModelB.z - SizeB; // 2.0f;
 
-			//if (vTopLeftA.x < vUnderRightB.x && vTopLeftA.y > vUnderRightB.y
-			//	&& vTopRightA.x > vUnderLeftB.x && vTopRightA.y > vUnderLeftB.y
-			//	&& vUnderLeftA.x < vTopRightB.x && vUnderLeftA.y < vTopRightB.y
-			//	&& vUnderRightA.x > vTopLeftB.x && vUnderRightA.y < vTopLeftB.y
-			//	)
-			//{
-			//	return true;
-			//}
+			if (vTopLeftA.x < vUnderRightB.x && vTopLeftA.y > vUnderRightB.y
+				&& vTopRightA.x > vUnderLeftB.x && vTopRightA.y > vUnderLeftB.y
+				&& vUnderLeftA.x < vTopRightB.x && vUnderLeftA.y < vTopRightB.y
+				&& vUnderRightA.x > vTopLeftB.x && vUnderRightA.y < vTopLeftB.y
+				)
+			{
+				return true;
+			}
 
 
 		
@@ -272,6 +284,13 @@ void MAIN::App()
 					g_pMain->m_pEnemyModel[i]->LVDown();
 				}
 			}
+			else if (g_pMain->m_pTestModel->GetLV() == 1 && m_pEnemyModel[i]->GetLV() == 1)
+			{
+				if (Colision(g_pMain->m_pTestModel, g_pMain->m_pEnemyModel[i])) {
+					g_pMain->m_pEnemyModel[i]->LVDown();
+				}
+			}
+
 		}
 		//}
 	}

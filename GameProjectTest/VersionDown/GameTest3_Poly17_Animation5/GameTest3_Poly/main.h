@@ -110,6 +110,7 @@ public:
 
 	bool Colision(MyModel* pModelA, MyModel* pModelB);
 
+	bool Colision2(MyModel* pModelA, MyModel* pModelB);
 
 private:
 	
