@@ -45,8 +45,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 void MAIN::InitModel()
 {
 	m_pTestModel = new MyModel;
+	m_pTestModel->InitLv(3);
 	for (int i = 0; i < 3; i++) {
 		m_pEnemyModel[i] = new MyModel;
+		//int LV = (m_pEnemyModel[i]->GetLV());
+		m_pEnemyModel[i]->InitLv(i + 3);
+		float Size = (m_pEnemyModel[i]->GetSize());
+		m_pEnemyModel[i]->SetPos(0, 0, Size * (i +1 ));
 	}
 	m_pGround = new MyGround;
 	m_pMoveUI = new MoveUI;
@@ -83,6 +88,18 @@ MAIN::~MAIN()
 
 }
 
+bool MAIN::Colision(MyModel* pModelA, MyModel* pModelB) 
+{
+	D3DXVECTOR3 vLength = pModelB->GetColisionPos() - pModelA->GetColisionPos();
+	float fLength = D3DXVec3Length(&vLength);
+	float fModelArad = sqrt(pow(pModelA->GetSize(), 2) + pow(pModelA->GetSize(), 2))/2.0f;
+	float fModelBrad = sqrt(pow(pModelB->GetSize(), 2) + pow(pModelB->GetSize(), 2)) / 2.0f;
+	if (fLength <= fModelArad + fModelBrad)
+	{
+		return true;
+	}
+	return false;
+}
 //
 //std::wstring StrToWstr(const std::string& s)
 //{
@@ -197,6 +214,16 @@ void MAIN::Loop()
 void MAIN::App()
 {
 	g_pMain->m_pFPS->Run();
+	
+	for (int i = 0; i < 3; i++) {
+		if (g_pMain->m_pTestModel->GetLV() > g_pMain->m_pEnemyModel[i]->GetLV())
+		{
+			if (Colision(g_pMain->m_pTestModel, g_pMain->m_pEnemyModel[i]))
+			{
+				g_pMain->m_pEnemyModel[i]->LVDown();
+			}
+		}
+	}
 	Render();//アプリケーションの中身は現状レンダーのみ
 }
 
@@ -436,13 +463,11 @@ HRESULT MAIN::InitShader()
 
 HRESULT MAIN::InitPolygon()
 {
-	m_pTestModel->InitLv(3);
 	m_pTestModel->m_Cube.Init(m_pDevice, m_pDeviceContext);
 	m_pTestModel->m_Cube.CreateVertexBuffer();
 	m_pTestModel->m_Cube.CreateTexture("white.jpg");
 
 	for (int i = 0; i < 3; i++) {
-		m_pEnemyModel[i]->InitLv(i+3);
 		m_pEnemyModel[i]->m_Cube.Init(m_pDevice, m_pDeviceContext);
 		m_pEnemyModel[i]->m_Cube.CreateVertexBuffer();
 		m_pEnemyModel[i]->m_Cube.CreateTexture("red.jpg");
@@ -532,60 +557,16 @@ void MAIN::Render()
 		if (check) {
 			m_eMoveVec = eMoveVec::None;
 		}
-
-		////right check
-		//if (m_eMoveVec == eMoveVec::Right) {
-		//	
-		//	bool check = m_pTestModel->AnimationLocalRightA(DeltaFPS->GetDeltaTime());
-		//	if (check) {
-
-		//		m_eMoveVec = eMoveVec::None;
-		//	}
-		//}
-
-		//if (m_eMoveVec == eMoveVec::Left) {
-
-		//	bool check = m_pTestModel->AnimationLocalLeftA(DeltaFPS->GetDeltaTime());
-
-		//	if (check) {
-
-		//		m_eMoveVec = eMoveVec::None;
-		//	}
-		//}
-
-		//if (m_eMoveVec == eMoveVec::Forward) {
-
-		//	bool check = m_pTestModel->AnimationLocalForwardA(DeltaFPS->GetDeltaTime());
-
-		//	if (check) {
-
-		//		m_eMoveVec = eMoveVec::None;
-		//	}
-		//}
-
-		//if (m_eMoveVec == eMoveVec::Backward) {
-
-		//	bool check = m_pTestModel->AnimationLocalBackwardA(DeltaFPS->GetDeltaTime());
-
-		//	if (check) {
-
-		//		m_eMoveVec = eMoveVec::None;
-		//	}
-		//}
-
-
-
-		//MoveUpdate(m_eMoveVec);
 		
 		//上を常に見れるようにするか　元のターゲットまで戻すかの処理
-		MainCamera->UpDateLook(DeltaFPS->GetDeltaTime(),m_pTestModel->GetSizeY());
+		MainCamera->UpDateLook(DeltaFPS->GetDeltaTime(),m_pTestModel->GetSize());
 		if (GetKeyState(VK_UP) & 0x80) {
-			MainCamera->LookUp(DeltaFPS->GetDeltaTime(), m_pTestModel->GetSizeY());
+			MainCamera->LookUp(DeltaFPS->GetDeltaTime(), m_pTestModel->GetSize());
 
 			//MainCamera->MoveUp(DeltaFPS->GetDeltaTime());
 		}
 		if (GetKeyState(VK_DOWN) & 0x80) {
-			MainCamera->LookDown(DeltaFPS->GetDeltaTime(), m_pTestModel->GetSizeY());
+			MainCamera->LookDown(DeltaFPS->GetDeltaTime(), m_pTestModel->GetSize());
 			//MainCamera->MoveDown(DeltaFPS->GetDeltaTime());
 		}
 		if (GetKeyState(VK_RIGHT) & 0x80) {
@@ -632,31 +613,14 @@ void MAIN::Render()
 			flg2 = false;
 		}
 	}
-
-	//popup message
-	
-	/*if (GetKeyState('E') & 0x80)
-	{
-		char testString[256];
-		D3DXVECTOR3 tmp = m_pTestModel->GetCenter();
-		sprintf_s(testString, "x = %f,y = %f,z=%f",tmp.x,tmp.y,tmp.z );
-		MessageBox(m_hWnd, testString, "test", 0);
-	}*/
-
 	
 	D3DXMATRIX Tran;
 	D3DXMatrixTranslation(&Tran, 0.0f, 0.0f, 0.0f);
-	//D3DXVECTOR3 CameraPosVec(0, 0.7f, -1);
-	//MainCamera->SetCamera(&mView, &mProjection, m_pTestModel->GetCameraTarget(),m_pTestModel->GetCameraMargin());
-	//MainCamera->SetCamera(&mView, &mProjection, m_pTestModel->GetCameraTarget(), m_pTestModel->GetCameraMargin(),TargetMarg.y,TargetMarg.x);
 	MainCamera->SetCameraA(&mView, &mProjection, m_pTestModel->GetCameraTarget(), m_pTestModel->GetCameraMargin());
-
 
 	m_pTestModel->Render(mView, mProjection);
 	for (int i = 0; i < 3; i++)
 	{
-		//D3DXMatrixTranslation(&Tran, (i+1)*1, 0, (i+1)*1);
-		//m_pEnemyModel[i]->SetPos((i + 1) * m_pEnemyModel[i]->GetSizeY(), 0, (i + 1) * 1);
 		m_pEnemyModel[i]->Render(mView, mProjection);
 	}
 
@@ -664,7 +628,7 @@ void MAIN::Render()
 	m_pGround->Render(mView, mProjection);
 
 	
-	m_pMoveUI->Render(mView, mProjection, m_pTestModel->GetCenter(),m_pTestModel->GetSizeY() * 1.1,MainCamera->GetWorldForward(),m_pTestModel->GetLV());
+	m_pMoveUI->Render(mView, mProjection, m_pTestModel->GetCenter(),m_pTestModel->GetSize() * 1.1,MainCamera->GetWorldForward(),m_pTestModel->GetLV());
 	
 	g_pMain->m_pFPS->PrintFps(m_hWnd);
 

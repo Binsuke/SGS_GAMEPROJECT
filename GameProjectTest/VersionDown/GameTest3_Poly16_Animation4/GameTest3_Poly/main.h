@@ -108,6 +108,8 @@ public:
 
 	bool MoveUpdateA(eMoveVec Vec);
 
+	bool Colision(MyModel* pModelA, MyModel* pModelB);
+
 
 private:
 	

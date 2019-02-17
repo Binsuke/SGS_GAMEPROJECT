@@ -38,6 +38,8 @@ public:
 	void SetPos(D3DXVECTOR3 vPos);
 	void SetPos(float x, float y, float z);
 
+	D3DXVECTOR3 GetColisionPos(){ return m_vPos + m_vAnimePos; }
+
 	
 	void Move(float deltaTime, const D3DXVECTOR3& cvForwardVec);
 	bool MoveA(float deltaTime, const D3DXVECTOR3& cvForwardVec);
@@ -51,7 +53,7 @@ public:
 
 	D3DXVECTOR3 GetCameraTarget();
 
-	float GetSizeY();
+	float GetSize();
 
 	int GetLV() { return m_iLV; }
 
@@ -119,8 +121,11 @@ private:
 	float m_fAnimationMargineY;
 
 	float m_fAnimTime;//second
+	float m_fAnimTimeDelay;
 	bool m_bAnimeFlg;
 	float m_fAnimeWaitTime;
+
+	bool m_bRenderflg;
 
 	//D3DXMATRIX AnimationRotz;
 

@@ -7,7 +7,8 @@ MyModel::MyModel() : m_vForward(0, 0, 1), m_vUp(0, 1, 0), m_vRight(1, 0, 0)
 , m_vLocalForward(0, 0, 1), m_vLocalRight(1, 0, 0), m_vLocalUp(0, 1, 0)
 , m_fAnimTime(0.1f), m_bAnimeFlg(false), m_fAnimeWaitTime(0.0f)
 , m_fAnimationRotX(0.0f), m_fAnimationRotZ(0.0f),m_fAnimationMargineY(0.0f)
-,m_vAnimePos(0,0,0)
+,m_vAnimePos(0,0,0),m_fAnimTimeDelay(0.005)
+,m_bRenderflg(true)
 {
 	D3DXMATRIX tran;
 	D3DXMatrixTranslation(&tran, 0, 0, 0);
@@ -66,26 +67,24 @@ void MyModel::UpdateCenter()
 
 void MyModel::Render(D3DXMATRIX view,D3DXMATRIX proj)
 {
-	m_VertexShader.SetShader(0);
-	m_VertexShader.SetLayout();
-	m_PixelShader.SetShader(0);
+	if (m_bRenderflg) {
+		m_VertexShader.SetShader(0);
+		m_VertexShader.SetLayout();
+		m_PixelShader.SetShader(0);
 
-	D3DXMATRIX mTran;
-	D3DXMatrixTranslation(&mTran,m_vPos.x, m_vPos.y, m_vPos.z);
-	/*D3DXMATRIX mRotZ;
-	D3DXMatrixRotationZ(&mRotZ, m_fAnimationRotX / 180.0f * D3DX_PI);
-	D3DXMATRIX mRotX;
-	D3DXMatrixRotationX(&mRotX, m_fAnimationRotZ / 180.0f * D3DX_PI);*/
-	
-	D3DXMATRIX mW = m_mAnimeRot * mTran * m_mAdjustment;
-	for (auto itr=m_lmModelMat.begin(); itr != m_lmModelMat.end(); ++itr)
-	{
-				D3DXMATRIX tmpmatrix;
-				tmpmatrix = (*itr) * mW;
-				m_ConstantBuffer.SetConstantBuffer(tmpmatrix, view, proj);
-				m_ConstantBuffer.SetCBtoPS();
-				m_ConstantBuffer.SetCBtoVS();
-				m_Cube.Render();
+		D3DXMATRIX mTran;
+		D3DXMatrixTranslation(&mTran, m_vPos.x, m_vPos.y, m_vPos.z);
+
+		D3DXMATRIX mW = m_mAnimeRot * mTran * m_mAdjustment;
+		for (auto itr = m_lmModelMat.begin(); itr != m_lmModelMat.end(); ++itr)
+		{
+			D3DXMATRIX tmpmatrix;
+			tmpmatrix = (*itr) * mW;
+			m_ConstantBuffer.SetConstantBuffer(tmpmatrix, view, proj);
+			m_ConstantBuffer.SetCBtoPS();
+			m_ConstantBuffer.SetCBtoVS();
+			m_Cube.Render();
+		}
 	}
 	//UpdateCenter();
 }
@@ -288,7 +287,9 @@ void MyModel::LVUp()
 			}
 		}
 	}
+	//D3DXVECTOR3 vTmp(m_fPolySize, 0, m_fPolySize);
 
+	//m_vPos += vTmp;
 	ModelSizeUp();
 	InitAdjustment();
 	UpdateCenter();
@@ -298,7 +299,8 @@ void MyModel::LVUp()
 
 void MyModel::LVDown()
 {
-	if (m_iLV == 1) {//死んだりする処理を入れる
+	if (m_iLV <= 1) {//死んだりする処理を入れる
+		m_bRenderflg = false;
 		return;
 	}
 	m_iLV--;
@@ -313,6 +315,10 @@ void MyModel::LVDown()
 			}
 		}
 	}
+	D3DXVECTOR3 vTmp(m_fPolySize, 0, m_fPolySize);
+
+	m_vPos += vTmp;
+
 	ModelSizeDown();
 	InitAdjustment();
 	UpdateCenter();
@@ -344,7 +350,7 @@ void MyModel::ModelSizeDown()
 	m_iModelHalfSizeZ -= 1;
 }
 
-float MyModel::GetSizeY()
+float MyModel::GetSize()
 {
 	return m_iModelSizeY * m_fPolySize;
 }
@@ -442,8 +448,8 @@ bool MyModel::AnimationLocalRightA(float deltaTime)
 
 	if (m_bAnimeFlg == true) {
 		m_fAnimeWaitTime += deltaTime;
-
-		if ((m_fAnimTime)* m_iModelSizeX <= m_fAnimeWaitTime) {
+		float AnimTime = m_fAnimTime + m_fAnimTimeDelay * m_iLV;
+		if ((AnimTime)* m_iModelSizeX <= m_fAnimeWaitTime) {
 			m_vPos = m_vAnimationPrevPos + m_fPolySize * m_iModelSizeX * m_vLocalRight;
 			m_fAnimationRotX = 0;
 			m_fAnimeWaitTime = 0;
@@ -456,9 +462,9 @@ bool MyModel::AnimationLocalRightA(float deltaTime)
 			return true;
 		}
 
-		m_vAnimePos += m_fPolySize * m_iModelSizeX * m_vLocalRight * deltaTime / (m_fAnimTime) / m_iModelSizeX;
+		m_vAnimePos += m_fPolySize * m_iModelSizeX * m_vLocalRight * deltaTime / (AnimTime) / m_iModelSizeX;
 
-		m_fAnimationRotX += -90.0f * deltaTime / (m_fAnimTime) / m_iModelSizeX;
+		m_fAnimationRotX += -90.0f * deltaTime / (AnimTime) / m_iModelSizeX;
 
 
 		D3DXMATRIX mPipotTran;
@@ -485,7 +491,7 @@ bool MyModel::AnimationLocalLeft(float deltaTime) {
 	}
 	if (m_bAnimeFlg == true) {
 		m_fAnimeWaitTime += deltaTime;
-
+		float AnimTime = m_fAnimTime + m_fAnimTimeDelay * m_iLV;
 		if ((m_fAnimTime) * m_iModelSizeX <= m_fAnimeWaitTime) {
 			m_vPos = m_vAnimationPrevPos +  m_fPolySize * m_iModelSizeX * -m_vLocalRight;
 			m_fAnimationRotX = 0;
@@ -494,9 +500,9 @@ bool MyModel::AnimationLocalLeft(float deltaTime) {
 			return true;
 		}
 
-		m_vPos += m_fPolySize * m_iModelSizeX * -m_vLocalRight * deltaTime / (m_fAnimTime) / m_iModelSizeX;
+		m_vPos += m_fPolySize * m_iModelSizeX * -m_vLocalRight * deltaTime / AnimTime / m_iModelSizeX;
 
-		m_fAnimationRotX += 90.0f * deltaTime / (m_fAnimTime) / m_iModelSizeX;
+		m_fAnimationRotX += 90.0f * deltaTime / (AnimTime) / m_iModelSizeX;
 
 		AnimationMargineY(deltaTime);
 	}
@@ -515,8 +521,9 @@ bool MyModel::AnimationLocalLeftA(float deltaTime)
 
 	if (m_bAnimeFlg == true) {
 		m_fAnimeWaitTime += deltaTime;
+		float AnimTime = m_fAnimTime + m_fAnimTimeDelay * m_iLV;
 
-		if ((m_fAnimTime)* m_iModelSizeX <= m_fAnimeWaitTime) {
+		if ((AnimTime)* m_iModelSizeX <= m_fAnimeWaitTime) {
 			m_vPos = m_vAnimationPrevPos + m_fPolySize * m_iModelSizeX * -m_vLocalRight;
 			m_fAnimationRotX = 0;
 			m_fAnimeWaitTime = 0;
@@ -529,9 +536,9 @@ bool MyModel::AnimationLocalLeftA(float deltaTime)
 			return true;
 		}
 
-		m_vAnimePos += m_fPolySize * m_iModelSizeX * -m_vLocalRight * deltaTime / (m_fAnimTime)/ m_iModelSizeX;
+		m_vAnimePos += m_fPolySize * m_iModelSizeX * -m_vLocalRight * deltaTime / (AnimTime)/ m_iModelSizeX;
 
-		m_fAnimationRotX += 90.0f * deltaTime / (m_fAnimTime) / m_iModelSizeX;
+		m_fAnimationRotX += 90.0f * deltaTime / (AnimTime) / m_iModelSizeX;
 
 
 		D3DXMATRIX mPipotTran;
@@ -592,8 +599,9 @@ bool MyModel::AnimationLocalForwardA(float deltaTime)
 
 	if (m_bAnimeFlg == true) {
 		m_fAnimeWaitTime += deltaTime;
+		float AnimTime = m_fAnimTime + m_fAnimTimeDelay * m_iLV;
 
-		if ((m_fAnimTime) * m_iModelSizeZ <= m_fAnimeWaitTime) {
+		if ((AnimTime) * m_iModelSizeZ <= m_fAnimeWaitTime) {
 			m_vPos = m_vAnimationPrevPos + m_fPolySize * m_iModelSizeZ * m_vLocalForward;
 			m_fAnimationRotZ = 0;
 			m_fAnimeWaitTime = 0;
@@ -606,9 +614,9 @@ bool MyModel::AnimationLocalForwardA(float deltaTime)
 			return true;
 		}
 
-		m_vAnimePos += m_fPolySize * m_iModelSizeZ * m_vLocalForward * deltaTime / (m_fAnimTime)/ m_iModelSizeX;
+		m_vAnimePos += m_fPolySize * m_iModelSizeZ * m_vLocalForward * deltaTime / (AnimTime)/ m_iModelSizeX;
 
-		m_fAnimationRotZ += 90.0f * deltaTime / (m_fAnimTime) / m_iModelSizeX;
+		m_fAnimationRotZ += 90.0f * deltaTime / (AnimTime) / m_iModelSizeX;
 
 
 		D3DXMATRIX mPipotTran;
@@ -672,8 +680,9 @@ bool MyModel::AnimationLocalBackwardA(float deltaTime)
 
 	if (m_bAnimeFlg == true) {
 		m_fAnimeWaitTime += deltaTime;
+		float AnimTime = m_fAnimTime + m_fAnimTimeDelay * m_iLV;
 
-		if ((m_fAnimTime)* m_iModelSizeZ <= m_fAnimeWaitTime) {
+		if ((AnimTime)* m_iModelSizeZ <= m_fAnimeWaitTime) {
 			m_vPos = m_vAnimationPrevPos + m_fPolySize * m_iModelSizeZ * -m_vLocalForward;
 			m_fAnimationRotZ = 0;
 			m_fAnimeWaitTime = 0;
@@ -688,9 +697,9 @@ bool MyModel::AnimationLocalBackwardA(float deltaTime)
 		//このアニメポスはカメラ座標を更新するためにセンターを少しずらしてあげる必要があって
 		//そのためのマージン、アニメーションをしてないときはこれは何の成分もないが
 		//アニメーションをしてるときはこれがうまい具合にセンターを動かしてくれる
-		m_vAnimePos += m_fPolySize * m_iModelSizeZ * -m_vLocalForward * deltaTime / (m_fAnimTime) / m_iModelSizeX;
+		m_vAnimePos += m_fPolySize * m_iModelSizeZ * -m_vLocalForward * deltaTime / (AnimTime) / m_iModelSizeX;
 
-		m_fAnimationRotZ += -90.0f * deltaTime / (m_fAnimTime) / m_iModelSizeX;
+		m_fAnimationRotZ += -90.0f * deltaTime / (AnimTime) / m_iModelSizeX;
 
 
 		D3DXMATRIX mPipotTran;
