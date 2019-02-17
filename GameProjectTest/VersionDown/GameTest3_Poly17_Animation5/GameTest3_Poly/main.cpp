@@ -51,7 +51,7 @@ void MAIN::InitModel()
 		//int LV = (m_pEnemyModel[i]->GetLV());
 		m_pEnemyModel[i]->InitLv(i + 3);
 		float Size = (m_pEnemyModel[i]->GetSize());
-		m_pEnemyModel[i]->SetPos(0, 0, Size * (i +1 ));
+		m_pEnemyModel[i]->SetPos(0, 0, Size * (i + 1));
 	}
 	m_pGround = new MyGround;
 	m_pMoveUI = new MoveUI;
@@ -64,14 +64,14 @@ void MAIN::ReleaseModel()
 	SAFE_DELETE(m_pCamera);
 	SAFE_DELETE(m_pFPS);
 	SAFE_DELETE(m_pTestModel);
-	
+
 	//SAFE_DELETE_ARRAY(m_pEnemyModel);
 	for (int i = 0; i < 3; i++) {
 		SAFE_DELETE(m_pEnemyModel[i]);
 	}
 
 	SAFE_DELETE(m_pGround);
-	SAFE_DELETE( m_pMoveUI);
+	SAFE_DELETE(m_pMoveUI);
 }
 //コンストラクタ
 MAIN::MAIN()
@@ -88,65 +88,63 @@ MAIN::~MAIN()
 
 }
 
-bool MAIN::Colision(MyModel* pModelA, MyModel* pModelB) 
+bool MAIN::Colision(MyModel* pModelA, MyModel* pModelB)
 {
-	if (pModelA->GetLV() == 1 && pModelB->GetLV() == 1)
-	{
-		D3DXVECTOR3 vModelA = pModelA->GetCenter();
-		D3DXVECTOR3 vModelB = pModelB->GetCenter();
-
-		D3DXVECTOR2 vTopRightA;
-
-		float SizeA = pModelA->GetSize();
-		float SizeB = pModelB->GetSize();
-
-		vTopRightA.x = vModelA.x + SizeA / 2.0f;
-		vTopRightA.y = vModelA.z + SizeA / 2.0f;
-		D3DXVECTOR2 vTopLeftA;
-		vTopLeftA.x = vModelA.x - SizeA / 2.0f;
-		vTopLeftA.y = vModelA.z + SizeA / 2.0f;
-		D3DXVECTOR2 vUnderRightA;
-		vUnderRightA.x = vModelA.x + SizeA / 2.0f;
-		vUnderRightA.y = vModelA.z - SizeA / 2.0f;
-		D3DXVECTOR2 vUnderLeftA;
-		vUnderLeftA.x = vModelA.x - SizeA / 2.0f;
-		vUnderLeftA.y = vModelA.z - SizeA / 2.0f;
-
-
-		D3DXVECTOR2 vTopRightB;
-		vTopRightB.x = vModelB.x + SizeB / 2.0f;
-		vTopRightB.y = vModelB.z + SizeB / 2.0f;
-		D3DXVECTOR2 vTopLeftB;
-		vTopLeftB.x = vModelB.x - SizeB / 2.0f;
-		vTopLeftB.y = vModelB.z + SizeB / 2.0f;
-		D3DXVECTOR2 vUnderRightB;
-		vUnderRightB.x = vModelB.x + SizeB / 2.0f;
-		vUnderRightB.y = vModelB.z - SizeB / 2.0f;
-		D3DXVECTOR2 vUnderLeftB;
-		vUnderLeftB.x = vModelB.x - SizeB / 2.0f;
-		vUnderLeftB.y = vModelB.z - SizeB / 2.0f;
-
-		if (vTopLeftA.x < vUnderRightB.x && vTopLeftA.y > vUnderRightB.y
-			&& vTopRightA.x > vUnderLeftB.x && vTopRightA.y > vUnderLeftB.y
-			&& vUnderLeftA.x < vTopRightB.x && vUnderLeftA.y < vTopRightB.y
-			&& vUnderRightA.x > vTopLeftB.x && vUnderRightA.y < vTopLeftB.y
-			)
+		D3DXVECTOR3 vLength = pModelB->GetCenter() - pModelA->GetCenter();
+		float fLength = D3DXVec3Length(&vLength);
+		float fModelArad = sqrt(pow(pModelA->GetSize(), 2) + pow(pModelA->GetSize(), 2))*0.49;
+		float fModelBrad = sqrt(pow(pModelB->GetSize(), 2) + pow(pModelB->GetSize(), 2))*0.49;
+		if (fLength < fModelArad + fModelBrad)
 		{
 			return true;
 		}
-		else {
-			return false;
-		}
-	}
-	D3DXVECTOR3 vLength = pModelB->GetCenter() - pModelA->GetCenter();
-	float fLength = D3DXVec3Length(&vLength);
-	float fModelArad = sqrt(pow(pModelA->GetSize(), 2) + pow(pModelA->GetSize(), 2))/2.0f;
-	float fModelBrad = sqrt(pow(pModelB->GetSize(), 2) + pow(pModelB->GetSize(), 2)) / 2.0f;
-	if (fLength < fModelArad + fModelBrad)
-	{
-		return true;
-	}
-	
+
+			//D3DXVECTOR3 vModelA = pModelA->GetCenter();
+			//D3DXVECTOR3 vModelB = pModelB->GetCenter();
+
+			//D3DXVECTOR2 vTopRightA;
+
+			//float SizeA = pModelA->GetSize();
+			//float SizeB = pModelB->GetSize();
+
+			//vTopRightA.x = vModelA.x + SizeA / 2.0f;
+			//vTopRightA.y = vModelA.z + SizeA / 2.0f;
+			//D3DXVECTOR2 vTopLeftA;
+			//vTopLeftA.x = vModelA.x - SizeA / 2.0f;
+			//vTopLeftA.y = vModelA.z + SizeA / 2.0f;
+			//D3DXVECTOR2 vUnderRightA;
+			//vUnderRightA.x = vModelA.x + SizeA / 2.0f;
+			//vUnderRightA.y = vModelA.z - SizeA / 2.0f;
+			//D3DXVECTOR2 vUnderLeftA;
+			//vUnderLeftA.x = vModelA.x - SizeA / 2.0f;
+			//vUnderLeftA.y = vModelA.z - SizeA / 2.0f;
+
+
+			//D3DXVECTOR2 vTopRightB;
+			//vTopRightB.x = vModelB.x + SizeB / 2.0f;
+			//vTopRightB.y = vModelB.z + SizeB / 2.0f;
+			//D3DXVECTOR2 vTopLeftB;
+			//vTopLeftB.x = vModelB.x - SizeB / 2.0f;
+			//vTopLeftB.y = vModelB.z + SizeB / 2.0f;
+			//D3DXVECTOR2 vUnderRightB;
+			//vUnderRightB.x = vModelB.x + SizeB / 2.0f;
+			//vUnderRightB.y = vModelB.z - SizeB / 2.0f;
+			//D3DXVECTOR2 vUnderLeftB;
+			//vUnderLeftB.x = vModelB.x - SizeB; // 2.0f;
+			//vUnderLeftB.y = vModelB.z - SizeB; // 2.0f;
+
+			//if (vTopLeftA.x < vUnderRightB.x && vTopLeftA.y > vUnderRightB.y
+			//	&& vTopRightA.x > vUnderLeftB.x && vTopRightA.y > vUnderLeftB.y
+			//	&& vUnderLeftA.x < vTopRightB.x && vUnderLeftA.y < vTopRightB.y
+			//	&& vUnderRightA.x > vTopLeftB.x && vUnderRightA.y < vTopLeftB.y
+			//	)
+			//{
+			//	return true;
+			//}
+
+
+		
+
 	return false;
 }
 //
@@ -238,8 +236,8 @@ void MAIN::Loop()
 {
 	MSG msg = { 0 };
 	ZeroMemory(&msg, sizeof(msg));
-	
-	
+
+
 	while (msg.message != WM_QUIT)//終了メッセージが届いていなければ　ループ
 	{
 		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE)) //メッセージをもとに処理を選択
@@ -263,14 +261,16 @@ void MAIN::Loop()
 void MAIN::App()
 {
 	g_pMain->m_pFPS->Run();
-	
+
 	for (int i = 0; i < 3; i++) {
 		//if (g_pMain->m_pTestModel->GetLV() > g_pMain->m_pEnemyModel[i]->GetLV())
 		//{
 		if (g_pMain->m_pEnemyModel[i]->GetLV() > 0) {
-			if (Colision(g_pMain->m_pTestModel, g_pMain->m_pEnemyModel[i]))
-			{
-				g_pMain->m_pEnemyModel[i]->LVDown();
+			if (g_pMain->m_pTestModel->GetLV() > m_pEnemyModel[i]->GetLV()) {
+				if (Colision(g_pMain->m_pTestModel, g_pMain->m_pEnemyModel[i]))
+				{
+					g_pMain->m_pEnemyModel[i]->LVDown();
+				}
 			}
 		}
 		//}
@@ -423,14 +423,14 @@ HRESULT MAIN::InitD3D()
 HRESULT MAIN::InitShader()
 {
 
-	
+
 	//hlslファイル読み込み　ブロブ作成　
 	ID3DBlob *pCompiledShader = NULL;
 	ID3DBlob *pErrors = NULL;
 	//ブロブからバーテックスシェーダーを作成
 
 	int tmpnum;
-	
+
 	m_pTestModel->m_VertexShader.Init(m_pDevice, m_pDeviceContext);
 
 	for (int i = 0; i < 3; i++)
@@ -460,9 +460,9 @@ HRESULT MAIN::InitShader()
 
 	////頂点インプットレイアウトを定義
 	////今回ここは VS_OUTPUTのレイアウトをもとに　　POSITION と UVになるTEXCOORDを設定
-	
 
-	
+
+
 	//ブロブからピクセルシェーダー作成
 
 	m_pTestModel->m_PixelShader.Init(m_pDevice, m_pDeviceContext);
@@ -483,7 +483,7 @@ HRESULT MAIN::InitShader()
 
 	m_pTestModel->m_ConstantBuffer.Init(m_pDevice, m_pDeviceContext);
 
-	
+
 	//コンスタントバッファー作成　　ここでは変換行列渡し用
 	D3D11_BUFFER_DESC cb;//説明書
 	cb.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
@@ -533,7 +533,7 @@ HRESULT MAIN::InitPolygon()
 	m_pMoveUI->m_PanelW.CreateVertexBuffer();
 	m_pMoveUI->m_PanelW.CreateTexture("UI_W.png");
 */
-	m_pMoveUI->MovePanelInit(m_pDevice,m_pDeviceContext);
+	m_pMoveUI->MovePanelInit(m_pDevice, m_pDeviceContext);
 	return S_OK;
 }
 
@@ -555,7 +555,7 @@ void MAIN::Render()
 	//Inputs
 	//static MAIN::eMoveVec Vec = MAIN::eMoveVec;;None;
 
-	
+
 	if (DeltaFPS->DeltaReady())
 	{
 		if (GetKeyState('A') & 0x80) {
@@ -603,14 +603,14 @@ void MAIN::Render()
 				//m_eMoveVec = eMoveVec::None;
 			}
 		}
-		
+
 		bool check = MoveUpdateA(m_eMoveVec);
 		if (check) {
 			m_eMoveVec = eMoveVec::None;
 		}
-		
+
 		//上を常に見れるようにするか　元のターゲットまで戻すかの処理
-		MainCamera->UpDateLook(DeltaFPS->GetDeltaTime(),m_pTestModel->GetSize());
+		MainCamera->UpDateLook(DeltaFPS->GetDeltaTime(), m_pTestModel->GetSize());
 		if (GetKeyState(VK_UP) & 0x80) {
 			MainCamera->LookUp(DeltaFPS->GetDeltaTime(), m_pTestModel->GetSize());
 
@@ -655,8 +655,10 @@ void MAIN::Render()
 			if (!flg2) {
 				if (m_eMoveVec == None)
 				{
-					m_pTestModel->LVDown();
-					flg2 = true;
+					if (m_pTestModel->GetLV() >= 2) {
+						m_pTestModel->LVDown();
+						flg2 = true;
+					}
 				}
 			}
 		}
@@ -664,7 +666,7 @@ void MAIN::Render()
 			flg2 = false;
 		}
 	}
-	
+
 	D3DXMATRIX Tran;
 	D3DXMatrixTranslation(&Tran, 0.0f, 0.0f, 0.0f);
 	MainCamera->SetCameraA(&mView, &mProjection, m_pTestModel->GetCameraTarget(), m_pTestModel->GetCameraMargin());
@@ -675,12 +677,12 @@ void MAIN::Render()
 		m_pEnemyModel[i]->Render(mView, mProjection);
 	}
 
-	
+
 	m_pGround->Render(mView, mProjection);
 
-	
-	m_pMoveUI->Render(mView, mProjection, m_pTestModel->GetCenter(),m_pTestModel->GetSize() * 1.1,MainCamera->GetWorldForward(),m_pTestModel->GetLV());
-	
+
+	m_pMoveUI->Render(mView, mProjection, m_pTestModel->GetCenter(), m_pTestModel->GetSize() * 1.1, MainCamera->GetWorldForward(), m_pTestModel->GetLV());
+
 	g_pMain->m_pFPS->PrintFps(m_hWnd);
 
 	m_pSwapChain->Present(0, 0);//画面更新
@@ -693,8 +695,8 @@ void MAIN::MoveUpdate(eMoveVec eVec)
 	D3DXVECTOR3 vLocalVec;
 	switch (eVec)
 	{
-	//case eMoveVec::None:
-		//m_pCamera->GetMoveLocalVec(&vLocalVec, Camera::eGetForward);
+		//case eMoveVec::None:
+			//m_pCamera->GetMoveLocalVec(&vLocalVec, Camera::eGetForward);
 
 	case eMoveVec::Forward:
 		//D3DXVECTOR3 vLocalForwardVec(0,0,0);
@@ -728,7 +730,7 @@ bool MAIN::MoveUpdateA(eMoveVec eVec)
 	switch (eVec)
 	{
 	case eMoveVec::None:
-			//m_pCamera->GetMoveLocalVec(&vLocalVec, Camera::eGetForward);
+		//m_pCamera->GetMoveLocalVec(&vLocalVec, Camera::eGetForward);
 		return false;
 	case eMoveVec::Forward:
 		//D3DXVECTOR3 vLocalForwardVec(0,0,0);
