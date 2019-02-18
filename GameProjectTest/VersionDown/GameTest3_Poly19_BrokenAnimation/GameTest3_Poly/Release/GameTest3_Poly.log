@@ -61,8 +61,8 @@ d:\githubrepositories\sgs_gameproject\gameprojecttest\versiondown\gametest3_poly
 d:\githubrepositories\sgs_gameproject\gameprojecttest\versiondown\gametest3_poly19_brokenanimation\gametest3_poly\main.cpp(121): warning C4244: '初期化中': 'double' から 'float' への変換です。データが失われる可能性があります。
 d:\githubrepositories\sgs_gameproject\gameprojecttest\versiondown\gametest3_poly19_brokenanimation\gametest3_poly\main.cpp(751): warning C4244: '引数': 'double' から 'float' への変換です。データが失われる可能性があります。
   コード生成しています。
-  5 of 276 functions ( 1.8%) were compiled, the rest were copied from previous compilation.
+  3 of 276 functions ( 1.1%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    0 functions had inline decision re-evaluated but remain unchanged
+    1 functions had inline decision re-evaluated but remain unchanged
   コード生成が終了しました。
   GameTest3_Poly.vcxproj -> D:\GitHubRepositories\SGS_GAMEPROJECT\GameProjectTest\VersionDown\GameTest3_Poly19_BrokenAnimation\Release\GameTest3_Poly.exe

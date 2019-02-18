@@ -279,18 +279,18 @@ void MAIN::App()
 		//if (g_pMain->m_pTestModel->GetLV() > g_pMain->m_pEnemyModel[i]->GetLV())
 		//{
 		if (g_pMain->m_pEnemyModel[i]->GetLV() > 0) {
-			if (g_pMain->m_pTestModel->GetLV() > m_pEnemyModel[i]->GetLV()) {
+			//if (g_pMain->m_pTestModel->GetLV() > m_pEnemyModel[i]->GetLV()) {
 				if (Colision(g_pMain->m_pTestModel, g_pMain->m_pEnemyModel[i]))
 				{
 					g_pMain->m_pEnemyModel[i]->LVDown();
 				}
-			}
-			else if (g_pMain->m_pTestModel->GetLV() == 1 && m_pEnemyModel[i]->GetLV() == 1)
-			{
-				if (Colision(g_pMain->m_pTestModel, g_pMain->m_pEnemyModel[i])) {
-					g_pMain->m_pEnemyModel[i]->LVDown();
-				}
-			}
+			//}
+			//else if (g_pMain->m_pTestModel->GetLV() == 1 && m_pEnemyModel[i]->GetLV() == 1)
+			//{
+				//if (Colision(g_pMain->m_pTestModel, g_pMain->m_pEnemyModel[i])) {
+				//	g_pMain->m_pEnemyModel[i]->LVDown();
+				//}
+			//}
 
 		}
 		//}
