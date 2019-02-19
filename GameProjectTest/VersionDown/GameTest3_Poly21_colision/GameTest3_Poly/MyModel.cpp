@@ -1,6 +1,8 @@
 #include "MyModel.h"
 
 
+float MyModel::m_fAnimationDelayTimeRimit = 0.3f;
+
 MyModel::MyModel() : m_vForward(0, 0, 1), m_vUp(0, 1, 0), m_vRight(1, 0, 0)
 , m_fPolySize(MyPoly::Poly::PolySize), m_fPolyHalfSize(MyPoly::Poly::PolyHalfSize)
 , m_vCenter(0, 0, 0), m_vPos(0, 0, 0)
@@ -831,7 +833,11 @@ bool MyModel::AnimationLocalRightR(float deltaTime)
 	if (m_bAnimeFlg == true) {
 		if (!m_bAnimeReverceFlg) {
 			m_fAnimeWaitTime += deltaTime;
-			float AnimTime = m_fAnimTime + m_fAnimTimeDelay * m_iLV;
+			float AnimDelay = m_fAnimTimeDelay * m_iLV;
+			if (m_fAnimTimeDelay > MyModel::m_fAnimationDelayTimeRimit) {
+				AnimDelay = MyModel::m_fAnimationDelayTimeRimit;
+			}
+			float AnimTime = m_fAnimTime + AnimDelay;
 			if ((AnimTime)/** m_iModelSizeX*/ <= m_fAnimeWaitTime) {
 				m_vPos = m_vAnimationPrevPos + m_fPolySize * m_iModelSizeX * m_vLocalRight;
 				m_fAnimationRotX = 0;
@@ -911,7 +917,12 @@ bool MyModel::AnimationLocalLeftR(float deltaTime)
 	if (m_bAnimeFlg == true) {
 		if (!m_bAnimeReverceFlg) {
 			m_fAnimeWaitTime += deltaTime;
-			float AnimTime = m_fAnimTime + m_fAnimTimeDelay * m_iLV;
+
+			float AnimDelay = m_fAnimTimeDelay * m_iLV;
+			if (m_fAnimTimeDelay > MyModel::m_fAnimationDelayTimeRimit) {
+				AnimDelay = MyModel::m_fAnimationDelayTimeRimit;
+			}
+			float AnimTime = m_fAnimTime + AnimDelay;
 
 			if ((AnimTime)/** m_iModelSizeX */ <= m_fAnimeWaitTime) {
 				m_vPos = m_vAnimationPrevPos + m_fPolySize * m_iModelSizeX * -m_vLocalRight;
@@ -989,8 +1000,13 @@ bool MyModel::AnimationLocalForwardR(float deltaTime)
 	if (m_bAnimeFlg == true) {
 		if (!m_bAnimeReverceFlg) {
 			m_fAnimeWaitTime += deltaTime;
-			float AnimTime = m_fAnimTime + m_fAnimTimeDelay * m_iLV;
-
+			//animtimeに関してはメンバにし用かと思ったが、敵に当たったらアニメーション速度がいきなりかわるので
+			//これでいい
+			float AnimDelay = m_fAnimTimeDelay * m_iLV;
+			if (m_fAnimTimeDelay > MyModel::m_fAnimationDelayTimeRimit) {
+				AnimDelay = MyModel::m_fAnimationDelayTimeRimit;
+			}
+			float AnimTime = m_fAnimTime + AnimDelay;
 			if ((AnimTime)/* * m_iModelSizeZ*/ <= m_fAnimeWaitTime) {
 				m_vPos = m_vAnimationPrevPos + m_fPolySize * m_iModelSizeZ * m_vLocalForward;
 				m_fAnimationRotZ = 0;
@@ -1068,8 +1084,11 @@ bool MyModel::AnimationLocalBackwardR(float deltaTime)
 	if (m_bAnimeFlg == true) {
 		if (!m_bAnimeReverceFlg) {
 			m_fAnimeWaitTime += deltaTime;
-			float AnimTime = m_fAnimTime + m_fAnimTimeDelay * m_iLV;
-
+			float AnimDelay = m_fAnimTimeDelay * m_iLV;
+			if (m_fAnimTimeDelay > MyModel::m_fAnimationDelayTimeRimit) {
+				AnimDelay = MyModel::m_fAnimationDelayTimeRimit;
+			}
+			float AnimTime = m_fAnimTime + AnimDelay;
 			if ((AnimTime)/** m_iModelSizeZ*/ <= m_fAnimeWaitTime) {
 				m_vPos = m_vAnimationPrevPos + m_fPolySize * m_iModelSizeZ * -m_vLocalForward;
 				m_fAnimationRotZ = 0;

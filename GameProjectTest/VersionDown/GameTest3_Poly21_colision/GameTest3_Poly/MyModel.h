@@ -265,7 +265,7 @@ protected:
 	//キューブを真ん中にずらすための行列
 	D3DXMATRIX m_mAdjustment;
 
-	
+	static float m_fAnimationDelayTimeRimit;
 
 	D3DXMATRIX m_World;
 	enum {
