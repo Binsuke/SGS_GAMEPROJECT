@@ -18,6 +18,9 @@ public:
 
 	void SameCubeColisionCheck(MyModel* pModel);
 	void SameCubeColisionCheckEnd();
+
+	int GetCubeStack() { return m_iCubeStack; }
+	int GetNextLevel() { return m_iNextLevel; }
 private:
 	bool GlowInitFlg;
 	int m_iNextLevel;

@@ -558,5 +558,12 @@ void GameScene::Input()
 			flg2 = false;
 		}
 	}
+
+	if (GetKeyState(VK_SPACE) & 0x80) {
+		char testString[256];
+		sprintf_s(testString, "%d", m_pTestModel->GetCubeStack());
+		MessageBox(g_pMain->m_hWnd, testString, "test", 0);
+	}
+
 }
 
